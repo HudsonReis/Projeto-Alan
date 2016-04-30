@@ -10,8 +10,50 @@ package com.mycompany.alan.classes;
  * @author Nicolas
  */
 public class MovimentacaoSaida {
+
     private int quantidade;
     private int codigoProduto;
     private int codigoUsuario;
     private int codigoFilial;
+
+    public MovimentacaoSaida(int qtd, int codProduto, int codUsuario,
+            int codFilial) {
+        quantidade = qtd;
+        codigoProduto = codProduto;
+        codigoUsuario = codUsuario;
+        codigoFilial = codFilial;
+
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public int getCodigoProduto() {
+        return codigoProduto;
+    }
+
+    public void setCodigoProduto(int codigoProduto) {
+        this.codigoProduto = codigoProduto;
+    }
+
+    public int getCodigoUsuario() {
+        return codigoUsuario;
+    }
+
+    public void setCodigoUsuario(int codigoUsuario) {
+        this.codigoUsuario = codigoUsuario;
+    }
+
+    public int getCodigoFilial() {
+        return codigoFilial;
+    }
+
+    public void setCodigoFilial(int codigoFilial) {
+        this.codigoFilial = codigoFilial;
+    }
 }
