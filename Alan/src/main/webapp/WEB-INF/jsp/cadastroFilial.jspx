@@ -4,16 +4,58 @@
     Created on : 30/04/2016, 00:15:38
     Author     : Nicolas
 -->
-<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
-
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
+          version="2.0">
     <jsp:directive.page contentType="text/html" pageEncoding="UTF-8"/>
+    <html>
+        <head>
+            <title>Cadastro Filial</title>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <link rel="stylesheet" href="resources/css/bootstrap.min.css"/>
+            <link rel="stylesheet" href="resources/css/style.css"/>
+        </head>
+        <body>
+            <div class="container">
+                <h2>Cadastro de Filiais</h2>
+                <div class="box">
+                    <form method="post">
+                        <div class="row">   
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="FilialId">ID</label>
+                                    <input type="text" class="form-control" id="filialId" name="FilialId"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">   
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="NomeFilial">Nome</label>
+                                    <input type="text" class="form-control" id="nomeFilial" name="NomeFilial" placeholder="Nome"/>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="cnpj">Cnpj</label>
+                                    <input type="text" class="form-control" id="cnpj" name="cnpj" placeholder="Cnpj"/>
+                                </div>
+                            </div>
+                        </div>
 
-    <!-- any content can be specified here, e.g.: -->
-    <jsp:element name="text">
-        <jsp:attribute name="lang">EN</jsp:attribute>
-        <jsp:body>
-Teste
-        </jsp:body>
-    </jsp:element>
-        
+
+                        <div class="right">
+                            <button type="submit" class="btn btn-success">Salvar</button>
+                            <button type="button" class="btn btn-danger">Descartar</button>
+                            <button type="button" class="btn btn-default">Cancelar</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <script type="text/javascript" src="resources/js/jquery-2.2.3.min.js"></script>
+            <script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
+        </body>
+    </html>
+
 </jsp:root>

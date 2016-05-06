@@ -12,91 +12,44 @@
             <nav class="navbar navbar-inverse">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#">Alan</a>
+                        <a class="navbar-brand" href="/Alan">Alan</a>
                     </div>
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
+                        <li class="active"><a href="/Alan">Home</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Cadastro
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
+                                <li><a href="CadastroFilial">Filial</a></li>
+                                <li><a href="CadastroUsuario">Usuário</a></li>
+                                <li><a href="CadastroProduto">Produto</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Movimentação
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Entrada</a></li>
+                                <li><a href="#">Saída</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Busca
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
                                 <li><a href="#">Filial</a></li>
-                                <li><a href="#">Usuario</a></li>
+                                <li><a href="#">Usuário</a></li>
                                 <li><a href="#">Produto</a></li>
                             </ul>
                         </li>
-                        <li><a href="CadastroFilial">Relatorios</a></li>
+                        <li><a href="#">Relatorios</a></li>
                     </ul>
                 </div>
             </nav>
-        </div>
-        <div class="container">
-            <h2>Cadastro de Usuários </h2>
-            <div class="box">
-                <form>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="UsuarioId">ID</label>
-                                <input type="text" class="form-control" id="UsuarioId" name="UsuarioId" value="4562" disabled>
-                            </div> 
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="Nome">Nome</label>
-                                <input type="text" class="form-control" id="nome" name="Nome" placeholder="Nome">
-                            </div>                        
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="PerfilId">Perfil</label>
-                                <select class="form-control" name="PerfilId">
-                                    <option value="0">Selecione...</option>
-                                    <option value="1">Gerente</option>
-                                    <option value="2">Vendedor</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="FilialId">Filial</label>
-                                <select class="form-control" id="FilialId" name="FilialId">
-                                    <option value="0">Selecione...</option>
-                                    <option value="1">Filial RJ</option>
-                                    <option value="2">Filial SP</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="Login">Login</label>
-                                <input type="text" class="form-control" id="login" name="Login" placeholder="Login">
-                            </div> 
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="block">Status</label>
-                                <input type="radio" id="Ativo" name="Status" value="true" /><label for="Ativo" class="espacamento">Ativo</label>
-                                <input type="radio" id="Inativo" name="Status" value="false" /><label for="Inativo">Inativo</label>
-                            </div> 
-                        </div>
-                    </div>
-
-                    <div class="right">
-                        <button type="submit" class="btn btn-success">Salvar</button>
-                        <button type="button" class="btn btn-danger">Excluir</button>
-                        <button type="button" class="btn btn-default">Cancelar</button>
-                    </div>
-                </form>  
-            </div>
-            
-        </div>
-
+        </div>        
         <script type="text/javascript" src="resources/js/jquery-2.2.3.min.js"></script>
         <script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
     </body>
