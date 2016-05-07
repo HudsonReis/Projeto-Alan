@@ -21,10 +21,10 @@
                 <div class="box">
                     <form method="post">
                         <div class="row">   
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="FilialId">ID</label>
-                                    <input type="text" class="form-control" id="filialId" name="FilialId"/>
+                                    <input type="text" class="form-control" id="filialId" name="FilialId" disabled="true"/>
                                 </div>
                             </div>
                         </div>
@@ -32,13 +32,51 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="NomeFilial">Nome</label>
-                                    <input type="text" class="form-control" id="nomeFilial" name="NomeFilial" placeholder="Nome"/>
+                                    <input type="text" required="" class="form-control" id="nomeFilial" name="NomeFilial" placeholder="Nome"/>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="nomeFantasia">Nome Fantasia</label>
+                                    <input type="text" required="" class="form-control" id="nomeFantasia" name="NomeFantasia" placeholder="Nome Fantasia"/>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="cnpj">Cnpj</label>
-                                    <input type="text" class="form-control" id="cnpj" name="cnpj" placeholder="Cnpj"/>
+                                    <input type="text" required="" class="form-control" id="cnpj" name="cnpj" placeholder="Cnpj"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">   
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="Rua">Rua</label>
+                                    <input type="text" required="" class="form-control" id="rua" name="Rua" placeholder="Rua"/>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <label for="Numero">Número</label>
+                                    <input type="number" required="" class="form-control" id="numero" name="Numero" placeholder="Número"/>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="Bairro">Bairro</label>
+                                    <input type="text" required="" class="form-control" id="bairro" name="Bairro" placeholder="Bairro"/>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <label for="Estado">Estado</label>
+                                    <input type="text" required="" class="form-control" id="estado" name="Estado" placeholder="Estado"/>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="Cidade">Cidade</label>
+                                    <input type="text" required="" class="form-control" id="cidade" name="Cidade" placeholder="Cidade"/>
                                 </div>
                             </div>
                         </div>

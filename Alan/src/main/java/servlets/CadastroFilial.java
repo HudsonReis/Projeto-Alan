@@ -5,8 +5,13 @@
  */
 package servlets;
 
+import classes.Filial;
+import classes.FilialDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -77,7 +82,27 @@ public class CadastroFilial extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        String nome = request.getParameter("NomeFilial");
+        String nomeFantasia = request.getParameter("NomeFantasia");
+        String cnpj = request.getParameter("cnpj");
+        String rua = request.getParameter("Rua");
+        int num = Integer.parseInt(request.getParameter("Numero"));
+        String bairro = request.getParameter("Bairro");
+        String estado = request.getParameter("Estado");
+        String cidade = request.getParameter("Cidade");
+        
+        //Criando objeto da filial
+        Filial filial = new Filial(nome, nomeFantasia, cnpj, rua, num, bairro, estado, cidade);
+        try {
+            //tentando enviar filial para ser adicionadas
+            FilialDAO.adicionar(filial);            
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroFilial.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CadastroFilial.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+
     }
 
     /**
