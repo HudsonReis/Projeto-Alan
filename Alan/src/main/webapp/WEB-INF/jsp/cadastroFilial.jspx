@@ -16,6 +16,7 @@
             <link rel="stylesheet" href="resources/css/style.css"/>
         </head>
         <body>
+            <jsp:include page="../../index.html"></jsp:include>
             <div class="container">
                 <h2>Cadastro de Filiais</h2>
                 <div class="box">

@@ -6,9 +6,13 @@
 package servlets;
 
 import classes.Usuario;
+import classes.UsuarioDAO;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,12 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Fernando
- */
+
 @WebServlet(name = "LoginServlet", urlPatterns = {"/Login"})
-public class LoginServlet extends HttpServlet {
+public class LoginServlet extends BaseServlet {
 
   /**
    * Apresenta a tela de login caso usuário não esteja autenticado. Caso
@@ -39,7 +40,7 @@ public class LoginServlet extends HttpServlet {
       
     HttpSession sessao = request.getSession(false);
     if (sessao == null || sessao.getAttribute("usuario") == null) {
-      RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
+      RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/login.jspx");
       rd.forward(request, response);
 
       return;
@@ -59,21 +60,21 @@ public class LoginServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
-    String nome = request.getParameter("nome");
+    String login = request.getParameter("login");
     String senha = request.getParameter("senha");
 
     // Validar nome de usuário e senha.
-    Usuario usuario = validar(nome, senha);
+    Usuario usuario = validar(login, senha);
     if (usuario != null) {
-      HttpSession sessao = request.getSession(false);
-      if (sessao != null) {
-        // Força invalidação da sessão anterior.
-        sessao.invalidate();
-      }
-      sessao = request.getSession(true);
-      sessao.setAttribute("usuario", usuario);
-      response.sendRedirect(request.getContextPath() + "/AgendaServlet");
-      return;
+        HttpSession sessao = request.getSession(false);
+        if (sessao != null) {
+          // Força invalidação da sessão anterior.
+          sessao.invalidate();
+        }
+        sessao = request.getSession(true);
+        sessao.setAttribute("usuario", usuario);
+        response.sendRedirect(request.getContextPath() + "/CadastroUsuario");
+        return;
       // FIM CASO SUCESSO
     }
     response.sendRedirect(request.getContextPath() + "/erroLogin.jsp");
@@ -82,11 +83,18 @@ public class LoginServlet extends HttpServlet {
 
   // Implementar aqui a validação do usuário com os dados
   // armazenados no banco de dados.
-  private Usuario validar(String nome, String senha) {
-//    Usuario usuario = USUARIOS_CADASTRADOS.get(nome);
-//    if (usuario != null && usuario.autenticar(nome, senha)) {
-//      return usuario;
-//    }
+  private Usuario validar(String login, String senha) {
+    try {
+        Usuario usuario = UsuarioDAO.consultar(login, senha);
+        if (usuario != null && usuario.autenticar(login, senha)) {
+            return usuario;
+        }
+    } catch(SQLException ex) {
+        Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+    } 
+    
     return null;
   }
 

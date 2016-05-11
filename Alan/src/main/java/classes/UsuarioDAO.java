@@ -3,7 +3,10 @@ package classes;
 import conexao.conexaoBanco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UsuarioDAO {
     public static void adicionar(Usuario usuario) throws SQLException, ClassNotFoundException {
@@ -27,10 +30,55 @@ public class UsuarioDAO {
 //        stmt.close();
     }
     
-    public static void consultar(String nome) throws SQLException, ClassNotFoundException {
+    public static Usuario consultar(String login, String senha) throws SQLException, ClassNotFoundException {
         Connection conexao = conexaoBanco.obterConexao();
         
-        String sql = "SELECT ";
+        String sql = "SELECT codigoUnitario, codigoFilial, codigoPerfil, nome, login, senha, status"
+                + " FROM Usuario WHERE login = ? AND senha = ?";
+        
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        
+        stmt.setString(1, login);
+        stmt.setString(2, senha);
+        
+        ResultSet result = stmt.executeQuery();
+        
+        String strResult = result.toString();
+        
+        int codUnitario = result.getInt("codigoUnitario");
+        int codFilial = result.getInt("codigoFilial");
+        int codPerfil = result.getInt("codigoPerfil");
+        String nome = result.getString("nome");
+        String loginRes = result.getString("login");
+        String senhaRes = result.getString("senha");
+        boolean status = result.getBoolean("status");
+        List<Integer> funcionalidades = consultarFuncionalidadesDoPerfil(result.getInt("codigoPerfil"));
+        
+        Usuario usuario = new Usuario(nome, codUnitario, codFilial, codPerfil, loginRes, senhaRes, status, funcionalidades);
+        
+        stmt.close();
+        
+        return usuario;
+    }
+    
+    public static List<Integer> consultarFuncionalidadesDoPerfil(int codigoPerfil) throws SQLException, ClassNotFoundException {
+        Connection conexao = conexaoBanco.obterConexao();
+        
+        String sql = "SELECT codigoFuncionalidade FROM Perfil_Funcionalidade WHERE codigoPerfil = ?";
+        
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        stmt.setInt(1, codigoPerfil);
+        
+        List<Integer> retorno = new ArrayList<Integer>();
+        ResultSet result = stmt.executeQuery(sql);
+        
+        while(result.next()) {
+            retorno.add(result.getInt("codigoFuncionalidade"));
+        }
+        
+        stmt.close();
+        
+        return retorno;
     }
 }
 
