@@ -11,8 +11,8 @@ package classes;
  */
 public class Funcionario extends Usuario {
     
-    public Funcionario(String nome, int codUnitario, int codFilial, String login, String senha, char tipo) {
-        super(nome, codUnitario, codFilial, login, senha, tipo);
+    public Funcionario(String nome, int codUnitario, int codFilial, int codigoPerfil, String login, String senha) {
+        super(nome, codUnitario, codFilial, codigoPerfil, login, senha);
     }
     
 }

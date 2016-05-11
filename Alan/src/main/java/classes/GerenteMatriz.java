@@ -11,8 +11,8 @@ package classes;
  */
 public class GerenteMatriz extends Usuario{
     
-    public GerenteMatriz(String nome, int codUnitario, int codFilial, String login, String senha, char tipo) {
-        super(nome, codUnitario, codFilial, login, senha, tipo);
+    public GerenteMatriz(String nome, int codUnitario, int codFilial, int codigoPerfil, String login, String senha) {
+        super(nome, codUnitario, codFilial, codigoPerfil, login, senha);
     }
     
 }

@@ -1,6 +1,6 @@
 package classes;
 
-import conexao.ConexaoBanco;
+import conexao.conexaoBanco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -10,7 +10,7 @@ public class FilialDAO {
     
     
     public static void adicionar(Filial filial) throws SQLException, ClassNotFoundException {
-        Connection conexao = ConexaoBanco.obterConexao();
+        Connection conexao = conexaoBanco.obterConexao();
         //linguagem sql -> inserir no banco
         String sql = "INSERT INTO FILIAL  "
                 //Nomes dos campos no banco
@@ -27,6 +27,7 @@ public class FilialDAO {
         stmt.setString(7, filial.getCidade());
         stmt.setString(8, filial.getCnpj());
         stmt.execute();
+        stmt.close();
     }
 }
 
