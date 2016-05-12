@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Document   : menu
+    Created on : 11/05/2016, 20:46:18
+    Author     : arthur.lrsouza1
+-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+
+    <jsp:directive.page contentType="text/html" pageEncoding="UTF-8"/>
+
+    <!-- any content can be specified here, e.g.: -->
+    <h1> Projeto Alan</h1>
+    <div>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/Alan">Alan</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/Alan">Home</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Cadastro
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="CadastroFilial">Filial</a></li>
+                            <li><a href="CadastroUsuario">Usuário</a></li>
+                            <li><a href="CadastroProduto">Produto</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Movimentação
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Entrada</a></li>
+                            <li><a href="#">Saída</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Busca
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Filial</a></li>
+                            <li><a href="#">Usuário</a></li>
+                            <li><a href="#">Produto</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Relatorios</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>        
+
+</jsp:root>

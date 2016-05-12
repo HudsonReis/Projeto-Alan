@@ -35,9 +35,9 @@ public class AutorizacaoFilter implements Filter {
         Usuario usuario = (Usuario) sessao.getAttribute("usuario");
 
         if (usuario == null) {
-          String contextPath = httpRequest.getContextPath();
-          httpResponse.sendRedirect(contextPath + "/Login");
-          return;
+            String contextPath = httpRequest.getContextPath();
+            httpResponse.sendRedirect(contextPath + "/Login");
+            return;
         }
 
         try {

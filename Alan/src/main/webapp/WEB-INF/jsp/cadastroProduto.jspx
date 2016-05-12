@@ -19,6 +19,7 @@
             <link rel="stylesheet" href="resources/css/style.css"/>
         </head>
         <body>
+            <jsp:include page="menu.jspx"></jsp:include>
             <div class="container">
                 <h2> Cadastro de Produtos</h2>
                 <div class="box">
@@ -75,8 +76,8 @@
                 </div>
             </div>
 
-            <script type="text/javascript" src="resources/js/jquery-2.2.3.min.js"></script>
-            <script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
+            <script type="text/javascript" src="resources/js/jquery-2.2.3.min.js"><![CDATA[/*Teste*/]]></script>
+            <script type="text/javascript" src="resources/js/bootstrap.min.js"><![CDATA[/*Teste*/]]></script>
         </body>
     </html>
 

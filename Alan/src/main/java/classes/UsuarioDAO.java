@@ -43,7 +43,7 @@ public class UsuarioDAO {
         
         ResultSet result = stmt.executeQuery();
         
-        String strResult = result.toString();
+        result.next();
         
         int codUnitario = result.getInt("codigoUnitario");
         int codFilial = result.getInt("codigoFilial");
@@ -70,7 +70,7 @@ public class UsuarioDAO {
         stmt.setInt(1, codigoPerfil);
         
         List<Integer> retorno = new ArrayList<Integer>();
-        ResultSet result = stmt.executeQuery(sql);
+        ResultSet result = stmt.executeQuery();
         
         while(result.next()) {
             retorno.add(result.getInt("codigoFuncionalidade"));

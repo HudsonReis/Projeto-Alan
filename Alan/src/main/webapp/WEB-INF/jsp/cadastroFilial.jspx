@@ -11,12 +11,12 @@
     <html>
         <head>
             <title>Cadastro Filial</title>
-            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+          
             <link rel="stylesheet" href="resources/css/bootstrap.min.css"/>
             <link rel="stylesheet" href="resources/css/style.css"/>
         </head>
         <body>
-            <jsp:include page="../../index.html"></jsp:include>
+            <jsp:include page="menu.jspx"></jsp:include>
             <div class="container">
                 <h2>Cadastro de Filiais</h2>
                 <div class="box">
@@ -92,8 +92,8 @@
                     </form>
                 </div>
             </div>
-            <script type="text/javascript" src="resources/js/jquery-2.2.3.min.js"></script>
-            <script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
+            <script type="text/javascript" src="resources/js/jquery-2.2.3.min.js"><![CDATA[/*Teste*/]]></script>
+            <script type="text/javascript" src="resources/js/bootstrap.min.js"><![CDATA[/*Teste*/]]></script>
         </body>
     </html>
 
