@@ -70,7 +70,7 @@ public class LoginServlet extends BaseServlet {
         }
         sessao = request.getSession(true);
         sessao.setAttribute("usuario", usuario);
-        response.sendRedirect(request.getContextPath() + "/index.html");
+        response.sendRedirect(request.getContextPath() + "/CadastroUsuario");
         return;
       // FIM CASO SUCESSO
     }
