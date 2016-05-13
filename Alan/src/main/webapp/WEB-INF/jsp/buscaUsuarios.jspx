@@ -13,14 +13,17 @@
             <title>Consulta de Usuários</title>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
             <link rel="stylesheet" href="resources/css/bootstrap.min.css"/>
+            <link rel="stylesheet" hre="resources/css/jquery.dataTables.min.css"/>
+            <link rel="stylesheet" href="resources/css/dataTables.bootstrap.min.css"/>
             <link rel="stylesheet" href="resources/css/style.css"/>
         </head>       
         <body>            
             <jsp:include page="menu.jspx"></jsp:include>
             <div class="container">
                 <h2>Consulta de Usuários </h2>
-                <div class="box">
-<!--                    <form>
+                <table id="usuarios" class="table table-striped table-bordered table-hover"></table>
+<!--                <div class="box">
+                    <form>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -78,11 +81,22 @@
                             <button type="button" class="btn btn-danger">Descartar</button>
                             <button type="button" class="btn btn-default">Cancelar</button>
                         </div>
-                    </form>  -->
-                </div>
+                    </form>  
+                </div>-->
             </div>
             <script type="text/javascript" src="resources/js/jquery-2.2.3.min.js"><![CDATA[/*Teste*/]]></script>
             <script type="text/javascript" src="resources/js/bootstrap.min.js"><![CDATA[/*Teste*/]]></script>
+            <script type="text/javascript" src="resources/js/jquery.dataTables.min.js"><![CDATA[/*Teste*/]]></script>
+            <script type="text/javascript">
+                $(document).ready(function(){
+                   $("#usuarios").dataTable({
+                       "ajax":{
+                           "url": window.location.href + "/getUsuarios",
+                           "type": "POST"
+                       }
+                   }); 
+                });
+            </script>
         </body>
     </html>
 

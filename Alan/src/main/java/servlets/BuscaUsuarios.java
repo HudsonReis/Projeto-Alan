@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "BuscaUsuarios", urlPatterns = {"/BuscaUsuarios"})
 public class BuscaUsuarios extends BaseServlet {
 
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -32,7 +33,7 @@ public class BuscaUsuarios extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response, "");
+        processRequest(request, response, "/WEB-INF/jsp/buscaUsuarios.jspx");
     }
 
     /**
@@ -46,7 +47,7 @@ public class BuscaUsuarios extends BaseServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response, "");
+        processRequest(request, response, "/WEB-INF/jsp/buscaUsuarios.jspx");
     }
 
     /**
