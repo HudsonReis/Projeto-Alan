@@ -6,7 +6,7 @@
 package servlets;
 
 import classes.Usuario;
-import classes.UsuarioDAO;
+import DAO.UsuarioDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;

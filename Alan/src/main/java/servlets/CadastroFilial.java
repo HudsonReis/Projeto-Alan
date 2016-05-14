@@ -6,7 +6,7 @@
 package servlets;
 
 import classes.Filial;
-import classes.FilialDAO;
+import DAO.FilialDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;

@@ -5,13 +5,15 @@
  */
 package servlets;
 
+import classes.Usuario;
+import DAO.UsuarioDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
@@ -20,6 +22,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "BuscaUsuarios", urlPatterns = {"/BuscaUsuarios"})
 public class BuscaUsuarios extends BaseServlet {
 
+    public void getUsuarios()  {
+        
+    }
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -33,6 +38,17 @@ public class BuscaUsuarios extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        List<Usuario> lista = new ArrayList<Usuario>();
+        
+        try {
+            lista = UsuarioDAO.listar();
+        } catch(Exception ex) {
+            
+        }
+        
+        request.setAttribute("Usuarios", lista);
+        
         processRequest(request, response, "/WEB-INF/jsp/buscaUsuarios.jspx");
     }
 

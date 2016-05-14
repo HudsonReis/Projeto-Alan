@@ -24,6 +24,7 @@ import util.Criptografia;
 public class Usuario {
 
     private String nome;
+    private String perfil;
     private int codigoUnitario;
     private int codigoFilial;
     private int codigoPerfil;
@@ -39,7 +40,7 @@ public class Usuario {
 
     //Inicia o usuario com status ativo
     public Usuario(String nome, int codUnitario, int codFilial, int codPerfil, String login,
-            String senha, Boolean status, List<Integer> funcionalidades) {
+            String senha, Boolean status, List<Integer> funcionalidades, String perfil) {
         this.nome = nome;
         this.codigoUnitario = codUnitario;
         this.codigoFilial = codFilial;
@@ -47,6 +48,7 @@ public class Usuario {
         this.codigoPerfil = codPerfil;
         this.status = status;
         this.funcionalidades = funcionalidades;
+        this.perfil = perfil;
         
         try {
             this.hashSenha = Criptografia.gerarHashSenhaPBKDF2(senha);

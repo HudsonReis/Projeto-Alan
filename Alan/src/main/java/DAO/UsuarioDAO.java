@@ -34,8 +34,10 @@ public class UsuarioDAO {
     public static Usuario consultar(String login, String senha) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         
-        String sql = "SELECT codigoUnitario, codigoFilial, codigoPerfil, nome, login, senha, status"
-                + " FROM Usuario WHERE login = ? AND senha = ?";
+        String sql = "SELECT u.codigoUnitario, u.codigoFilial, u.codigoPerfil, u.nome, u.login, u.senha"
+                + ", u.status, p.nome as perfil"
+                + " FROM Usuario u INNER JOIN Perfil p ON u.codigoPerfil = p.codigoPerfil "
+                + "WHERE u.login = ? AND u.senha = ?";
         
         PreparedStatement stmt = conexao.prepareStatement(sql);
         
@@ -52,10 +54,11 @@ public class UsuarioDAO {
         String nome = result.getString("nome");
         String loginRes = result.getString("login");
         String senhaRes = result.getString("senha");
+        String perfil = result.getString("perfil");
         boolean status = result.getBoolean("status");
         List<Integer> funcionalidades = consultarFuncionalidadesDoPerfil(result.getInt("codigoPerfil"));
         
-        Usuario usuario = new Usuario(nome, codUnitario, codFilial, codPerfil, loginRes, senhaRes, status, funcionalidades);
+        Usuario usuario = new Usuario(nome, codUnitario, codFilial, codPerfil, loginRes, senhaRes, status, funcionalidades, perfil);
         
         stmt.close();
         
@@ -78,6 +81,37 @@ public class UsuarioDAO {
         }
         
         stmt.close();
+        
+        return retorno;
+    }
+    
+    public static List<Usuario> listar() throws SQLException, ClassNotFoundException {
+        Connection conexao = ConexaoBanco.obterConexao();
+        
+        String sql = "SELECT u.codigoUnitario, u.codigoFilial, u.codigoPerfil, u.nome, u.login, u.senha"
+                + ", u.status, p.nome as perfil"
+                + " FROM Usuario u INNER JOIN Perfil p ON u.codigoPerfil = p.codigoPerfil ";
+        
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        List<Usuario> retorno = new ArrayList<Usuario>();
+        ResultSet result = stmt.executeQuery();
+        
+        while(result.next()) {
+            
+            int codUnitario = result.getInt("codigoUnitario");
+            int codFilial = result.getInt("codigoFilial");
+            int codPerfil = result.getInt("codigoPerfil");
+            String nome = result.getString("nome");
+            String loginRes = result.getString("login");
+            String senhaRes = result.getString("senha");
+            String perfil = result.getString("perfil");
+            boolean status = result.getBoolean("status");
+            List<Integer> funcionalidades = consultarFuncionalidadesDoPerfil(result.getInt("codigoPerfil"));
+
+            Usuario usuario = new Usuario(nome, codUnitario, codFilial, codPerfil, loginRes, senhaRes, status, funcionalidades, perfil);
+        
+            retorno.add(usuario);
+        }
         
         return retorno;
     }
