@@ -61,7 +61,7 @@ public class CadastroFilial extends BaseServlet {
         String cidade = request.getParameter("Cidade");
         
         //Criando objeto da filial
-        Filial filial = new Filial(nome, nomeFantasia, cnpj, rua, num, bairro, estado, cidade);
+        Filial filial = new Filial(nome, nomeFantasia, rua, num, bairro, estado, cidade, cnpj);
         try {
             //tentando enviar filial para ser adicionadas
             FilialDAO.adicionar(filial);            

@@ -13,19 +13,20 @@ public class Produto {
 
     private String nome;
     private int codigoPeca;
+    private int codUsuario;
     private int qtdPeca;
     private double valor;
     private boolean status;
     private int codigoFilial;
 
-    public Produto(String nome, int codigoPeca, int qtdPeca, double valor,
-            boolean status, int codigoFilial) {
+    public Produto(String nome, double valor,
+            boolean status, int codigoFilial, int codUsuario) {
         this.nome = nome;
         this.codigoPeca = codigoPeca;
-        this.qtdPeca = qtdPeca;
         this.valor = valor;
         this.status = status;
         this.codigoFilial = codigoFilial;
+        this.codUsuario = codUsuario;
     }
 
     public String getNome() {

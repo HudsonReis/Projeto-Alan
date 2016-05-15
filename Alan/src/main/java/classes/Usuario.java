@@ -23,22 +23,24 @@ import util.Criptografia;
  */
 public class Usuario {
 
-    private String nome;
-    private String perfil;
     private int codigoUnitario;
     private int codigoFilial;
     private int codigoPerfil;
+    private String nome;
     private String login;
     private char[] hashSenha;
+    private String perfil;    
     private boolean status;
     private List<Integer> funcionalidades;
-    
-    public Usuario()
-    {
-        
+
+    public Usuario(String nome, int codigoFilial, int codigoPerfil, String login, String senha, boolean status) {
+        this.nome = nome;
+        this.codigoFilial = codigoFilial;
+        this.codigoPerfil = codigoPerfil;
+        this.login = login;
+        this.status = status;
     }
 
-    //Inicia o usuario com status ativo
     public Usuario(String nome, int codUnitario, int codFilial, int codPerfil, String login,
             String senha, Boolean status, List<Integer> funcionalidades, String perfil) {
         this.nome = nome;
@@ -49,10 +51,10 @@ public class Usuario {
         this.status = status;
         this.funcionalidades = funcionalidades;
         this.perfil = perfil;
-        
+
         try {
             this.hashSenha = Criptografia.gerarHashSenhaPBKDF2(senha);
-        } catch(NoSuchAlgorithmException | InvalidKeySpecException ex) {
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -108,19 +110,19 @@ public class Usuario {
     public void setStatus(boolean status) {
         this.status = status;
     }
-    
+
     public boolean autenticar(String login, String senha) {
         if (this.nome != null) {
-          try {
-            return this.login.equals(login) && Arrays.equals(this.hashSenha, Criptografia.gerarHashSenhaPBKDF2(senha));
-          } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
-            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
-          }
+            try {
+                return this.login.equals(login) && Arrays.equals(this.hashSenha, Criptografia.gerarHashSenhaPBKDF2(senha));
+            } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
+                Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return false;
     }
-    
-    public boolean autorizado(int perfilIdNecessario) {        
+
+    public boolean autorizado(int perfilIdNecessario) {
         return this.funcionalidades.contains(perfilIdNecessario);
     }
 }

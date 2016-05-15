@@ -11,18 +11,18 @@ package classes;
  */
 public class Filial {
 
+    private int codigoFilial;
     private String nome;
     private String nomeFantasia;
-    private String cnpj;
     private String rua;
     private int num;
     private String bairro;
     private String estado;
     private String cidade;
+    private String cnpj;
 
-    private int codigoFilial;
-
-    public Filial(String nome, String nomeFantasia, String cnpj, String rua, int num, String bairro, String estado, String cidade) {
+    public Filial(String nome, String nomeFantasia, String rua, int num, String bairro, String estado, String cidade, String cnpj
+    ) {
         this.nome = nome;
         this.nomeFantasia = nomeFantasia;
         this.cnpj = cnpj;

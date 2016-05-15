@@ -5,12 +5,12 @@ import classes.Filial;
 import conexao.ConexaoBanco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class FilialDAO {
 
-    
-    
     public static void adicionar(Filial filial) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         //linguagem sql -> inserir no banco
@@ -31,6 +31,38 @@ public class FilialDAO {
         stmt.execute();
         stmt.close();
     }
+
+    public static ArrayList<Filial> listar() throws SQLException, ClassNotFoundException {
+
+        Connection conexao = ConexaoBanco.obterConexao();
+
+        String sql = "SELECT * FROM FILIAL";
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+
+        ResultSet result = stmt.executeQuery();
+        ArrayList<Filial> retorno = new ArrayList<>();
+
+        while (result.next()) {
+            //pego o retorno do banco e atribuo à variaveis
+            int codigoFilial = result.getInt("codigofilial");
+            String nome = result.getString("nome");
+            String nomeFantasia = result.getString("fantasia");
+            String rua = result.getString("rua");
+            int num = result.getInt("numero");
+            String bairro = result.getString("bairro");
+            String estado = result.getString("estado");
+            String cidade = result.getString("cidade");
+            String cnpj = result.getString("cnpj");
+            
+            //crio um objeto filial
+            Filial f = new Filial(nome, nomeFantasia, rua, num, bairro, estado, cidade, cnpj);
+            
+            //e adiciono no arraylist para retorno
+            retorno.add(f);
+            
+        }
+
+        return retorno;
+    }
+
 }
-
-

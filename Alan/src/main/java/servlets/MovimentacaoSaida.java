@@ -5,17 +5,12 @@
  */
 package servlets;
 
-import DAO.FilialDAO;
-import DAO.PerfilDAO;
-import classes.Filial;
-import classes.Perfil;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,8 +18,30 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Nicolas
  */
-@WebServlet(name = "CadastroUsuario", urlPatterns = {"/CadastroUsuario"})
-public class CadastroUsuario extends BaseServlet {
+@WebServlet(name = "MovimentacaoSaida", urlPatterns = {"/MovimentacaoSaida"})
+public class MovimentacaoSaida extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            RequestDispatcher rd = 
+                    request.getRequestDispatcher("/WEB-INF/jsp/movimentacaoSaida.jspx");
+            rd.forward(request, response);
+            
+        }
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -37,30 +54,7 @@ public class CadastroUsuario extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        //pego os perfis de usuario do banco de dados para preenchimento de campos no html
-        ArrayList<Perfil> perfis = new ArrayList<>();
-        try {
-            perfis  = PerfilDAO.consultar();
-        } catch (SQLException ex) {
-            Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        request.setAttribute("perfis", perfis);
-        
-        //pego as filiais de usuario do banco de dados para preenchimento de campos no html
-        ArrayList<Filial> filiais = new ArrayList<Filial>();
-        try {
-            filiais = FilialDAO.listar();
-        } catch (SQLException ex) {
-            Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        request.setAttribute("filiais", filiais);
-        
-        processRequest(request, response, "/WEB-INF/jsp/cadastroUsuario.jspx");
+        processRequest(request, response);
     }
 
     /**
@@ -74,9 +68,7 @@ public class CadastroUsuario extends BaseServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String nome = request.getParameter("Nome");
-        
+        processRequest(request, response);
     }
 
     /**
