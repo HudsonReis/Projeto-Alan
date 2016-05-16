@@ -15,7 +15,7 @@
             <title>Consulta de Usuários</title>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
             <link rel="stylesheet" href="resources/css/bootstrap.min.css"/>
-            <link rel="stylesheet" hre="resources/css/jquery.dataTables.min.css"/>
+            <link rel="stylesheet" href="resources/css/jquery.dataTables.min.css"/>
             <link rel="stylesheet" href="resources/css/dataTables.bootstrap.min.css"/>
             <link rel="stylesheet" href="resources/css/style.css"/>
         </head>       
@@ -127,7 +127,11 @@
 //                           { "data": "status" }
 //                       ]
 //                   }); 
-                    $("#usuarios").DataTable();
+                    $("#usuarios").DataTable({
+                        "language":{
+                            "url": "//cdn.datatables.net/plug-ins/1.10.11/i18n/Portuguese-Brasil.json"
+                        }
+                    });
                 });
             </script>
         </body>

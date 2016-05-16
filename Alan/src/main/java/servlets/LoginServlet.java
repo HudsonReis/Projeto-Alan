@@ -43,7 +43,7 @@ public class LoginServlet extends BaseServlet {
       return;
     }
     // Usar o request.getContextPath() para corrigir o caminho da URL.
-    response.sendRedirect(request.getContextPath() + "/CadastroUsuario");
+    response.sendRedirect(request.getContextPath() + "/Home");
   }
 
   /**
