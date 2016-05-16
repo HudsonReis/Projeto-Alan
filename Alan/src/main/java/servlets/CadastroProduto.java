@@ -6,7 +6,10 @@
 package servlets;
 
 import DAO.FilialDAO;
+import DAO.PerfilDAO;
+import DAO.ProdutoDAO;
 import classes.Filial;
+import classes.Perfil;
 import classes.Produto;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -49,9 +52,22 @@ public class CadastroProduto extends BaseServlet {
             Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
         request.setAttribute("filiais", filiais);
+        
+        int id=0;
+        try {
+            id  = ProdutoDAO.maxId();
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.setAttribute("id", id);
+        
         RequestDispatcher rd
             = request.getRequestDispatcher("/WEB-INF/jsp/cadastroProduto.jspx");
-
+        
+        
+        
         rd.forward(request, response);
 
     }

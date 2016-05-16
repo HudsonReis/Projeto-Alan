@@ -28,7 +28,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="prodId">ID</label>
-                                    <input type="text" class="form-control" id="prodId" name="prodId" disabled=""/>
+                                    <input type="text" class="form-control" id="prodId" name="prodId" disabled="" value="${id}"/>
                                 </div>
                             </div>
                         </div>

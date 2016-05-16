@@ -1,4 +1,3 @@
-
 package DAO;
 
 import conexao.ConexaoBanco;
@@ -14,8 +13,8 @@ import javax.swing.JOptionPane;
  * @author caiqu
  */
 public class ProdutoDAO {
-   
-        public static void adicionar(Produto produto) throws SQLException, ClassNotFoundException {
+
+    public static void adicionar(Produto produto) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         //linguagem sql -> inserir no banco
         String sql = "INSERT INTO MOVIMENTACAOENTRADA  "
@@ -34,7 +33,8 @@ public class ProdutoDAO {
         stmt.execute();
         stmt.close();
     }
-        public static int maxId() throws SQLException, ClassNotFoundException {
+
+    public static int maxId() throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         //linguagem sql -> inserir no banco
         String sql = "SELECT MAX(CODPECA)FROM PRODUTO";
@@ -53,6 +53,6 @@ public class ProdutoDAO {
         } finally {
             stmt.close();
         }
-        return prox;
+        return 1;
     }
 }
