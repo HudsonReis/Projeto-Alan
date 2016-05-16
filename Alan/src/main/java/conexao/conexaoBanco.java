@@ -13,7 +13,7 @@ import java.sql.SQLException;
  *
  * @author Nicolas
  */
-public class conexaoBanco {
+public class ConexaoBanco {
 
     public static Connection obterConexao() throws SQLException, ClassNotFoundException {
         Connection conn = null;
