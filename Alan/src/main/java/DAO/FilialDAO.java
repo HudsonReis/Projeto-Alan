@@ -1,7 +1,6 @@
 package DAO;
 
 import classes.Filial;
-import classes.Filial;
 import conexao.ConexaoBanco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
