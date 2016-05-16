@@ -11,21 +11,36 @@ package classes;
  */
 public class Produto {
 
-    private String nome;
     private int codigoPeca;
+    private int codigoFilial;
     private int codUsuario;
+    private String nome;
     private int qtdPeca;
     private double valor;
     private boolean status;
-    private int codigoFilial;
 
-    public Produto(String nome, double valor,
-            boolean status, int codigoFilial, int codUsuario) {
-        this.nome = nome;
+    
+    public int getCodigoPeca() {
+        return codigoPeca;
+    }
+
+    public void setCodigoPeca(int codigoPeca) {
         this.codigoPeca = codigoPeca;
-        this.valor = valor;
-        this.status = status;
+    }
+
+    public int getCodigoFilial() {
+        return codigoFilial;
+    }
+
+    public void setCodigoFilial(int codigoFilial) {
         this.codigoFilial = codigoFilial;
+    }
+
+    public int getCodUsuario() {
+        return codUsuario;
+    }
+
+    public void setCodUsuario(int codUsuario) {
         this.codUsuario = codUsuario;
     }
 
@@ -35,14 +50,6 @@ public class Produto {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public int getCodigoPeca() {
-        return codigoPeca;
-    }
-
-    public void setCodigoPeca(int codigoPeca) {
-        this.codigoPeca = codigoPeca;
     }
 
     public int getQtdPeca() {
@@ -69,12 +76,15 @@ public class Produto {
         this.status = status;
     }
 
-    public int getCodigoFilial() {
-        return codigoFilial;
-    }
-
-    public void setCodigoFilial(int codigoFilial) {
+    public Produto(int codigoPeca, int codigoFilial, int codUsuario, String nome, int qtdPeca, double valor, boolean status) {
+        this.codigoPeca = codigoPeca;
         this.codigoFilial = codigoFilial;
+        this.codUsuario = codUsuario;
+        this.nome = nome;
+        this.qtdPeca = qtdPeca;
+        this.valor = valor;
+        this.status = status;
     }
 
+        
 }
