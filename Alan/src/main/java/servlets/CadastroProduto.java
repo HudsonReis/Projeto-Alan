@@ -57,10 +57,11 @@ public class CadastroProduto extends BaseServlet {
         try {
             id  = ProdutoDAO.maxId();
         } catch (SQLException ex) {
-            Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CadastroProduto.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CadastroProduto.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         request.setAttribute("id", id);
         
         RequestDispatcher rd

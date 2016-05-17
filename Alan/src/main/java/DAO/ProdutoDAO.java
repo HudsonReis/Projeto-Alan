@@ -6,7 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -36,23 +37,16 @@ public class ProdutoDAO {
 
     public static int maxId() throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
-        //linguagem sql -> inserir no banco
         String sql = "SELECT MAX(CODPECA)FROM PRODUTO";
         PreparedStatement stmt = conexao.prepareStatement(sql);
-        int prox = 0;
-        try {
-            ResultSet rs = stmt.executeQuery();
-            int max = rs.getInt(1);
-            if (max <= 0) {
+        int prox=0;
+        ResultSet rs = stmt.executeQuery();
+        if(rs.next()==false) {
                 prox = 1;
             } else {
-                prox = max + 1;
+                prox = rs.getInt(1) + 1;
             }
-        } catch (SQLException sqlE) {
-            JOptionPane.showMessageDialog(null, " [Erro ao processar SELECT MAX " + sqlE.getMessage() + "]");
-        } finally {
-            stmt.close();
-        }
-        return 1;
+        return prox;
     }
+
 }
