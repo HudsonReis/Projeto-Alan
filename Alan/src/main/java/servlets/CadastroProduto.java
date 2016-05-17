@@ -86,7 +86,7 @@ public class CadastroProduto extends BaseServlet {
             throws ServletException, IOException {
         
         
-        
+        int codPeca = Integer.parseInt(request.getParameter("prodId"));        
         String nome = request.getParameter("nomeProd");
         double valor = Double.parseDouble(request.getParameter("valorProd"));
         ArrayList lista = (ArrayList) request.getAttribute("lista");
@@ -94,7 +94,7 @@ public class CadastroProduto extends BaseServlet {
         System.out.println(valor);
         
         
-        //Produto p = new Produto();
+        Produto p = new Produto(codPeca, 0, 0, nome, 0, valor, true);
         
         processRequest(request, response, "/WEB-INF/jsp/cadastroProduto.jspx");
     }

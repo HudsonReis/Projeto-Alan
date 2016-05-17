@@ -20,17 +20,16 @@ public class ProdutoDAO {
         //linguagem sql -> inserir no banco
         String sql = "INSERT INTO MOVIMENTACAOENTRADA  "
                 //Nomes dos campos no banco
-                + "(nome, codPeca, qtdPeca, valor, status, codigoFilial)"
-                + "VALUES(?,?,?,?)";
+                + "(CODIGOFILIAL, IDUSUARIO, NOME, QUANTIDADEPECA, VALOR, STATUS)"
+                + "VALUES(?,?,?,?,?,?)";
 
         PreparedStatement stmt = conexao.prepareStatement(sql);
-        stmt.setString(1, produto.getNome());
-        stmt.setInt(2, produto.getCodigoPeca());
-        stmt.setInt(3, produto.getQtdPeca());
-        stmt.setDouble(4, produto.getValor());
-        stmt.setBoolean(5, produto.isStatus());
-        stmt.setInt(6, produto.getCodigoFilial());
-
+        stmt.setInt(1, produto.getCodigoFilial());
+        stmt.setInt(2, produto.getCodUsuario());
+        stmt.setString(3, produto.getNome());
+        stmt.setInt(4, produto.getQtdPeca());
+        stmt.setDouble(5, produto.getValor());
+        stmt.setBoolean(6, true);
         stmt.execute();
         stmt.close();
     }
