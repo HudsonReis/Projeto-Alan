@@ -47,7 +47,7 @@
                         </ul>
                     </li>
                     <li><a href="#">Relatorios</a></li>
-                    <li><a href="Logout"></a></li>
+                    <li><a href="Logout">Logout</a></li>
                 </ul>
             </div>
         </nav>
