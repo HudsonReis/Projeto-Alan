@@ -7,6 +7,7 @@ package servlets;
 
 import DAO.FilialDAO;
 import DAO.PerfilDAO;
+import DAO.ProdutoDAO;
 import classes.Filial;
 import classes.Perfil;
 import java.io.IOException;
@@ -41,9 +42,11 @@ public class CadastroUsuario extends BaseServlet {
         //pego os perfis de usuario do banco de dados para preenchimento de campos no html
         ArrayList<Perfil> perfis = new ArrayList<>();
         ArrayList<Filial> filiais = new ArrayList<Filial>();
+        int id=0;
         try {
             perfis  = PerfilDAO.consultar();
             filiais = FilialDAO.listar();
+            id  = ProdutoDAO.maxId();
         } catch (SQLException ex) {
             Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -51,6 +54,7 @@ public class CadastroUsuario extends BaseServlet {
         }
         request.setAttribute("perfis", perfis);
         request.setAttribute("filiais", filiais);
+        request.setAttribute("id", id);
         
         processRequest(request, response, "/WEB-INF/jsp/cadastroUsuario.jspx");
     }

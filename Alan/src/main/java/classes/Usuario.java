@@ -103,7 +103,7 @@ public class Usuario {
         this.codigoPerfil = tipo;
     }
 
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 
