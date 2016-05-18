@@ -78,7 +78,7 @@ public class AutorizacaoFilter implements Filter {
             return true;
         } else if (pagina.endsWith("Home")) {
             return true;
-        }
+        } 
         
         return false;
     }

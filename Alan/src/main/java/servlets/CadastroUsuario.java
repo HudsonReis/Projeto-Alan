@@ -40,24 +40,16 @@ public class CadastroUsuario extends BaseServlet {
         
         //pego os perfis de usuario do banco de dados para preenchimento de campos no html
         ArrayList<Perfil> perfis = new ArrayList<>();
-        try {
-            perfis  = PerfilDAO.consultar();
-        } catch (SQLException ex) {
-            Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        request.setAttribute("perfis", perfis);
-        
-        //pego as filiais de usuario do banco de dados para preenchimento de campos no html
         ArrayList<Filial> filiais = new ArrayList<Filial>();
         try {
+            perfis  = PerfilDAO.consultar();
             filiais = FilialDAO.listar();
         } catch (SQLException ex) {
             Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
+        request.setAttribute("perfis", perfis);
         request.setAttribute("filiais", filiais);
         
         processRequest(request, response, "/WEB-INF/jsp/cadastroUsuario.jspx");

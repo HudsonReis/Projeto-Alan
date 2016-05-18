@@ -16,7 +16,6 @@ public class Produto {
     private int codUsuario;
     private String nome;
     private int qtdPeca;
-    private double valor;
     private boolean status;
 
     
@@ -60,15 +59,8 @@ public class Produto {
         this.qtdPeca = qtdPeca;
     }
 
-    public double getValor() {
-        return valor;
-    }
 
-    public void setValor(double valor) {
-        this.valor = valor;
-    }
-
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 
@@ -76,14 +68,13 @@ public class Produto {
         this.status = status;
     }
 
-    public Produto(int codigoPeca, int codigoFilial, int codUsuario, String nome, int qtdPeca, double valor, boolean status) {
+    public Produto(int codigoPeca, int codigoFilial, int codUsuario, String nome) {
         this.codigoPeca = codigoPeca;
         this.codigoFilial = codigoFilial;
         this.codUsuario = codUsuario;
         this.nome = nome;
-        this.qtdPeca = qtdPeca;
-        this.valor = valor;
-        this.status = status;
+        this.qtdPeca = 0;
+        this.status = true;
     }
 
         

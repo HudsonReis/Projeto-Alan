@@ -11,6 +11,7 @@ import DAO.ProdutoDAO;
 import classes.Filial;
 import classes.Perfil;
 import classes.Produto;
+import classes.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -44,32 +46,21 @@ public class CadastroProduto extends BaseServlet {
 
         //pego as filiais de usuario do banco de dados para preenchimento de campos no html
         ArrayList<Filial> filiais = new ArrayList<Filial>();
+        int id=0;
         try {
             filiais = FilialDAO.listar();
+            id  = ProdutoDAO.maxId();
         } catch (SQLException ex) {
             Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
         request.setAttribute("filiais", filiais);
-        
-        int id=0;
-        try {
-            id  = ProdutoDAO.maxId();
-        } catch (SQLException ex) {
-            Logger.getLogger(CadastroProduto.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CadastroProduto.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
         request.setAttribute("id", id);
-        
-        RequestDispatcher rd
-            = request.getRequestDispatcher("/WEB-INF/jsp/cadastroProduto.jspx");
+                
         
         
-        
-        rd.forward(request, response);
+        processRequest(request, response, "/WEB-INF/jsp/cadastroProduto.jspx");
 
     }
 
@@ -86,15 +77,24 @@ public class CadastroProduto extends BaseServlet {
             throws ServletException, IOException {
         
         
-        int codPeca = Integer.parseInt(request.getParameter("prodId"));        
-        String nome = request.getParameter("nomeProd");
-        double valor = Double.parseDouble(request.getParameter("valorProd"));
-        ArrayList lista = (ArrayList) request.getAttribute("lista");
-        System.out.println(lista.get(0));
-        System.out.println(valor);
         
         
-        Produto p = new Produto(codPeca, 0, 0, nome, 0, valor, true);
+        int codPeca = Integer.parseInt(request.getParameter("prodId"));
+        int codFilial = Integer.parseInt(request.getParameter("filialId"));
+        HttpSession sessao = request.getSession(false);
+        Usuario usuario = (Usuario) sessao.getAttribute("usuario");
+        int codUsuario = usuario.getCodigoUnitario();
+        String nome = request.getParameter("nomeProd");        
+        
+        Produto produto = new Produto(codPeca, codFilial, codUsuario, nome);
+        
+        try {
+            ProdutoDAO.adicionar(produto);
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroProduto.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CadastroProduto.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         processRequest(request, response, "/WEB-INF/jsp/cadastroProduto.jspx");
     }
