@@ -112,6 +112,33 @@ public class UsuarioDAO {
         
         return retorno;
     }
+    
+    public static Usuario consultarPorId(int id) throws SQLException, ClassNotFoundException {
+        Connection conexao = ConexaoBanco.obterConexao();
+        
+        String sql = "SELECT codigoUnitario, codigoFilial, codigoPerfil, nome, login, senha, status FROM Usuario" +
+                "WHERE codigoUnitario = ?";
+        
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        
+        stmt.setInt(1, id);
+        ResultSet result = stmt.executeQuery();
+        result.next();
+        
+        int codUnitario = result.getInt("codigoUnitario");
+        int codFilial = result.getInt("codigoFilial");
+        int codPerfil = result.getInt("codigoPerfil");
+        String nome = result.getString("nome");
+        String loginRes = result.getString("login");
+        String senhaRes = result.getString("senha");
+        boolean status = result.getBoolean("status");
+        
+        Usuario usuario = new Usuario(nome, codUnitario, codFilial, codPerfil, loginRes, senhaRes, status, null, "");
+        
+        stmt.close();
+        
+        return usuario;
+    }
 
     public static int maxId() throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();

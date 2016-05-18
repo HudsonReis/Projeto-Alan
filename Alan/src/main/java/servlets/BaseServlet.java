@@ -7,6 +7,8 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -31,6 +33,28 @@ public class BaseServlet extends HttpServlet {
             RequestDispatcher rd
                     = request.getRequestDispatcher(pagina);
             rd.forward(request, response);
+        }
+    }
+    
+    
+    protected Integer identificarEdicao(HttpServletRequest request) {
+        Dictionary<String, String> dic = new Hashtable<String, String>();
+        
+        if(request.getQueryString() != null) {
+            String[] qs = request.getQueryString().split("&");
+            
+            for(String keyPair: qs) {
+                String[] item = keyPair.split("=");
+                dic.put(item[0], item[1]);
+            }
+        }
+        
+        if(dic != null && dic.get("id") != null) {
+            request.setAttribute("edicao", true);
+            return Integer.parseInt(dic.get("id"));
+        } else {
+            request.setAttribute("edicao", false);
+            return null;
         }
     }
 
