@@ -29,7 +29,7 @@
                                 <div class="form-group">
                                     <label for="prodId">ID</label>
                                     <input type="text" class="form-control" disabled="" value="${id}"/>
-                                    <input type="hidden" id="prodId" name="prodId"/>
+                                    <input type="hidden" id="prodId" name="prodId" value="${id}"/>
                                 </div>
                             </div>
                         </div>
