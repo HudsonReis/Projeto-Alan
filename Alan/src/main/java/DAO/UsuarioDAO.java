@@ -115,6 +115,20 @@ public class UsuarioDAO {
         
         return retorno;
     }
+
+    public static int maxId() throws SQLException, ClassNotFoundException {
+        Connection conexao = ConexaoBanco.obterConexao();
+        String sql = "SELECT MAX(CODIGOUNITARIO)FROM USUARIO";
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        int prox = 0;
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next() == false) {
+            prox = 1;
+        } else {
+            prox = rs.getInt(1) + 1;
+        }
+        return prox;
+    }
 }
 
 

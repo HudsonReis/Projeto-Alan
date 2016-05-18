@@ -21,16 +21,20 @@ public class Filial {
     private String cidade;
     private String cnpj;
 
-    public Filial(String nome, String nomeFantasia, String rua, int num, String bairro, String estado, String cidade, String cnpj
-    ) {
+    public Filial() {
+
+    }
+
+    public Filial(int codigoFilial, String nome, String nomeFantasia, String rua, int num, String bairro, String estado, String cidade, String cnpj) {
+        this.codigoFilial = codigoFilial;
         this.nome = nome;
         this.nomeFantasia = nomeFantasia;
-        this.cnpj = cnpj;
         this.rua = rua;
         this.num = num;
         this.bairro = bairro;
         this.estado = estado;
         this.cidade = cidade;
+        this.cnpj = cnpj;
     }
 
     public String getNome() {

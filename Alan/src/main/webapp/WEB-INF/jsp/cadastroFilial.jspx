@@ -25,7 +25,8 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="FilialId">ID</label>
-                                    <input type="text" class="form-control" id="filialId" name="FilialId" disabled="true"/>
+                                    <input type="text" class="form-control" disabled="true" value="${id}"/>
+                                    <input type="hidden" id="filialId" name="filialId"/>
                                 </div>
                             </div>
                         </div>

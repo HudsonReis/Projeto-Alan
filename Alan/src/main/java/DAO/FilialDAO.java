@@ -54,7 +54,7 @@ public class FilialDAO {
             String cnpj = result.getString("cnpj");
             
             //crio um objeto filial
-            Filial f = new Filial(nome, nomeFantasia, rua, num, bairro, estado, cidade, cnpj);
+            Filial f = new Filial(codigoFilial,nome, nomeFantasia, rua, num, bairro, estado, cidade, cnpj);
             
             //e adiciono no arraylist para retorno
             retorno.add(f);
@@ -62,6 +62,20 @@ public class FilialDAO {
         }
 
         return retorno;
+    }
+    
+    public static int maxId() throws SQLException, ClassNotFoundException {
+        Connection conexao = ConexaoBanco.obterConexao();
+        String sql = "SELECT MAX(CODIGOFILIAL)FROM FILIAL";
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        int prox = 0;
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next() == false) {
+            prox = 1;
+        } else {
+            prox = rs.getInt(1) + 1;
+        }
+        return prox;
     }
 
 }

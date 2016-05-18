@@ -78,11 +78,11 @@ public class CadastroProduto extends BaseServlet {
         
         
         
-        
-        int codPeca = Integer.parseInt(request.getParameter("prodId"));
-        int codFilial = Integer.parseInt(request.getParameter("filialId"));
         HttpSession sessao = request.getSession(false);
         Usuario usuario = (Usuario) sessao.getAttribute("usuario");
+        
+        int codPeca = Integer.parseInt(request.getParameter("prodId"));
+        int codFilial = Integer.parseInt(request.getParameter("filialId"));        
         int codUsuario = usuario.getCodigoUnitario();
         String nome = request.getParameter("nomeProd");        
         

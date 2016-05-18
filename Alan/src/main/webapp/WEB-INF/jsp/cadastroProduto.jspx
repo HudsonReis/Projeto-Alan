@@ -28,7 +28,8 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="prodId">ID</label>
-                                    <input type="text" class="form-control" id="prodId" name="prodId" disabled="" value="${id}"/>
+                                    <input type="text" class="form-control" disabled="" value="${id}"/>
+                                    <input type="hidden" id="prodId" name="prodId"/>
                                 </div>
                             </div>
                         </div>
@@ -43,7 +44,7 @@
                                 <div class="form-group">
                                     <label for="filialId">Filial</label>
                                     <select class="form-control" id="filialId" name="filialId">
-                                        <option valuue="0">Selecione...</option>
+                                        <option value="0">Selecione...</option>
                                         <c:forEach items="${filiais}" var="filial">
                                         <option value="${filial.codigoFilial}">${filial.nomeFantasia}</option>
                                     </c:forEach>
