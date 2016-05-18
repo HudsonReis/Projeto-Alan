@@ -35,6 +35,16 @@ public class CadastroFilial extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        int id = 0;
+        try {
+            id = FilialDAO.maxId();
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroFilial.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CadastroFilial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.setAttribute("id", id);
         processRequest(request, response, "/WEB-INF/jsp/cadastroFilial.jspx");
 
     }
@@ -51,6 +61,7 @@ public class CadastroFilial extends BaseServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        int id = Integer.parseInt(request.getParameter("filialId")) ;
         String nome = request.getParameter("NomeFilial");
         String nomeFantasia = request.getParameter("NomeFantasia");
         String cnpj = request.getParameter("cnpj");
@@ -61,7 +72,7 @@ public class CadastroFilial extends BaseServlet {
         String cidade = request.getParameter("Cidade");
         
         //Criando objeto da filial
-        Filial filial = new Filial(nome, nomeFantasia, rua, num, bairro, estado, cidade, cnpj);
+        Filial filial = new Filial(id, nome, nomeFantasia, rua, num, bairro, estado, cidade, cnpj);
         try {
             //tentando enviar filial para ser adicionadas
             FilialDAO.adicionar(filial);            

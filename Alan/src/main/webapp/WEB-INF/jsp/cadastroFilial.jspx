@@ -26,7 +26,7 @@
                                 <div class="form-group">
                                     <label for="FilialId">ID</label>
                                     <input type="text" class="form-control" disabled="true" value="${id}"/>
-                                    <input type="hidden" id="filialId" name="filialId"/>
+                                    <input type="hidden" id="filialId" name="filialId" value="${id}"/>
                                 </div>
                             </div>
                         </div>
