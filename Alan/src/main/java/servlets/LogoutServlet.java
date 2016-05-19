@@ -34,8 +34,8 @@ public class LogoutServlet extends BaseServlet {
         
         HttpSession session = request.getSession();
         session.invalidate();
-         
-        processRequest(request, response, "/WEB-INF/jsp/login.jspx");
+        
+        response.sendRedirect(request.getContextPath() + "/Login");
     }
 
     /**
