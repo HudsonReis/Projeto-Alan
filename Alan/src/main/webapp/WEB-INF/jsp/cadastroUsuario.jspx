@@ -32,7 +32,8 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="UsuarioId">ID</label>
-                                    <input type="text" class="form-control" id="usuarioId" name="UsuarioId" disabled=""/>
+                                    <input type="text" class="form-control" disabled="" value="${id}"/>
+                                    <input type="hidden" id="prodId" name="UsuarioId" value="${id}"/>
                                 </div> 
                             </div>
                         </div>
