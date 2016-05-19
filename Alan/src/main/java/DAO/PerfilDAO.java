@@ -30,7 +30,7 @@ public class PerfilDAO {
         ArrayList <Perfil> retorno = new ArrayList<Perfil>();
         
         while(result.next()){
-            int codigoPerfil = result.getInt("codigoperfil");
+            int codigoPerfil = result.getInt("codigoPerfil");
             String nome = result.getString("nome");
             Perfil p = new Perfil(codigoPerfil, nome);
             retorno.add(p);

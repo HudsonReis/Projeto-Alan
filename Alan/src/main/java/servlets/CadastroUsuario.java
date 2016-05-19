@@ -8,8 +8,10 @@ package servlets;
 import DAO.FilialDAO;
 import DAO.PerfilDAO;
 import DAO.ProdutoDAO;
+import DAO.UsuarioDAO;
 import classes.Filial;
 import classes.Perfil;
+import classes.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import util.Criptografia;
 
 /**
  *
@@ -72,6 +75,20 @@ public class CadastroUsuario extends BaseServlet {
             throws ServletException, IOException {
         
         String nome = request.getParameter("Nome");
+        int codFilial = Integer.parseInt(request.getParameter("filialId"));        
+        int codPerfil = Integer.parseInt(request.getParameter("perfilId"));        
+        String login = request.getParameter("Login");
+        String senha = request.getParameter("Senha");
+        
+        Usuario usuario = new Usuario(nome, codFilial, codPerfil, login, senha, true);
+        
+        try {
+            UsuarioDAO.adicionar(usuario);
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
 

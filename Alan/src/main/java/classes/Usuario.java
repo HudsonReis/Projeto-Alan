@@ -39,6 +39,12 @@ public class Usuario {
         this.codigoPerfil = codigoPerfil;
         this.login = login;
         this.status = status;
+        
+        try {
+            this.hashSenha = Criptografia.gerarHashSenhaPBKDF2(senha);
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
+            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public Usuario(String nome, int codUnitario, int codFilial, int codPerfil, String login,

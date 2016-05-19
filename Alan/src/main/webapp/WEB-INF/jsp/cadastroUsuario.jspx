@@ -47,10 +47,10 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="PerfilId">Perfil</label>
-                                    <select class="form-control" name="PerfilId">
+                                    <select class="form-control" name="perfilId" id="perfilId">
                                         <option value="0">Selecione...</option>
                                     <c:forEach items="${perfis}" var="perfil">
-                                        <option value="${peril.codigoPefil}">${perfil.nome}</option>
+                                        <option value="${perfil.codigoPerfil}">${perfil.nome}</option>
                                     </c:forEach>
                                     </select>
                                 </div>
@@ -58,7 +58,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="filialId">Filial</label>
-                                    <select class="form-control" id="filialId" name="FilialId">
+                                    <select class="form-control" id="filialId" name="filialId">
                                         <option value="0">Selecione...</option>
                                     <c:forEach items="${filiais}" var="filial">
                                         <option value="${filial.codigoFilial}">${filial.nomeFantasia}</option>
