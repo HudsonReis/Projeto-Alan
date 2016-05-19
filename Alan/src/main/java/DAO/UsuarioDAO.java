@@ -116,8 +116,8 @@ public class UsuarioDAO {
     public static Usuario consultarPorId(int id) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         
-        String sql = "SELECT codigoUnitario, codigoFilial, codigoPerfil, nome, login, senha, status FROM Usuario" +
-                "WHERE codigoUnitario = ?";
+        String sql = "SELECT codigoUnitario, codigoFilial, codigoPerfil, nome, login, senha, status "
+                + "FROM Usuario WHERE codigoUnitario = ?";
         
         PreparedStatement stmt = conexao.prepareStatement(sql);
         

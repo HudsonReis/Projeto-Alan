@@ -32,8 +32,8 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="UsuarioId">ID</label>
-                                    <input type="text" class="form-control" disabled="" value="${id}"/>
-                                    <input type="hidden" id="prodId" name="UsuarioId" value="${id}"/>
+                                    <input type="text" class="form-control" disabled="" value="${usuario.codigoUnitario}"/>
+                                    <input type="hidden" id="prodId" name="UsuarioId" value="${usuario.codigoUnitario}"/>
                                 </div> 
                             </div>
                         </div>
@@ -41,7 +41,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="nome">Nome</label>
-                                    <input type="text" class="form-control" id="nome" name="Nome" placeholder="Nome"/>
+                                    <input type="text" class="form-control" id="nome" name="Nome" placeholder="Nome" value="${usuario.nome}"/>
                                 </div>                        
                             </div>
                             <div class="col-md-4">
@@ -71,7 +71,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="Login">Login</label>
-                                    <input type="text" class="form-control" id="login" name="Login" placeholder="Login"/>
+                                    <input type="text" class="form-control" id="login" name="Login" placeholder="Login" value="${usuario.login}"/>
                                 </div> 
                             </div>
                             <div class="col-md-4">
@@ -82,14 +82,16 @@
                                 </div> 
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="Senha">Senha</label>
-                                    <input type="password" class="form-control" id="senha" name="Senha" placeholder="Senha"/>
+                        <c:if test="${!edicao}">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="Senha">Senha</label>
+                                        <input type="password" class="form-control" id="senha" name="Senha" placeholder="Senha"/>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </c:if>                    
                         <div class="right">
                             <button type="submit" class="btn btn-success">Salvar</button>
                             <button type="button" class="btn btn-danger">Descartar</button>

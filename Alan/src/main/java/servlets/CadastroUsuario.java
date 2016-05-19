@@ -45,11 +45,24 @@ public class CadastroUsuario extends BaseServlet {
         //pego os perfis de usuario do banco de dados para preenchimento de campos no html
         ArrayList<Perfil> perfis = new ArrayList<>();
         ArrayList<Filial> filiais = new ArrayList<Filial>();
-        int id=0;
+        
+        Usuario usuario = new Usuario();
+        Integer id = identificarEdicao(request);
+        boolean edicao = false;
+        
         try {
             perfis  = PerfilDAO.consultar();
             filiais = FilialDAO.listar();
-            id  = ProdutoDAO.maxId();
+            
+            if (id != null) {
+                usuario = UsuarioDAO.consultarPorId(id);
+                edicao = true;
+            } else {
+                id = UsuarioDAO.maxId();
+                usuario.setCodigoUnitario(id);
+            }
+            
+            
         } catch (SQLException ex) {
             Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -57,7 +70,8 @@ public class CadastroUsuario extends BaseServlet {
         }
         request.setAttribute("perfis", perfis);
         request.setAttribute("filiais", filiais);
-        request.setAttribute("id", id);
+        request.setAttribute("usuario", usuario);
+        request.setAttribute("edicao", edicao);
         
         processRequest(request, response, "/WEB-INF/jsp/cadastroUsuario.jspx");
     }
@@ -90,6 +104,7 @@ public class CadastroUsuario extends BaseServlet {
             Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        response.sendRedirect(request.getContextPath() + "/Home");
     }
 
     /**

@@ -32,7 +32,7 @@ public class AutorizacaoFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
         HttpSession sessao = httpRequest.getSession();
-        Usuario usuario = (Usuario) sessao.getAttribute("usuario");
+        Usuario usuario = (Usuario) sessao.getAttribute("usuarioLogado");
 
         if (usuario == null) {
             String contextPath = httpRequest.getContextPath();

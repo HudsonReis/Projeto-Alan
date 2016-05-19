@@ -72,7 +72,7 @@ public class LoginServlet extends BaseServlet {
           sessao.invalidate();
         }
         sessao = request.getSession(true);
-        sessao.setAttribute("usuario", usuario);
+        sessao.setAttribute("usuarioLogado", usuario);
         response.sendRedirect(request.getContextPath() + "/Home");
         return;
       // FIM CASO SUCESSO

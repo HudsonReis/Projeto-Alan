@@ -33,6 +33,11 @@ public class Usuario {
     private boolean status;
     private List<Integer> funcionalidades;
 
+    public Usuario()
+    {
+        
+    }
+    
     public Usuario(String nome, int codigoFilial, int codigoPerfil, String login, String senha, boolean status) {
         this.nome = nome;
         this.codigoFilial = codigoFilial;
