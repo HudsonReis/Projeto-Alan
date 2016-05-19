@@ -17,7 +17,7 @@ import javax.crypto.spec.PBEKeySpec;
  * @author Arthur
  */
 public class Criptografia {
-    private static char[] gerarHashSenhaMD5(String senha) {
+    public static char[] gerarHashSenhaMD5(String senha) {
         try {
           // SALT (EM SITUACOES REAIS, DEVEM SER DIFERENTES PARA CADA USUARIO)
           String salt = "ATACGHNAT";

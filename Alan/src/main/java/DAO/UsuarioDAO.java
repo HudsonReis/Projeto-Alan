@@ -22,7 +22,7 @@ public class UsuarioDAO {
         stmt.setInt(2, usuario.getCodigoPerfil());
         stmt.setString(3, usuario.getNome());
         stmt.setString(4, usuario.getLogin());
-        stmt.setString(5, usuario.getHashSenha().toString());
+        stmt.setString(5, String.copyValueOf(usuario.getHashSenha()));
         stmt.setBoolean(6, usuario.getStatus());
         stmt.execute();
         stmt.close();
