@@ -33,7 +33,8 @@
                                 <div class="form-group">
                                     <label for="UsuarioId">ID</label>
                                     <input type="text" class="form-control" disabled="" value="${usuario.codigoUnitario}"/>
-                                    <input type="hidden" id="prodId" name="UsuarioId" value="${usuario.codigoUnitario}"/>
+                                    <input type="hidden" id="usuarioId" name="usuarioId" value="${usuario.codigoUnitario}"/>
+                                    <input type="hidden" id="edicao" name="edicao" value="${edicao}"/>
                                 </div> 
                             </div>
                         </div>

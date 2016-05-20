@@ -7,7 +7,6 @@ package servlets;
 
 import DAO.FilialDAO;
 import DAO.PerfilDAO;
-import DAO.ProdutoDAO;
 import DAO.UsuarioDAO;
 import classes.Filial;
 import classes.Perfil;
@@ -21,7 +20,6 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import util.Criptografia;
 
 /**
  *
@@ -88,16 +86,23 @@ public class CadastroUsuario extends BaseServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        boolean edicao = Boolean.parseBoolean(request.getParameter("edicao"));
         String nome = request.getParameter("Nome");
+        int id = Integer.parseInt(request.getParameter("usuarioId"));
         int codFilial = Integer.parseInt(request.getParameter("filialId"));        
         int codPerfil = Integer.parseInt(request.getParameter("perfilId"));        
         String login = request.getParameter("Login");
         String senha = request.getParameter("Senha");
         
-        Usuario usuario = new Usuario(nome, codFilial, codPerfil, login, senha, true);
+        Usuario usuario = new Usuario(id, nome, codFilial, codPerfil, login, senha, true);
         
         try {
-            UsuarioDAO.adicionar(usuario);
+            if(edicao) {
+                UsuarioDAO.alterar(usuario);
+            } else {
+                UsuarioDAO.adicionar(usuario);
+            }
+            
         } catch (SQLException ex) {
             Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {

@@ -5,16 +5,12 @@
  */
 package classes;
 
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
 import util.Criptografia;
 
 /**
@@ -38,7 +34,8 @@ public class Usuario {
         
     }
     
-    public Usuario(String nome, int codigoFilial, int codigoPerfil, String login, String senha, boolean status) {
+    public Usuario(int codigoUnitario, String nome, int codigoFilial, int codigoPerfil, String login, String senha, boolean status) {
+        this.codigoUnitario = codigoUnitario;
         this.nome = nome;
         this.codigoFilial = codigoFilial;
         this.codigoPerfil = codigoPerfil;
@@ -46,7 +43,10 @@ public class Usuario {
         this.status = status;
         
         try {
-            this.hashSenha = Criptografia.gerarHashSenhaPBKDF2(senha);
+            if (senha != null) {
+                this.hashSenha = Criptografia.gerarHashSenhaPBKDF2(senha);
+            }
+            
         } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
         }

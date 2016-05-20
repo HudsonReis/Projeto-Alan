@@ -28,6 +28,25 @@ public class UsuarioDAO {
         stmt.close();
     }
     
+    public static void alterar(Usuario usuario) throws SQLException, ClassNotFoundException {
+        Connection conexao = ConexaoBanco.obterConexao();
+        //linguagem sql -> inserir no banco
+        String sql = "UPDATE USUARIO SET NOME = ? AND CODIGOPERFIL = ? AND CODIGOFILIAL = ? AND LOGIN = ? AND "
+                + "STATUS = ? WHERE CODIGOUNITARIO = ?";
+
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        
+        stmt.setString(1, usuario.getNome());
+        stmt.setInt(2, usuario.getCodigoPerfil());
+        stmt.setInt(3, usuario.getCodigoFilial());
+        stmt.setString(4, usuario.getLogin());
+        stmt.setBoolean(5, usuario.getStatus());
+        stmt.setInt(6, usuario.getCodigoUnitario());
+        
+        stmt.execute();
+        stmt.close();
+    }
+    
     public static Usuario consultar(String login, String senha) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         
