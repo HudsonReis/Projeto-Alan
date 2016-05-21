@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -36,6 +38,9 @@ public class BaseServlet extends HttpServlet {
         }
     }
     
+    protected void logar(String nameOfClass, Exception ex) {
+        Logger.getLogger(nameOfClass).log(Level.SEVERE, null, ex);
+    }
     
     protected Integer identificarEdicao(HttpServletRequest request) {
         Dictionary<String, String> dic = new Hashtable<String, String>();

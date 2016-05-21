@@ -6,23 +6,19 @@
 package servlets;
 
 import DAO.FilialDAO;
-import DAO.PerfilDAO;
 import DAO.ProdutoDAO;
 import classes.Filial;
-import classes.Perfil;
 import classes.Produto;
 import classes.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import util.Resposta;
 
 /**
  *
@@ -46,19 +42,30 @@ public class CadastroProduto extends BaseServlet {
 
         //pego as filiais de usuario do banco de dados para preenchimento de campos no html
         ArrayList<Filial> filiais = new ArrayList<Filial>();
-        int id=0;
+        
+        Produto produto = new Produto();
+        Integer id = identificarEdicao(request);
+        boolean edicao = false;
+        
         try {
             filiais = FilialDAO.listar();
-            id  = ProdutoDAO.maxId();
+            
+            if (id != null) {
+                produto = ProdutoDAO.consultarPorId(id);
+                edicao = true;
+            } else {
+                id = ProdutoDAO.maxId();
+                produto.setCodigoPeca(id);
+            }
+            
         } catch (SQLException ex) {
-            Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            logar(CadastroProduto.class.getName(), ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            logar(CadastroProduto.class.getName(), ex);
         }
         request.setAttribute("filiais", filiais);
-        request.setAttribute("id", id);
-                
-        
+        request.setAttribute("produto", produto);
+        request.setAttribute("edicao", edicao);
         
         processRequest(request, response, "/WEB-INF/jsp/cadastroProduto.jspx");
 
@@ -76,27 +83,44 @@ public class CadastroProduto extends BaseServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        
+        Resposta resposta = new Resposta();
         
         HttpSession sessao = request.getSession(false);
-        Usuario usuario = (Usuario) sessao.getAttribute("usuario");
+        Usuario usuario = (Usuario)sessao.getAttribute("usuarioLogado");
         
         int codPeca = Integer.parseInt(request.getParameter("prodId"));
         int codFilial = Integer.parseInt(request.getParameter("filialId"));        
         int codUsuario = usuario.getCodigoUnitario();
+        int qtdPeca = 0; 
         String nome = request.getParameter("nomeProd");        
+        boolean status = Boolean.parseBoolean(request.getParameter("status"));
+        boolean edicao = Boolean.parseBoolean(request.getParameter("edicao"));
         
-        Produto produto = new Produto(codPeca, codFilial, codUsuario, nome);
+        Produto produto = new Produto(codPeca, codFilial, codUsuario, nome, qtdPeca, status);
         
         try {
-            ProdutoDAO.adicionar(produto);
+            
+            if(resposta.getSucesso()) {
+                if(edicao) {
+                    ProdutoDAO.alterar(produto);
+                } else {
+                    ProdutoDAO.adicionar(produto);
+                }
+            }
+            
+            request.getSession().setAttribute("resposta", resposta);
+            
         } catch (SQLException ex) {
-            Logger.getLogger(CadastroProduto.class.getName()).log(Level.SEVERE, null, ex);
+            logar(CadastroProduto.class.getName(), ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CadastroProduto.class.getName()).log(Level.SEVERE, null, ex);
+            logar(CadastroProduto.class.getName(), ex);
         }
         
-        processRequest(request, response, "/WEB-INF/jsp/cadastroProduto.jspx");
+        if(resposta.getSucesso()) {
+            response.sendRedirect(request.getContextPath() + "/Home");
+        } else {
+            response.sendRedirect(request.getContextPath() + "/CadastroProduto");
+        }
     }
 
     /**

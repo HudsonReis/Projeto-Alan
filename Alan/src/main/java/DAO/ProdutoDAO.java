@@ -6,8 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -31,6 +29,51 @@ public class ProdutoDAO {
         stmt.setBoolean(5, produto.getStatus());
         stmt.execute();
         stmt.close();
+    }
+    
+    public static void alterar(Produto produto) throws SQLException, ClassNotFoundException {
+        Connection conexao = ConexaoBanco.obterConexao();
+        //linguagem sql -> inserir no banco
+        String sql = "UPDATE PRODUTO SET CODIGOFILIAL = ?, IDUSUARIO = ?, NOME = ?, QUANTIDADEPECA = ?, "
+                + "STATUS = ? WHERE CODPECA = ?";
+
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        
+        stmt.setInt(1, produto.getCodigoFilial());
+        stmt.setInt(2, produto.getCodUsuario());
+        stmt.setString(3, produto.getNome());
+        stmt.setInt(4, produto.getQtdPeca());
+        stmt.setBoolean(5, produto.getStatus());
+        stmt.setInt(6, produto.getCodigoPeca());
+        
+        stmt.execute();
+        stmt.close();
+    }
+    
+    public static Produto consultarPorId(int id) throws SQLException, ClassNotFoundException {
+        Connection conexao = ConexaoBanco.obterConexao();
+        
+        String sql = "SELECT CODPECA, CODIGOFILIAL, IDUSUARIO, NOME, QUANTIDADEPECA, STATUS"
+                + "FROM PRODUTO WHERE CODPECA = ?";
+        
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        
+        stmt.setInt(1, id);
+        ResultSet result = stmt.executeQuery();
+        result.next();
+        
+        int codPeca = result.getInt("CODPECA");
+        int codFilial = result.getInt("CODIGOFILIAL");
+        int idUsuario = result.getInt("IDUSUARIO");
+        String nome = result.getString("NOME");
+        int qtdPeca = result.getInt("QUANTIDADEPECA");
+        boolean status = result.getBoolean("STATUS");
+        
+        Produto produto = new Produto(codPeca, codFilial, idUsuario, nome, qtdPeca, status);
+        
+        stmt.close();
+        
+        return produto;
     }
 
     public static int maxId() throws SQLException, ClassNotFoundException {

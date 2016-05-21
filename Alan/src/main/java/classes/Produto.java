@@ -17,7 +17,20 @@ public class Produto {
     private String nome;
     private int qtdPeca;
     private boolean status;
+    
+    public Produto()
+    {
+        
+    }
 
+    public Produto(int codigoPeca, int codigoFilial, int codUsuario, String nome, int qtdPeca, boolean status) {
+        this.codigoPeca = codigoPeca;
+        this.codigoFilial = codigoFilial;
+        this.codUsuario = codUsuario;
+        this.nome = nome;
+        this.qtdPeca = qtdPeca;
+        this.status = status;
+    }
     
     public int getCodigoPeca() {
         return codigoPeca;
@@ -66,16 +79,5 @@ public class Produto {
 
     public void setStatus(boolean status) {
         this.status = status;
-    }
-
-    public Produto(int codigoPeca, int codigoFilial, int codUsuario, String nome) {
-        this.codigoPeca = codigoPeca;
-        this.codigoFilial = codigoFilial;
-        this.codUsuario = codUsuario;
-        this.nome = nome;
-        this.qtdPeca = 0;
-        this.status = true;
-    }
-
-        
+    }        
 }

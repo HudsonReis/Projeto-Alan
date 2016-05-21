@@ -30,6 +30,28 @@ public class FilialDAO {
         stmt.execute();
         stmt.close();
     }
+    
+    public static void alterar(Filial filial) throws SQLException, ClassNotFoundException {
+        Connection conexao = ConexaoBanco.obterConexao();
+        //linguagem sql -> inserir no banco
+        String sql = "UPDATE FILIAL SET NOME = ?, NOMEFANTASIA = ?, RUA = ?, NUM = ?, "
+                + "BAIRRO = ?, ESTADO = ?, CIDADE = ?, CNPJ = ? WHERE CODIGOFILIAL = ?";
+
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        
+        stmt.setString(1, filial.getNome());
+        stmt.setString(2, filial.getNomeFantasia());
+        stmt.setString(3, filial.getRua());
+        stmt.setInt(4, filial.getNum());
+        stmt.setString(5, filial.getBairro());
+        stmt.setString(6, filial.getEstado());
+        stmt.setString(7, filial.getCidade());
+        stmt.setString(8, filial.getCnpj());
+        stmt.setInt(9, filial.getCodigoFilial());
+        
+        stmt.execute();
+        stmt.close();
+    }
 
     public static ArrayList<Filial> listar() throws SQLException, ClassNotFoundException {
 
@@ -62,6 +84,35 @@ public class FilialDAO {
         }
 
         return retorno;
+    }
+    
+    public static Filial consultarPorId(int id) throws SQLException, ClassNotFoundException {
+        Connection conexao = ConexaoBanco.obterConexao();
+        
+        String sql = "SELECT codigoFilial, nome, fantasia, rua, numero, bairro, estado, cidade, cnpj"
+                + "FROM FILIAL WHERE codigoFilial = ?";
+        
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        
+        stmt.setInt(1, id);
+        ResultSet result = stmt.executeQuery();
+        result.next();
+        
+        int codFilial = result.getInt("codigoFilial");
+        String nome = result.getString("nome");
+        String fantasia = result.getString("fantasia");
+        String rua = result.getString("rua");
+        int numero = result.getInt("numero");
+        String bairro = result.getString("bairro");
+        String estado = result.getString("estado");
+        String cidade = result.getString("cidade");
+        String cnpj = result.getString("cnpj");
+        
+        Filial filial = new Filial(codFilial, nome, fantasia, rua, numero, bairro, estado, cidade, cnpj);
+        
+        stmt.close();
+        
+        return filial;
     }
     
     public static int maxId() throws SQLException, ClassNotFoundException {

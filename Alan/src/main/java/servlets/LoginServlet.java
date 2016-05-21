@@ -90,11 +90,11 @@ public class LoginServlet extends BaseServlet {
             return usuario;
         }
     } catch(SQLException ex) {
-        Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        logar(LoginServlet.class.getName(), ex);
     } catch (ClassNotFoundException ex) {
-        Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        logar(LoginServlet.class.getName(), ex);
     } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
-        Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        logar(LoginServlet.class.getName(), ex);
     }
     
     return null;

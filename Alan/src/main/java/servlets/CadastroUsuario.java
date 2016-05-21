@@ -14,8 +14,6 @@ import classes.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -63,10 +61,11 @@ public class CadastroUsuario extends BaseServlet {
             
             
         } catch (SQLException ex) {
-            Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            logar(CadastroUsuario.class.getName(), ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            logar(CadastroUsuario.class.getName(), ex);
         }
+        
         request.setAttribute("perfis", perfis);
         request.setAttribute("filiais", filiais);
         request.setAttribute("usuario", usuario);
@@ -87,6 +86,8 @@ public class CadastroUsuario extends BaseServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        Resposta resposta = new Resposta();
+        
         boolean edicao = Boolean.parseBoolean(request.getParameter("edicao"));
         boolean status = Boolean.parseBoolean(request.getParameter("Status"));
         String nome = request.getParameter("Nome");
@@ -99,32 +100,36 @@ public class CadastroUsuario extends BaseServlet {
         Usuario usuario = new Usuario(id, nome, codFilial, codPerfil, login, senha, status);
         
         try {
-            if(edicao) {
-                UsuarioDAO.alterar(usuario);
-            } else {
-                UsuarioDAO.adicionar(usuario);
+            resposta = validar(usuario);
+            
+            if(resposta.getSucesso()) {
+                if(edicao) {
+                    UsuarioDAO.alterar(usuario);
+                } else {
+                    UsuarioDAO.adicionar(usuario);
+                }
             }
             
+            request.getSession().setAttribute("resposta", resposta);
+            
         } catch (SQLException ex) {
-            Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            logar(CadastroUsuario.class.getName(), ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            logar(CadastroUsuario.class.getName(), ex);
         }
         
-        response.sendRedirect(request.getContextPath() + "/Home");
+        if(resposta.getSucesso()) {
+            response.sendRedirect(request.getContextPath() + "/Home");
+        } else {
+            response.sendRedirect(request.getContextPath() + "/CadastroUsuario");
+        }
     }
     
-    public Resposta validar(Usuario usuario) {
+    public Resposta validar(Usuario usuario) throws SQLException, ClassNotFoundException {
         Resposta resposta = new Resposta();
         
-        try {
-            if(UsuarioDAO.consultarLoginExistente(usuario.getLogin())) {
-                resposta.setErro("Esse login já existe, por favor, informe outro");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        if(UsuarioDAO.consultarLoginExistente(usuario.getLogin())) {
+            resposta.setErro("Esse login já existe, por favor, informe outro");
         }
         
         return resposta;

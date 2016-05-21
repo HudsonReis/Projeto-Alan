@@ -9,12 +9,12 @@ import classes.Filial;
 import DAO.FilialDAO;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import util.Funcoes;
+import util.Resposta;
 
 /**
  *
@@ -36,17 +36,30 @@ public class CadastroFilial extends BaseServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        int id = 0;
+        Filial filial = new Filial();
+        Integer id = identificarEdicao(request);
+        boolean edicao = false;
+        
         try {
-            id = FilialDAO.maxId();
+            
+            if (id != null) {
+                filial = FilialDAO.consultarPorId(id);
+                edicao = true;
+            } else {
+                id = FilialDAO.maxId();
+                filial.setCodigoFilial(id);
+            }
+            
         } catch (SQLException ex) {
-            Logger.getLogger(CadastroFilial.class.getName()).log(Level.SEVERE, null, ex);
+            logar(CadastroFilial.class.getName(), ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CadastroFilial.class.getName()).log(Level.SEVERE, null, ex);
+            logar(CadastroFilial.class.getName(), ex);
         }
-        request.setAttribute("id", id);
+        
+        request.setAttribute("filial", filial);
+        request.setAttribute("edicao", edicao);
+        
         processRequest(request, response, "/WEB-INF/jsp/cadastroFilial.jspx");
-
     }
 
     /**
@@ -61,6 +74,9 @@ public class CadastroFilial extends BaseServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        Resposta resposta = new Resposta();
+        
+        boolean edicao = Boolean.parseBoolean(request.getParameter("edicao"));
         int id = Integer.parseInt(request.getParameter("filialId")) ;
         String nome = request.getParameter("NomeFilial");
         String nomeFantasia = request.getParameter("NomeFantasia");
@@ -74,14 +90,39 @@ public class CadastroFilial extends BaseServlet {
         //Criando objeto da filial
         Filial filial = new Filial(id, nome, nomeFantasia, rua, num, bairro, estado, cidade, cnpj);
         try {
-            //tentando enviar filial para ser adicionadas
-            FilialDAO.adicionar(filial);            
+            resposta = validar(filial);
+            
+            if(resposta.getSucesso()) {
+                if(edicao) {
+                    FilialDAO.alterar(filial);
+                } else {
+                    FilialDAO.adicionar(filial);
+                }
+            }
+            
+            request.getSession().setAttribute("resposta", resposta);
+                       
         } catch (SQLException ex) {
-            Logger.getLogger(CadastroFilial.class.getName()).log(Level.SEVERE, null, ex);
+            logar(CadastroFilial.class.getName(), ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CadastroFilial.class.getName()).log(Level.SEVERE, null, ex);
+            logar(CadastroFilial.class.getName(), ex);
         } 
 
+        if(resposta.getSucesso()) {
+            response.sendRedirect(request.getContextPath() + "/Home");
+        } else {
+            response.sendRedirect(request.getContextPath() + "/CadastroFilial");
+        }
+    }
+    
+    public Resposta validar(Filial filial) throws SQLException, ClassNotFoundException {
+        Resposta resposta = new Resposta();
+        
+        if(!Funcoes.isCNPJ(filial.getCnpj())) {
+            resposta.setErro("Este CNPJ é inválido");
+        }
+        
+        return resposta;
     }
 
     /**

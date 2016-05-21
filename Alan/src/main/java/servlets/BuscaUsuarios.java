@@ -21,10 +21,6 @@ import java.util.List;
  */
 @WebServlet(name = "BuscaUsuarios", urlPatterns = {"/BuscaUsuarios"})
 public class BuscaUsuarios extends BaseServlet {
-
-    public void getUsuarios()  {
-        
-    }
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -44,7 +40,7 @@ public class BuscaUsuarios extends BaseServlet {
         try {
             lista = UsuarioDAO.listar();
         } catch(Exception ex) {
-            
+            logar(BuscaUsuarios.class.getName(), ex);
         }
         
         request.setAttribute("Usuarios", lista);

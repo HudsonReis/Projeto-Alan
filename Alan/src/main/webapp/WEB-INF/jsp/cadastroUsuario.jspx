@@ -49,7 +49,7 @@
                                 <div class="form-group">
                                     <label for="PerfilId">Perfil</label>
                                     <select class="form-control" name="perfilId" id="perfilId" required="required">
-                                        <option value="0">Selecione...</option>
+                                        <option value="">Selecione...</option>
                                         <c:forEach items="${perfis}" var="perfil">
                                             <option value="${perfil.codigoPerfil}">${perfil.nome}</option>
                                         </c:forEach>
@@ -60,8 +60,8 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="filialId">Filial</label>
-                                    <select class="form-control" id="filialId" name="filialId">
-                                        <option value="0">Selecione...</option>
+                                    <select class="form-control" id="filialId" name="filialId" required="required">
+                                        <option value="">Selecione...</option>
                                         <c:forEach items="${filiais}" var="filial">
                                             <option value="${filial.codigoFilial}">${filial.nomeFantasia}</option>
                                         </c:forEach>                                    
@@ -100,6 +100,7 @@
                             <button type="submit" class="btn btn-success">Salvar</button>
                             <button type="button" id="btnCancelar" class="btn btn-default">Cancelar</button>
                         </div>
+                        <c:out value="${resposta.Mensagem}"></c:out>
                     </form>  
                 </div>
             </div>

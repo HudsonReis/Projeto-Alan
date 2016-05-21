@@ -25,8 +25,9 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="FilialId">ID</label>
-                                    <input type="text" class="form-control" disabled="true" value="${id}"/>
-                                    <input type="hidden" id="filialId" name="filialId" value="${id}"/>
+                                    <input type="text" class="form-control" disabled="true" value="${filial.codigoFilial}"/>
+                                    <input type="hidden" id="filialId" name="filialId" value="${filial.codigoFilial}"/>
+                                    <input type="hidden" id="edicao" name="edicao" value="${edicao}"/>
                                 </div>
                             </div>
                         </div>
@@ -34,19 +35,19 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="NomeFilial">Nome</label>
-                                    <input type="text" required="" class="form-control" id="nomeFilial" name="NomeFilial" placeholder="Nome"/>
+                                    <input type="text" required="required" class="form-control" id="nomeFilial" name="NomeFilial" placeholder="Nome" value="${filial.nome}"/>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="nomeFantasia">Nome Fantasia</label>
-                                    <input type="text" required="" class="form-control" id="nomeFantasia" name="NomeFantasia" placeholder="Nome Fantasia"/>
+                                    <input type="text" required="required" class="form-control" id="nomeFantasia" name="NomeFantasia" placeholder="Nome Fantasia" value="${filial.nomeFantasia}"/>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="cnpj">CNPJ</label>
-                                    <input type="text" required="" class="form-control" id="cnpj" name="cnpj" placeholder="CNPJ"/>
+                                    <input type="text" required="required" class="form-control" id="cnpj" name="cnpj" placeholder="CNPJ" value="${filial.cnpj}"/>
                                 </div>
                             </div>
                         </div>
@@ -54,40 +55,37 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="Rua">Rua</label>
-                                    <input type="text" required="" class="form-control" id="rua" name="Rua" placeholder="Rua"/>
+                                    <input type="text" required="required" class="form-control" id="rua" name="Rua" placeholder="Rua" value="${filial.rua}"/>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="Numero">Número</label>
-                                    <input type="number" required="" class="form-control" id="numero" name="Numero" placeholder="Número"/>
+                                    <input type="number" required="required" class="form-control" id="numero" name="Numero" placeholder="Número" value="${filial.num}"/>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="Bairro">Bairro</label>
-                                    <input type="text" required="" class="form-control" id="bairro" name="Bairro" placeholder="Bairro"/>
+                                    <input type="text" required="required" class="form-control" id="bairro" name="Bairro" placeholder="Bairro" value="${filial.bairro}"/>
                                 </div>
                             </div>
                             <div class="col-md-1">
                                 <div class="form-group">
                                     <label for="Estado">Estado</label>
-                                    <input type="text" required="" class="form-control" id="estado" name="Estado" placeholder="Estado" maxlength="2"/>
+                                    <input type="text" required="required" class="form-control" id="estado" name="Estado" placeholder="Estado" value="${filial.estado}" maxlength="2"/>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="Cidade">Cidade</label>
-                                    <input type="text" required="" class="form-control" id="cidade" name="Cidade" placeholder="Cidade"/>
+                                    <input type="text" required="required" class="form-control" id="cidade" name="Cidade" placeholder="Cidade" value="${filial.cidade}"/>
                                 </div>
                             </div>
                         </div>
-
-
                         <div class="right">
                             <button type="submit" class="btn btn-success">Salvar</button>
-                            <button type="button" class="btn btn-danger">Descartar</button>
-                            <button type="button" class="btn btn-default">Cancelar</button>
+                            <button type="button" id="btnCancelar" class="btn btn-default">Cancelar</button>
                         </div>
 
                     </form>
@@ -95,6 +93,7 @@
             </div>
             <script type="text/javascript" src="resources/js/jquery-2.2.3.min.js"><![CDATA[/*Teste*/]]></script>
             <script type="text/javascript" src="resources/js/bootstrap.min.js"><![CDATA[/*Teste*/]]></script>
+            <script type="text/javascript" src="resources/js/cadastroFilial.js"><![CDATA[/*Teste*/]]></script>
         </body>
     </html>
 
