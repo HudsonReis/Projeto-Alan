@@ -116,6 +116,18 @@ public class Usuario {
     public void setStatus(boolean status) {
         this.status = status;
     }
+    
+    public String getPerfil() {
+        return perfil;
+    }
+    
+    public String getStrStatus() {
+        if (status) {
+            return "Sim";
+        } else {
+            return "Não";
+        }
+    }
 
     public boolean autenticar(String login, String senha) {
         if (this.nome != null) {

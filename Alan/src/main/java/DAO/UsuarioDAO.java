@@ -31,7 +31,7 @@ public class UsuarioDAO {
     public static void alterar(Usuario usuario) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         //linguagem sql -> inserir no banco
-        String sql = "UPDATE USUARIO SET NOME = ? AND CODIGOPERFIL = ? AND CODIGOFILIAL = ? AND LOGIN = ? AND "
+        String sql = "UPDATE USUARIO SET NOME = ?, CODIGOPERFIL = ?, CODIGOFILIAL = ?, LOGIN = ?, "
                 + "STATUS = ? WHERE CODIGOUNITARIO = ?";
 
         PreparedStatement stmt = conexao.prepareStatement(sql);

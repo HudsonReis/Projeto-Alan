@@ -29,3 +29,7 @@ table {
 table tbody tr:hover {
     cursor:pointer;
 }
+
+button {
+    margin-left:5px;
+}

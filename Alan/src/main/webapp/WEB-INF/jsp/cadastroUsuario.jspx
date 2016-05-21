@@ -50,9 +50,9 @@
                                     <label for="PerfilId">Perfil</label>
                                     <select class="form-control" name="perfilId" id="perfilId">
                                         <option value="0">Selecione...</option>
-                                    <c:forEach items="${perfis}" var="perfil">
-                                        <option value="${perfil.codigoPerfil}">${perfil.nome}</option>
-                                    </c:forEach>
+                                        <c:forEach items="${perfis}" var="perfil">
+                                            <option value="${perfil.codigoPerfil}">${perfil.nome}</option>
+                                        </c:forEach>
                                     </select>
                                 </div>
                             </div>
@@ -61,9 +61,9 @@
                                     <label for="filialId">Filial</label>
                                     <select class="form-control" id="filialId" name="filialId">
                                         <option value="0">Selecione...</option>
-                                    <c:forEach items="${filiais}" var="filial">
-                                        <option value="${filial.codigoFilial}">${filial.nomeFantasia}</option>
-                                    </c:forEach>
+                                        <c:forEach items="${filiais}" var="filial">
+                                            <option value="${filial.codigoFilial}">${filial.nomeFantasia}</option>
+                                        </c:forEach>                                    
                                     </select>
                                 </div>
                             </div>
@@ -95,14 +95,14 @@
                         </c:if>                    
                         <div class="right">
                             <button type="submit" class="btn btn-success">Salvar</button>
-                            <button type="button" class="btn btn-danger">Descartar</button>
-                            <button type="button" class="btn btn-default">Cancelar</button>
+                            <button type="button" id="btnCancelar" class="btn btn-default">Cancelar</button>
                         </div>
                     </form>  
                 </div>
             </div>
             <script type="text/javascript" src="resources/js/jquery-2.2.3.min.js"><![CDATA[/*Teste*/]]></script>
             <script type="text/javascript" src="resources/js/bootstrap.min.js"><![CDATA[/*Teste*/]]></script>
+            <script type="text/javascript" src="resources/js/cadastroUsuario.js"><![CDATA[/*Teste*/]]></script>
         </body>
     </html>
 </jsp:root>

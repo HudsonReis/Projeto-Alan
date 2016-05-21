@@ -30,7 +30,7 @@
                             <th>Nome</th>
                             <th>Login</th>
                             <th>Perfil</th>
-                            <th>Status</th>
+                            <th>Ativo</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -39,119 +39,23 @@
                                 <td class="id">${usuario.codigoUnitario}</td>
                                 <td>${usuario.nome}</td>
                                 <td>${usuario.login}</td>
-                                <td>${usuario.login}</td>
-                                <td>${usuario.status}</td>
+                                <td>${usuario.perfil}</td>
+                                <td>${usuario.getStrStatus()}</td>
                             </tr>           
                         </c:forEach>
                     </tbody>                    
                 </table>
                 <div class="row">
                     <div class="col-md-12">
+                        <button type="button" id="btnNovo" class="btn btn-info" disabled="disabled">Novo</button>
                         <button type="button" id="btnEditar" class="btn btn-success" disabled="disabled">Editar</button>
                     </div>
                 </div>
-<!--                <div class="box">
-                    <form>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="UsuarioId">ID</label>
-                                    <input type="text" class="form-control" id="usuarioId" name="UsuarioId" value="4562"/>
-                                </div> 
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="nome">Nome</label>
-                                    <input type="text" class="form-control" id="nome" name="Nome" placeholder="Nome"/>
-                                </div>                        
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="PerfilId">Perfil</label>
-                                    <select class="form-control" name="PerfilId">
-                                        <option value="0">Selecione...</option>
-                                        <option value="1">Gerente</option>
-                                        <option value="2">Vendedor</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="filialId">Filial</label>
-                                    <select class="form-control" id="filialId" name="FilialId">
-                                        <option value="0">Selecione...</option>
-                                        <option value="1">Filial RJ</option>
-                                        <option value="2">Filial SP</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="Login">Login</label>
-                                    <input type="text" class="form-control" id="login" name="Login" placeholder="Login"/>
-                                </div> 
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="block">Status</label>
-                                    <input type="radio" id="ativo" name="Status" value="true" /><label for="ativo" class="espacamento">Ativo</label>
-                                    <input type="radio" id="inativo" name="Status" value="false" /><label for="inativo">Inativo</label>
-                                </div> 
-                            </div>
-                        </div>
-
-                        <div class="right">
-                            <button type="submit" class="btn btn-success">Salvar</button>
-                            <button type="button" class="btn btn-danger">Descartar</button>
-                            <button type="button" class="btn btn-default">Cancelar</button>
-                        </div>
-                    </form>  
-                </div>-->
             </div>
             <script type="text/javascript" src="resources/js/jquery-2.2.3.min.js"><![CDATA[/*Teste*/]]></script>
             <script type="text/javascript" src="resources/js/bootstrap.min.js"><![CDATA[/*Teste*/]]></script>
             <script type="text/javascript" src="resources/js/jquery.dataTables.min.js"><![CDATA[/*Teste*/]]></script>
-            <script type="text/javascript">
-                $(document).ready(function(){
-//                   $("#usuarios").dataTable({
-//                       "processing": true,
-//                       "serverside": true,                       
-//                       "ajax":{
-//                           "url": window.location.href + "/getUsuarios",
-//                           "type": "GET"
-//                       },
-//                       "columns": [
-//                           { "data": "codigoUnitario" },
-//                           { "data": "nome" },
-//                           { "data": "login" },
-//                           { "data": "perfil" },
-//                           { "data": "status" }
-//                       ]
-//                   }); 
-                    $("#usuarios").DataTable({
-                        "language":{
-                            "url": "//cdn.datatables.net/plug-ins/1.10.11/i18n/Portuguese-Brasil.json"
-                        }
-                    });
-                    
-                    $(document).on("click", "tbody tr", function () {
-                        $("tr").removeAttr("class", "success");
-                        $(this).attr("class", "success"); 
-                        
-                        $("button[id='btnEditar']").removeAttr("disabled", "disabled");
-                    });
-                    
-                    $(document).on("click", "button[id='btnEditar']", function () {
-                        var id = $("tr[class='success']").children()[0].innerHTML;
-                        var url = window.location.origin + "/Alan/CadastroUsuario?id=" + id;
-                        window.location.href = url;
-                    });
-                });
-            </script>
+            <script type="text/javascript" src="resources/js/buscaUsuarios.js"><![CDATA[/*Teste*/]]></script>
         </body>
     </html>
 
