@@ -47,13 +47,30 @@ public class UsuarioDAO {
         stmt.close();
     }
     
+    public static boolean consultarLoginExistente(String login) throws SQLException, ClassNotFoundException {
+        Connection conexao = ConexaoBanco.obterConexao();
+        
+        String sql = "SELECT COUNT(0) as cont FROM USUARIO WHERE login = ?";
+        
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        
+        stmt.setString(1, login);
+        
+        ResultSet result = stmt.executeQuery();
+        result.next();
+        
+        int contador = result.getInt("cont");
+        
+        return contador > 0;
+    }
+    
     public static Usuario consultar(String login, String senha) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         
         String sql = "SELECT u.codigoUnitario, u.codigoFilial, u.codigoPerfil, u.nome, u.login, u.senha"
                 + ", u.status, p.nome as perfil"
                 + " FROM Usuario u INNER JOIN Perfil p ON u.codigoPerfil = p.codigoPerfil "
-                + "WHERE u.login = ? AND u.senha = ?";
+                + "WHERE u.login = ? AND u.senha = ? AND u.status = true";
         
         PreparedStatement stmt = conexao.prepareStatement(sql);
         

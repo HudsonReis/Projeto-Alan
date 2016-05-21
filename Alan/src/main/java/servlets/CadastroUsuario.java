@@ -20,6 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import util.Resposta;
 
 /**
  *
@@ -87,6 +88,7 @@ public class CadastroUsuario extends BaseServlet {
             throws ServletException, IOException {
         
         boolean edicao = Boolean.parseBoolean(request.getParameter("edicao"));
+        boolean status = Boolean.parseBoolean(request.getParameter("Status"));
         String nome = request.getParameter("Nome");
         int id = Integer.parseInt(request.getParameter("usuarioId"));
         int codFilial = Integer.parseInt(request.getParameter("filialId"));        
@@ -94,7 +96,7 @@ public class CadastroUsuario extends BaseServlet {
         String login = request.getParameter("Login");
         String senha = request.getParameter("Senha");
         
-        Usuario usuario = new Usuario(id, nome, codFilial, codPerfil, login, senha, true);
+        Usuario usuario = new Usuario(id, nome, codFilial, codPerfil, login, senha, status);
         
         try {
             if(edicao) {
@@ -110,6 +112,22 @@ public class CadastroUsuario extends BaseServlet {
         }
         
         response.sendRedirect(request.getContextPath() + "/Home");
+    }
+    
+    public Resposta validar(Usuario usuario) {
+        Resposta resposta = new Resposta();
+        
+        try {
+            if(UsuarioDAO.consultarLoginExistente(usuario.getLogin())) {
+                resposta.setErro("Esse login já existe, por favor, informe outro");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return resposta;
     }
 
     /**

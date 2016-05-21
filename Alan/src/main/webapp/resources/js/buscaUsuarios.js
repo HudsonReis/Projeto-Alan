@@ -10,7 +10,6 @@ $(document).ready(function(){
         $(this).attr("class", "success"); 
 
         $("button[id='btnEditar']").removeAttr("disabled", "disabled");
-        $("button[id='btnNovo']").removeAttr("disabled", "disabled");
     });
 
     $(document).on("click", "button[id='btnEditar']", function () {

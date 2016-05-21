@@ -47,7 +47,7 @@
                 </table>
                 <div class="row">
                     <div class="col-md-12">
-                        <button type="button" id="btnNovo" class="btn btn-info" disabled="disabled">Novo</button>
+                        <button type="button" id="btnNovo" class="btn btn-info">Novo</button>
                         <button type="button" id="btnEditar" class="btn btn-success" disabled="disabled">Editar</button>
                     </div>
                 </div>
