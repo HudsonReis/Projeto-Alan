@@ -3,22 +3,34 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package classes;
+package classes.entidades;
 
 /**
  *
  * @author Nicolas
  */
-public class MovimentacaoEntrada {
+public class MovimentacaoSaida {
 
+    private int quantidade;
     private int codigoProduto;
     private int codigoUsuario;
-    private int quantidade;
+    private int codigoFilial;
 
-    public MovimentacaoEntrada(int codProduto, int codUsuario, int qtd) {
+    public MovimentacaoSaida(int qtd, int codProduto, int codUsuario,
+            int codFilial) {
+        quantidade = qtd;
         codigoProduto = codProduto;
         codigoUsuario = codUsuario;
-        quantidade = qtd;
+        codigoFilial = codFilial;
+
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
     }
 
     public int getCodigoProduto() {
@@ -37,12 +49,11 @@ public class MovimentacaoEntrada {
         this.codigoUsuario = codigoUsuario;
     }
 
-    public int getQuantidade() {
-        return quantidade;
+    public int getCodigoFilial() {
+        return codigoFilial;
     }
 
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
+    public void setCodigoFilial(int codigoFilial) {
+        this.codigoFilial = codigoFilial;
     }
-
 }

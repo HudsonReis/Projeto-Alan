@@ -1,6 +1,7 @@
 package DAO;
 
-import classes.Usuario;
+import classes.UsuarioListagem;
+import classes.entidades.Usuario;
 import conexao.ConexaoBanco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -118,30 +119,27 @@ public class UsuarioDAO {
         return retorno;
     }
     
-    public static List<Usuario> listar() throws SQLException, ClassNotFoundException {
+    public static List<UsuarioListagem> listar() throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         
-        String sql = "SELECT u.codigoUnitario, u.codigoFilial, u.codigoPerfil, u.nome, u.login, u.senha"
-                + ", u.status, p.nome as perfil"
-                + " FROM Usuario u INNER JOIN Perfil p ON u.codigoPerfil = p.codigoPerfil ";
+        String sql = "SELECT U.CODIGOUNITARIO, F.NOME AS FILIAL, P.NOME AS PERFIL, U.NOME, U.LOGIN, "
+                + "U.STATUS FROM USUARIO U INNER JOIN FILIAL F ON U.CODIGOFILIAL = F.CODIGOFILIAL "
+                + "INNER JOIN PERFIL P ON U.CODIGOPERFIL = P.CODIGOPERFIL";
         
         PreparedStatement stmt = conexao.prepareStatement(sql);
-        List<Usuario> retorno = new ArrayList<Usuario>();
+        List<UsuarioListagem> retorno = new ArrayList<UsuarioListagem>();
         ResultSet result = stmt.executeQuery();
         
         while(result.next()) {
             
-            int codUnitario = result.getInt("codigoUnitario");
-            int codFilial = result.getInt("codigoFilial");
-            int codPerfil = result.getInt("codigoPerfil");
-            String nome = result.getString("nome");
-            String loginRes = result.getString("login");
-            String senhaRes = result.getString("senha");
-            String perfil = result.getString("perfil");
-            boolean status = result.getBoolean("status");
-            List<Integer> funcionalidades = consultarFuncionalidadesDoPerfil(result.getInt("codigoPerfil"));
+            int codUnitario = result.getInt("CODIGOUNITARIO");
+            String filial = result.getString("FILIAL");
+            String perfil = result.getString("PERFIL");
+            String nome = result.getString("NOME");
+            String login = result.getString("LOGIN");
+            boolean status = result.getBoolean("STATUS");
 
-            Usuario usuario = new Usuario(nome, codUnitario, codFilial, codPerfil, loginRes, senhaRes, status, funcionalidades, perfil);
+            UsuarioListagem usuario = new UsuarioListagem(codUnitario, filial, perfil, nome, login, status);
         
             retorno.add(usuario);
         }

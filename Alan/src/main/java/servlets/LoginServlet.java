@@ -5,7 +5,7 @@
  */
 package servlets;
 
-import classes.Usuario;
+import classes.entidades.Usuario;
 import DAO.UsuarioDAO;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;

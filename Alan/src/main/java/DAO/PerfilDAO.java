@@ -5,7 +5,7 @@
  */
 package DAO;
 
-import classes.Perfil;
+import classes.entidades.Perfil;
 import conexao.ConexaoBanco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

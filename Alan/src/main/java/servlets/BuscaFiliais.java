@@ -5,23 +5,23 @@
  */
 package servlets;
 
-import classes.UsuarioListagem;
-import DAO.UsuarioDAO;
+import classes.entidades.Filial;
+import DAO.FilialDAO;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  *
  * @author Arthur
  */
-@WebServlet(name = "BuscaUsuarios", urlPatterns = {"/BuscaUsuarios"})
-public class BuscaUsuarios extends BaseServlet {
-    
+@WebServlet(name = "BuscaFiliais", urlPatterns = {"/BuscaFiliais"})
+public class BuscaFiliais extends BaseServlet {
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -34,18 +34,17 @@ public class BuscaUsuarios extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        List<UsuarioListagem> lista = new ArrayList<UsuarioListagem>();
+        List<Filial> lista = new ArrayList<Filial>();
         
         try {
-            lista = UsuarioDAO.listar();
+            lista = FilialDAO.listar();
         } catch(Exception ex) {
-            logar(BuscaUsuarios.class.getName(), ex);
+            logar(BuscaFiliais.class.getName(), ex);
         }
         
-        request.setAttribute("Usuarios", lista);
+        request.setAttribute("Filiais", lista);
         
-        processRequest(request, response, "/WEB-INF/jsp/buscaUsuarios.jspx");
+        processRequest(request, response, "/WEB-INF/jsp/buscaFiliais.jspx");
     }
 
     /**
@@ -59,7 +58,7 @@ public class BuscaUsuarios extends BaseServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response, "/WEB-INF/jsp/buscaUsuarios.jspx");
+        processRequest(request, response, "/WEB-INF/jsp/buscaFiliais.jspx");
     }
 
     /**

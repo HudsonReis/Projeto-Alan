@@ -5,7 +5,7 @@ import conexao.ConexaoBanco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import classes.MovimentacaoEntrada;
+import classes.entidades.MovimentacaoEntrada;
 
 /**
  *

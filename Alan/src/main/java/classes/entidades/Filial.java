@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package classes;
+package classes.entidades;
 
 /**
  *
@@ -23,6 +23,11 @@ public class Filial {
 
     public Filial() {
 
+    }
+    
+    public Filial(int codigoFilial, String nome) {
+        this.codigoFilial = codigoFilial;
+        this.nome = nome;   
     }
 
     public Filial(int codigoFilial, String nome, String nomeFantasia, String rua, int num, String bairro, String estado, String cidade, String cnpj) {

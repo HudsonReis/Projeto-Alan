@@ -5,7 +5,7 @@
  */
 package filters;
 
-import classes.Usuario;
+import classes.entidades.Usuario;
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;

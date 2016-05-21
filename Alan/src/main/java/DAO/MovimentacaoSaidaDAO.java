@@ -2,7 +2,7 @@
 package DAO;
 
 import conexao.ConexaoBanco;
-import classes.MovimentacaoSaida;
+import classes.entidades.MovimentacaoSaida;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

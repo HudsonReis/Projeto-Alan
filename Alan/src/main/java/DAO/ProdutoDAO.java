@@ -1,11 +1,14 @@
 package DAO;
 
 import conexao.ConexaoBanco;
-import classes.Produto;
+import classes.entidades.Produto;
+import classes.ProdutoListagem;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -74,6 +77,34 @@ public class ProdutoDAO {
         stmt.close();
         
         return produto;
+    }
+    
+    public static List<ProdutoListagem> listar() throws SQLException, ClassNotFoundException {
+        Connection conexao = ConexaoBanco.obterConexao();
+        
+        String sql = "SELECT P.CODPECA, F.NOME AS FILIAL, U.NOME AS USUARIO, P.NOME AS PRODUTO, "
+                + "P.QUANTIDADEPECA, P.STATUS FROM PRODUTO P INNER JOIN FILIAL F ON P.CODIGOFILIAL = "
+                + " F.CODIGOFILIAL INNER JOIN USUARIO U ON P.IDUSUARIO = U.CODIGOUNITARIO";
+        
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        List<ProdutoListagem> retorno = new ArrayList<ProdutoListagem>();
+        ResultSet result = stmt.executeQuery();
+        
+        while(result.next()) {
+            
+            int codPeca = result.getInt("CODPECA");
+            String filial = result.getString("FILIAL");
+            String usuario = result.getString("USUARIO");
+            String nomeProduto = result.getString("PRODUTO");
+            int qtdPeca = result.getInt("QUANTIDADEPECA");
+            boolean status = result.getBoolean("STATUS");
+
+            ProdutoListagem produto = new ProdutoListagem(codPeca, filial, usuario, nomeProduto, qtdPeca, status);
+        
+            retorno.add(produto);
+        }
+        
+        return retorno;
     }
 
     public static int maxId() throws SQLException, ClassNotFoundException {

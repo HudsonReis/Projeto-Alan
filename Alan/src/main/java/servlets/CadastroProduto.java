@@ -7,9 +7,9 @@ package servlets;
 
 import DAO.FilialDAO;
 import DAO.ProdutoDAO;
-import classes.Filial;
-import classes.Produto;
-import classes.Usuario;
+import classes.entidades.Filial;
+import classes.entidades.Produto;
+import classes.entidades.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;

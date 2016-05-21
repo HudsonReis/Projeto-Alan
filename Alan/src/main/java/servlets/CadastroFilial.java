@@ -5,7 +5,7 @@
  */
 package servlets;
 
-import classes.Filial;
+import classes.entidades.Filial;
 import DAO.FilialDAO;
 import java.io.IOException;
 import java.sql.SQLException;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package classes;
+package classes.entidades;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -24,8 +24,7 @@ public class Usuario {
     private int codigoPerfil;
     private String nome;
     private String login;
-    private char[] hashSenha;
-    private String perfil;    
+    private char[] hashSenha;  
     private boolean status;
     private List<Integer> funcionalidades;
 
@@ -61,7 +60,6 @@ public class Usuario {
         this.codigoPerfil = codPerfil;
         this.status = status;
         this.funcionalidades = funcionalidades;
-        this.perfil = perfil;
         this.hashSenha = senha.toCharArray();
     }
 
@@ -115,18 +113,6 @@ public class Usuario {
 
     public void setStatus(boolean status) {
         this.status = status;
-    }
-    
-    public String getPerfil() {
-        return perfil;
-    }
-    
-    public String getStrStatus() {
-        if (status) {
-            return "Sim";
-        } else {
-            return "Não";
-        }
     }
 
     public boolean autenticar(String login, String senha) {
