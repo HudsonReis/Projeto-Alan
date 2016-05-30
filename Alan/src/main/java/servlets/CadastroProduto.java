@@ -90,7 +90,7 @@ public class CadastroProduto extends BaseServlet {
         
         int codPeca = Integer.parseInt(request.getParameter("prodId"));
         int codFilial = Integer.parseInt(request.getParameter("filialId"));        
-        int codUsuario = usuario.getCodigoUnitario();
+        int codUsuario = usuario.getCodigoUsuario();
         int qtdPeca = 0; 
         String nome = request.getParameter("nomeProd");        
         boolean status = Boolean.parseBoolean(request.getParameter("status"));

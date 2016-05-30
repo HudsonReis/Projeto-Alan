@@ -19,7 +19,7 @@ import util.Criptografia;
  */
 public class Usuario {
 
-    private int codigoUnitario;
+    private int codigoUsuario;
     private int codigoFilial;
     private int codigoPerfil;
     private String nome;
@@ -33,8 +33,8 @@ public class Usuario {
         
     }
     
-    public Usuario(int codigoUnitario, String nome, int codigoFilial, int codigoPerfil, String login, String senha, boolean status) {
-        this.codigoUnitario = codigoUnitario;
+    public Usuario(int codigoUsuario, String nome, int codigoFilial, int codigoPerfil, String login, String senha, boolean status) {
+        this.codigoUsuario = codigoUsuario;
         this.nome = nome;
         this.codigoFilial = codigoFilial;
         this.codigoPerfil = codigoPerfil;
@@ -51,10 +51,10 @@ public class Usuario {
         }
     }
 
-    public Usuario(String nome, int codUnitario, int codFilial, int codPerfil, String login,
+    public Usuario(String nome, int codigoUsuario, int codFilial, int codPerfil, String login,
             String senha, Boolean status, List<Integer> funcionalidades, String perfil) {
         this.nome = nome;
-        this.codigoUnitario = codUnitario;
+        this.codigoUsuario = codigoUsuario;
         this.codigoFilial = codFilial;
         this.login = login;
         this.codigoPerfil = codPerfil;
@@ -71,12 +71,12 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public int getCodigoUnitario() {
-        return codigoUnitario;
+    public int getCodigoUsuario() {
+        return codigoUsuario;
     }
 
-    public void setCodigoUnitario(int codigoUnitario) {
-        this.codigoUnitario = codigoUnitario;
+    public void setCodigoUsuario(int codigoUsuario) {
+        this.codigoUsuario = codigoUsuario;
     }
 
     public int getCodigoFilial() {

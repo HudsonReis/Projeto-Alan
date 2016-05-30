@@ -84,7 +84,7 @@ public class ProdutoDAO {
         
         String sql = "SELECT P.CODPECA, F.NOME AS FILIAL, U.NOME AS USUARIO, P.NOME AS PRODUTO, "
                 + "P.QUANTIDADEPECA, P.STATUS FROM PRODUTO P INNER JOIN FILIAL F ON P.CODIGOFILIAL = "
-                + " F.CODIGOFILIAL INNER JOIN USUARIO U ON P.IDUSUARIO = U.CODIGOUNITARIO";
+                + " F.CODIGOFILIAL INNER JOIN USUARIO U ON P.IDUSUARIO = U.CODIGOUSUARIO";
         
         PreparedStatement stmt = conexao.prepareStatement(sql);
         List<ProdutoListagem> retorno = new ArrayList<ProdutoListagem>();

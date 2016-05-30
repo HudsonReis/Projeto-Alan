@@ -10,17 +10,17 @@ package classes;
  * @author Arthur
  */
 public class UsuarioListagem {
-    private int codigoUnitario;
+    private int codigoUsuario;
     private String filial;
     private String perfil;
     private String nome;
     private String login;  
     private boolean status;
     
-    public UsuarioListagem(int codUnitario, String filial, String perfil, String nome, String login,
+    public UsuarioListagem(int codigoUsuario, String filial, String perfil, String nome, String login,
             Boolean status) {
         
-        this.codigoUnitario = codUnitario;
+        this.codigoUsuario = codigoUsuario;
         this.filial = filial;
         this.perfil = perfil;
         this.nome = nome;
@@ -28,8 +28,8 @@ public class UsuarioListagem {
         this.status = status;
     }
     
-    public int getCodigoUnitario() {
-        return this.codigoUnitario;
+    public int getCodigoUsuario() {
+        return this.codigoUsuario;
     }
     
     public String getFilial() {

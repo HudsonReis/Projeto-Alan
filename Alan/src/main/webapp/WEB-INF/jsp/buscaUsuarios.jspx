@@ -37,7 +37,7 @@
                     <tbody>
                         <c:forEach var="usuario" items="${Usuarios}">
                             <tr>
-                                <td class="id">${usuario.codigoUnitario}</td>
+                                <td class="id">${usuario.codigoUsuario}</td>
                                 <td>${usuario.nome}</td>
                                 <td>${usuario.login}</td>
                                 <td>${usuario.perfil}</td>

@@ -33,7 +33,7 @@ public class UsuarioDAO {
         Connection conexao = ConexaoBanco.obterConexao();
         //linguagem sql -> inserir no banco
         String sql = "UPDATE USUARIO SET NOME = ?, CODIGOPERFIL = ?, CODIGOFILIAL = ?, LOGIN = ?, "
-                + "STATUS = ? WHERE CODIGOUNITARIO = ?";
+                + "STATUS = ? WHERE CODIGOUSUARIO = ?";
 
         PreparedStatement stmt = conexao.prepareStatement(sql);
         
@@ -42,7 +42,7 @@ public class UsuarioDAO {
         stmt.setInt(3, usuario.getCodigoFilial());
         stmt.setString(4, usuario.getLogin());
         stmt.setBoolean(5, usuario.getStatus());
-        stmt.setInt(6, usuario.getCodigoUnitario());
+        stmt.setInt(6, usuario.getCodigoUsuario());
         
         stmt.execute();
         stmt.close();
@@ -68,7 +68,7 @@ public class UsuarioDAO {
     public static Usuario consultar(String login, String senha) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         
-        String sql = "SELECT u.codigoUnitario, u.codigoFilial, u.codigoPerfil, u.nome, u.login, u.senha"
+        String sql = "SELECT u.codigoUsuario, u.codigoFilial, u.codigoPerfil, u.nome, u.login, u.senha"
                 + ", u.status, p.nome as perfil"
                 + " FROM Usuario u INNER JOIN Perfil p ON u.codigoPerfil = p.codigoPerfil "
                 + "WHERE u.login = ? AND u.senha = ? AND u.status = true";
@@ -82,7 +82,7 @@ public class UsuarioDAO {
         
         result.next();
         
-        int codUnitario = result.getInt("codigoUnitario");
+        int codUnitario = result.getInt("codigoUsuario");
         int codFilial = result.getInt("codigoFilial");
         int codPerfil = result.getInt("codigoPerfil");
         String nome = result.getString("nome");
@@ -122,7 +122,7 @@ public class UsuarioDAO {
     public static List<UsuarioListagem> listar() throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         
-        String sql = "SELECT U.CODIGOUNITARIO, F.NOME AS FILIAL, P.NOME AS PERFIL, U.NOME, U.LOGIN, "
+        String sql = "SELECT U.CODIGOUSUARIO, F.NOME AS FILIAL, P.NOME AS PERFIL, U.NOME, U.LOGIN, "
                 + "U.STATUS FROM USUARIO U INNER JOIN FILIAL F ON U.CODIGOFILIAL = F.CODIGOFILIAL "
                 + "INNER JOIN PERFIL P ON U.CODIGOPERFIL = P.CODIGOPERFIL";
         
@@ -132,7 +132,7 @@ public class UsuarioDAO {
         
         while(result.next()) {
             
-            int codUnitario = result.getInt("CODIGOUNITARIO");
+            int codUnitario = result.getInt("CODIGOUSUARIO");
             String filial = result.getString("FILIAL");
             String perfil = result.getString("PERFIL");
             String nome = result.getString("NOME");
@@ -150,8 +150,8 @@ public class UsuarioDAO {
     public static Usuario consultarPorId(int id) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         
-        String sql = "SELECT codigoUnitario, codigoFilial, codigoPerfil, nome, login, senha, status "
-                + "FROM Usuario WHERE codigoUnitario = ?";
+        String sql = "SELECT codigoUsuario, codigoFilial, codigoPerfil, nome, login, senha, status "
+                + "FROM Usuario WHERE codigoUsuario = ?";
         
         PreparedStatement stmt = conexao.prepareStatement(sql);
         
@@ -159,7 +159,7 @@ public class UsuarioDAO {
         ResultSet result = stmt.executeQuery();
         result.next();
         
-        int codUnitario = result.getInt("codigoUnitario");
+        int codUnitario = result.getInt("codigoUsuario");
         int codFilial = result.getInt("codigoFilial");
         int codPerfil = result.getInt("codigoPerfil");
         String nome = result.getString("nome");
@@ -176,7 +176,7 @@ public class UsuarioDAO {
 
     public static int maxId() throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
-        String sql = "SELECT MAX(CODIGOUNITARIO)FROM USUARIO";
+        String sql = "SELECT MAX(CODIGOUSUARIO)FROM USUARIO";
         PreparedStatement stmt = conexao.prepareStatement(sql);
         int prox = 0;
         ResultSet rs = stmt.executeQuery();

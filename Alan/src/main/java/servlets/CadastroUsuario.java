@@ -56,7 +56,7 @@ public class CadastroUsuario extends BaseServlet {
                 edicao = true;
             } else {
                 id = UsuarioDAO.maxId();
-                usuario.setCodigoUnitario(id);
+                usuario.setCodigoUsuario(id);
             }
             
             
