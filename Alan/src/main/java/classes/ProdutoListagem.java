@@ -17,7 +17,7 @@ public class ProdutoListagem {
     private int qtdPeca;
     private boolean status;
     
-    public ProdutoListagem(int codPeca, String filial, String usuario, String produto, int qtdPeca, boolean status)
+    public ProdutoListagem(int codigoPeca, String filial, String usuario, String produto, int qtdPeca, boolean status)
     {
         this.codigoPeca = codigoPeca;
         this.filial = filial;

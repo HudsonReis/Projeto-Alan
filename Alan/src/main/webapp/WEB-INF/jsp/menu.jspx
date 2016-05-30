@@ -41,9 +41,9 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Filial</a></li>
+                            <li><a href="BuscaFiliais">Filial</a></li>
                             <li><a href="BuscaUsuarios">Usuário</a></li>
-                            <li><a href="#">Produto</a></li>
+                            <li><a href="BuscaProdutos">Produto</a></li>
                         </ul>
                     </li>
                     <li><a href="#">Relatorios</a></li>

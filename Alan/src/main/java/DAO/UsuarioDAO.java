@@ -48,14 +48,15 @@ public class UsuarioDAO {
         stmt.close();
     }
     
-    public static boolean consultarLoginExistente(String login) throws SQLException, ClassNotFoundException {
+    public static boolean consultarLoginExistente(Usuario usuario) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         
-        String sql = "SELECT COUNT(0) as cont FROM USUARIO WHERE login = ?";
+        String sql = "SELECT COUNT(0) as cont FROM USUARIO WHERE login = ? AND codigoUsuario <> ?";
         
         PreparedStatement stmt = conexao.prepareStatement(sql);
         
-        stmt.setString(1, login);
+        stmt.setString(1, usuario.getLogin());
+        stmt.setInt(2, usuario.getCodigoUsuario());
         
         ResultSet result = stmt.executeQuery();
         result.next();

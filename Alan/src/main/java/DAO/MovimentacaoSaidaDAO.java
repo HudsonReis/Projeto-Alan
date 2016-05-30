@@ -18,7 +18,7 @@ public class MovimentacaoSaidaDAO {
         //linguagem sql -> inserir no banco
         String sql = "INSERT INTO MOVIMENTACAOSAIDA  "
                 //Nomes dos campos no banco
-                + "(codPeca, codFilial, idUsuario, quantidade)"
+                + "(codigoPeca, codFilial, idUsuario, quantidade)"
                 + "VALUES(?,?,?,?)";
 
         PreparedStatement stmt = conexao.prepareStatement(sql);

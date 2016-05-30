@@ -88,7 +88,7 @@ public class CadastroProduto extends BaseServlet {
         HttpSession sessao = request.getSession(false);
         Usuario usuario = (Usuario)sessao.getAttribute("usuarioLogado");
         
-        int codPeca = Integer.parseInt(request.getParameter("prodId"));
+        int codigoPeca = Integer.parseInt(request.getParameter("prodId"));
         int codFilial = Integer.parseInt(request.getParameter("filialId"));        
         int codUsuario = usuario.getCodigoUsuario();
         int qtdPeca = 0; 
@@ -96,7 +96,7 @@ public class CadastroProduto extends BaseServlet {
         boolean status = Boolean.parseBoolean(request.getParameter("status"));
         boolean edicao = Boolean.parseBoolean(request.getParameter("edicao"));
         
-        Produto produto = new Produto(codPeca, codFilial, codUsuario, nome, qtdPeca, status);
+        Produto produto = new Produto(codigoPeca, codFilial, codUsuario, nome, qtdPeca, status);
         
         try {
             
@@ -117,7 +117,7 @@ public class CadastroProduto extends BaseServlet {
         }
         
         if(resposta.getSucesso()) {
-            response.sendRedirect(request.getContextPath() + "/Home");
+            response.sendRedirect(request.getContextPath() + "/BuscaProdutos");
         } else {
             response.sendRedirect(request.getContextPath() + "/CadastroProduto");
         }

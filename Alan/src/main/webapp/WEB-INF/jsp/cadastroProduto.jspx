@@ -28,8 +28,8 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="prodId">ID</label>
-                                    <input type="text" class="form-control" disabled="" value="${produto.codPeca}"/>
-                                    <input type="hidden" id="prodId" name="prodId" value="${produto.codPeca}"/>
+                                    <input type="text" class="form-control" disabled="" value="${produto.codigoPeca}"/>
+                                    <input type="hidden" id="prodId" name="prodId" value="${produto.codigoPeca}"/>
                                     <input type="hidden" id="edicao" name="edicao" value="${edicao}"/>
                                 </div>
                             </div>

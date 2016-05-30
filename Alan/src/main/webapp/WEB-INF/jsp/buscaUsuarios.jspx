@@ -42,7 +42,7 @@
                                 <td>${usuario.login}</td>
                                 <td>${usuario.perfil}</td>
                                 <td>${usuario.filial}</td>
-                                <td>${usuario.status()}</td>
+                                <td>${usuario.getStatus()}</td>
                             </tr>           
                         </c:forEach>
                     </tbody>                    

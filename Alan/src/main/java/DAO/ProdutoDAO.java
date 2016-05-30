@@ -38,7 +38,7 @@ public class ProdutoDAO {
         Connection conexao = ConexaoBanco.obterConexao();
         //linguagem sql -> inserir no banco
         String sql = "UPDATE PRODUTO SET CODIGOFILIAL = ?, IDUSUARIO = ?, NOME = ?, QUANTIDADEPECA = ?, "
-                + "STATUS = ? WHERE CODPECA = ?";
+                + "STATUS = ? WHERE CODIGOPECA = ?";
 
         PreparedStatement stmt = conexao.prepareStatement(sql);
         
@@ -56,8 +56,8 @@ public class ProdutoDAO {
     public static Produto consultarPorId(int id) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         
-        String sql = "SELECT CODPECA, CODIGOFILIAL, IDUSUARIO, NOME, QUANTIDADEPECA, STATUS"
-                + "FROM PRODUTO WHERE CODPECA = ?";
+        String sql = "SELECT CODIGOPECA, CODIGOFILIAL, IDUSUARIO, NOME, QUANTIDADEPECA, STATUS"
+                + "FROM PRODUTO WHERE CODIGOPECA = ?";
         
         PreparedStatement stmt = conexao.prepareStatement(sql);
         
@@ -65,14 +65,14 @@ public class ProdutoDAO {
         ResultSet result = stmt.executeQuery();
         result.next();
         
-        int codPeca = result.getInt("CODPECA");
+        int codigoPeca = result.getInt("CODIGOPECA");
         int codFilial = result.getInt("CODIGOFILIAL");
         int idUsuario = result.getInt("IDUSUARIO");
         String nome = result.getString("NOME");
         int qtdPeca = result.getInt("QUANTIDADEPECA");
         boolean status = result.getBoolean("STATUS");
         
-        Produto produto = new Produto(codPeca, codFilial, idUsuario, nome, qtdPeca, status);
+        Produto produto = new Produto(codigoPeca, codFilial, idUsuario, nome, qtdPeca, status);
         
         stmt.close();
         
@@ -82,7 +82,7 @@ public class ProdutoDAO {
     public static List<ProdutoListagem> listar() throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         
-        String sql = "SELECT P.CODPECA, F.NOME AS FILIAL, U.NOME AS USUARIO, P.NOME AS PRODUTO, "
+        String sql = "SELECT P.CODIGOPECA, F.NOME AS FILIAL, U.NOME AS USUARIO, P.NOME AS PRODUTO, "
                 + "P.QUANTIDADEPECA, P.STATUS FROM PRODUTO P INNER JOIN FILIAL F ON P.CODIGOFILIAL = "
                 + " F.CODIGOFILIAL INNER JOIN USUARIO U ON P.IDUSUARIO = U.CODIGOUSUARIO";
         
@@ -92,14 +92,14 @@ public class ProdutoDAO {
         
         while(result.next()) {
             
-            int codPeca = result.getInt("CODPECA");
+            int codigoPeca = result.getInt("CODIGOPECA");
             String filial = result.getString("FILIAL");
             String usuario = result.getString("USUARIO");
             String nomeProduto = result.getString("PRODUTO");
             int qtdPeca = result.getInt("QUANTIDADEPECA");
             boolean status = result.getBoolean("STATUS");
 
-            ProdutoListagem produto = new ProdutoListagem(codPeca, filial, usuario, nomeProduto, qtdPeca, status);
+            ProdutoListagem produto = new ProdutoListagem(codigoPeca, filial, usuario, nomeProduto, qtdPeca, status);
         
             retorno.add(produto);
         }
@@ -109,7 +109,7 @@ public class ProdutoDAO {
 
     public static int maxId() throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
-        String sql = "SELECT MAX(CODPECA)FROM PRODUTO";
+        String sql = "SELECT MAX(CODIGOPECA)FROM PRODUTO";
         PreparedStatement stmt = conexao.prepareStatement(sql);
         int prox = 0;
         ResultSet rs = stmt.executeQuery();

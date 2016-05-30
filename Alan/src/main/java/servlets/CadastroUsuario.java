@@ -119,7 +119,7 @@ public class CadastroUsuario extends BaseServlet {
         }
         
         if(resposta.getSucesso()) {
-            response.sendRedirect(request.getContextPath() + "/Home");
+            response.sendRedirect(request.getContextPath() + "/BuscaUsuarios");
         } else {
             response.sendRedirect(request.getContextPath() + "/CadastroUsuario");
         }
@@ -128,7 +128,7 @@ public class CadastroUsuario extends BaseServlet {
     public Resposta validar(Usuario usuario) throws SQLException, ClassNotFoundException {
         Resposta resposta = new Resposta();
         
-        if(UsuarioDAO.consultarLoginExistente(usuario.getLogin())) {
+        if(UsuarioDAO.consultarLoginExistente(usuario)) {
             resposta.setErro("Esse login já existe, por favor, informe outro");
         }
         

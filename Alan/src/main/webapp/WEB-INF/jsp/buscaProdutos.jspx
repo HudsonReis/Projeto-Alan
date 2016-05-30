@@ -4,7 +4,9 @@
     Created on : 21/05/2016, 03:11:08
     Author     : Arthur
 -->
-<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
+          version="2.0">
 
     <jsp:directive.page contentType="text/html" pageEncoding="UTF-8"/>
 
@@ -35,12 +37,12 @@
                     <tbody>
                         <c:forEach var="produto" items="${Produtos}">
                             <tr>
-                                <td class="id">${produto.codPeca}</td>
-                                <td>${produto.nome}</td>
+                                <td class="id">${produto.codigoPeca}</td>
+                                <td>${produto.produto}</td>
                                 <td>${produto.filial}</td>
                                 <td>${produto.qtdPeca}</td>
                                 <td>${produto.usuario}</td>
-                                <td>${produto.status}</td>
+                                <td>${produto.getStatus()}</td>
                             </tr>           
                         </c:forEach>
                     </tbody>                    

@@ -71,8 +71,7 @@ public class Produto {
     public void setQtdPeca(int qtdPeca) {
         this.qtdPeca = qtdPeca;
     }
-
-
+    
     public boolean getStatus() {
         return status;
     }
