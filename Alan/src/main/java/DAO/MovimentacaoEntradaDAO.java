@@ -5,7 +5,7 @@ import conexao.ConexaoBanco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import classes.entidades.MovimentacaoEntrada;
+import classes.entidades.Compra;
 
 /**
  *
@@ -13,7 +13,7 @@ import classes.entidades.MovimentacaoEntrada;
  */
 public class MovimentacaoEntradaDAO {
     
-    public static void adicionar(MovimentacaoEntrada entrada) throws SQLException, ClassNotFoundException {
+    public static void adicionar(Compra entrada) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         //linguagem sql -> inserir no banco
         String sql = "INSERT INTO MOVIMENTACAOENTRADA  "
