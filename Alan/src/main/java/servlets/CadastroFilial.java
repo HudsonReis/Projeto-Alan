@@ -109,7 +109,7 @@ public class CadastroFilial extends BaseServlet {
         } 
 
         if(resposta.getSucesso()) {
-            response.sendRedirect(request.getContextPath() + "/Home");
+            response.sendRedirect(request.getContextPath() + "/BuscaFiliais");
         } else {
             response.sendRedirect(request.getContextPath() + "/CadastroFilial");
         }

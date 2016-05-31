@@ -100,7 +100,7 @@
                             <button type="submit" class="btn btn-success">Salvar</button>
                             <button type="button" id="btnCancelar" class="btn btn-default">Cancelar</button>
                         </div>
-                        <c:out value="${resposta.Mensagem}"></c:out>
+                        <!--<c:out value="${resposta.Mensagem}"></c:out>-->
                     </form>  
                 </div>
             </div>

@@ -60,7 +60,7 @@
                                     <label class="block">Status</label>
                                     <input type="radio" id="ativo" name="Status" value="true" /><label for="ativo" class="espacamento">Ativo</label>
                                     <input type="radio" id="inativo" name="Status" value="false" /><label for="inativo">Inativo</label>
-                                    <input type="hidden" id="statusEdit" value="${usuario.status}"/>
+                                    <input type="hidden" id="statusEdit" value="${produto.status}"/>
                                 </div> 
                             </div>
                         </div>

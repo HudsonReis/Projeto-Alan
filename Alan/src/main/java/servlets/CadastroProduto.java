@@ -93,7 +93,7 @@ public class CadastroProduto extends BaseServlet {
         int codUsuario = usuario.getCodigoUsuario();
         int qtdPeca = 0; 
         String nome = request.getParameter("nomeProd");        
-        boolean status = Boolean.parseBoolean(request.getParameter("status"));
+        boolean status = Boolean.parseBoolean(request.getParameter("Status"));
         boolean edicao = Boolean.parseBoolean(request.getParameter("edicao"));
         
         Produto produto = new Produto(codigoPeca, codFilial, codUsuario, nome, qtdPeca, status);

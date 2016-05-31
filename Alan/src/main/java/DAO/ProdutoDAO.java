@@ -56,8 +56,8 @@ public class ProdutoDAO {
     public static Produto consultarPorId(int id) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         
-        String sql = "SELECT CODIGOPECA, CODIGOFILIAL, IDUSUARIO, NOME, QUANTIDADEPECA, STATUS"
-                + "FROM PRODUTO WHERE CODIGOPECA = ?";
+        String sql = "SELECT codigoPeca, codigoFilial, idUsuario, nome, quantidadePeca, status"
+                + " FROM PRODUTO WHERE codigoPeca = ?";
         
         PreparedStatement stmt = conexao.prepareStatement(sql);
         

@@ -61,7 +61,7 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="Numero">Número</label>
-                                    <input type="number" required="required" class="form-control" id="numero" name="Numero" placeholder="Número" value="${filial.num}"/>
+                                    <input type="number" required="required" class="form-control" id="numero" name="Numero" placeholder="Número" value="${filial.numero}"/>
                                 </div>
                             </div>
                             <div class="col-md-3">
