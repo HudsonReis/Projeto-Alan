@@ -52,7 +52,7 @@ public class CadastroProdutoValor extends BaseServlet {
             
             if (id != null) {
                 produto = ProdutoDAO.consultarPorId(id);
-                valores = ProdutoValorDAO.listar();
+                valores = ProdutoValorDAO.listar(id);
             } 
             
         } catch (SQLException | ClassNotFoundException ex) {
@@ -84,8 +84,15 @@ public class CadastroProdutoValor extends BaseServlet {
         Usuario usuario = (Usuario)sessao.getAttribute("usuarioLogado");
         
         int codigoProduto = Integer.parseInt(request.getParameter("codigoProduto"));
-        Date inicioVigencia = Date.valueOf(request.getParameter("inicioVigencia"));        
-        Date terminoVigencia = Date.valueOf(request.getParameter("terminoVigencia")); 
+        Date inicioVigencia = Date.valueOf(request.getParameter("inicioVigencia")); 
+        
+        String terminoVigenciaStr = request.getParameter("terminoVigencia");
+        Date terminoVigencia = null;
+        
+        if(!terminoVigenciaStr.isEmpty()) {
+            terminoVigencia = Date.valueOf(terminoVigenciaStr); 
+        }
+        
         double valor = Double.parseDouble(request.getParameter("valor")); 
         
         ProdutoValor produtoValor = new ProdutoValor(codigoProduto, inicioVigencia, terminoVigencia, valor);

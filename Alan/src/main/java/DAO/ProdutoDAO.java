@@ -85,7 +85,15 @@ public class ProdutoDAO {
         String sql = "SELECT P.CODIGOPRODUTO, F.NOME AS FILIAL, U.NOME AS USUARIO, P.NOME AS PRODUTO, "
                 + "P.QUANTIDADEPECA, P.STATUS, PV.VALORPRODUTO FROM PRODUTO P INNER JOIN FILIAL F ON "
                 + "P.CODIGOFILIAL = F.CODIGOFILIAL INNER JOIN USUARIO U ON P.IDUSUARIO = U.CODIGOUSUARIO"
-                + " LEFT JOIN PRODUTO_VALOR PV ON P.CODIGOPRODUTO = PV.CODIGOPRODUTO";
+                + " LEFT JOIN PRODUTO_VALOR PV ON P.CODIGOPRODUTO = PV.CODIGOPRODUTO WHERE\n" +
+                "    PV.VALORPRODUTO IS NULL\n" +
+                "    OR\n" +
+                "    (\n" +
+                "            PV.DATATERMINOVIGENCIA IS NULL\n" +
+                "        AND PV.DATAINICIOVIGENCIA < CURRENT_DATE\n" +
+                "        OR\n" +
+                "        CURRENT_DATE BETWEEN PV.DATAINICIOVIGENCIA AND PV.DATATERMINOVIGENCIA\n" +
+                "    )";
         
         PreparedStatement stmt = conexao.prepareStatement(sql);
         List<ProdutoListagem> retorno = new ArrayList<>();

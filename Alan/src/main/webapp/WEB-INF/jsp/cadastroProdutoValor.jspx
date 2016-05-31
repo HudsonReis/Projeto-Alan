@@ -44,7 +44,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="nomeProd">Término de Vigência</label>
-                                    <input type="date" class="form-control" id="terminoVigencia" name="terminoVigencia" placeholder="Nome" required="required"/>
+                                    <input type="date" class="form-control" id="terminoVigencia" name="terminoVigencia"/>
                                 </div>
                             </div>
                             <div class="col-md-4">

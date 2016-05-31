@@ -27,23 +27,25 @@ public class ProdutoValorDAO {
                 + "(codigoProduto, dataInicioVigencia, dataTerminoVigencia, valorProduto)"
                 + "VALUES(?,?,?,?)";
 
-        PreparedStatement stmt = conexao.prepareStatement(sql);
-        
-        stmt.setInt(1, produtoValor.getCodigoProduto());
-        stmt.setDate(2, produtoValor.getInicioVigencia());
-        stmt.setDate(3, produtoValor.getTerminoVigencia());
-        stmt.setDouble(4, produtoValor.getValor());
-
-        stmt.execute();
-        stmt.close();
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setInt(1, produtoValor.getCodigoProduto());
+            stmt.setDate(2, produtoValor.getInicioVigencia());
+            stmt.setDate(3, produtoValor.getTerminoVigencia());
+            stmt.setDouble(4, produtoValor.getValor());
+            
+            stmt.execute();
+        }
     }
     
-    public static List<ProdutoValor> listar() throws SQLException, ClassNotFoundException {
+    public static List<ProdutoValor> listar(int id) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         
-        String sql = "SELECT codigoProduto, dataInicioVigencia, dataTerminoVigencia, valorProduto FROM Produto_Valor";
+        String sql = "SELECT codigoProduto, dataInicioVigencia, dataTerminoVigencia, valorProduto "
+                + "FROM Produto_Valor WHERE codigoProduto = ?";
         
         PreparedStatement stmt = conexao.prepareStatement(sql);
+        stmt.setInt(1, id);
+        
         List<ProdutoValor> retorno = new ArrayList<ProdutoValor>();
         ResultSet result = stmt.executeQuery();
         
