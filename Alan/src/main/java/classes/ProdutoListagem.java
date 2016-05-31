@@ -5,30 +5,35 @@
  */
 package classes;
 
+import util.Formatacoes;
+
 /**
  *
  * @author Arthur
  */
 public class ProdutoListagem {
-    private int codigoPeca;
+    private int codigoProduto;
     private String filial;
     private String usuario;
     private String produto;
     private int qtdPeca;
+    private double valor;
     private boolean status;
     
-    public ProdutoListagem(int codigoPeca, String filial, String usuario, String produto, int qtdPeca, boolean status)
+    public ProdutoListagem(int codigoProduto, String filial, String usuario, String produto, 
+            double valor, int qtdPeca, boolean status)
     {
-        this.codigoPeca = codigoPeca;
+        this.codigoProduto = codigoProduto;
         this.filial = filial;
         this.usuario = usuario;
         this.produto = produto;
         this.qtdPeca = qtdPeca;
+        this.valor = valor;
         this.status = status;
     }
     
-    public int getCodigoPeca() {
-        return this.codigoPeca;
+    public int getCodigoProduto() {
+        return this.codigoProduto;
     }
     
     public String getFilial() {
@@ -45,6 +50,14 @@ public class ProdutoListagem {
     
     public int getQtdPeca() {
         return this.qtdPeca;
+    }
+    
+    public double getValor() {
+        return this.valor;
+    }
+    
+    public String getValorFormatado() {
+        return Formatacoes.formatarMoeda(this.valor);
     }
     
     public String getStatus() {

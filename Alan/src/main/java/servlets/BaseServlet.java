@@ -43,7 +43,7 @@ public class BaseServlet extends HttpServlet {
     }
     
     protected Integer identificarEdicao(HttpServletRequest request) {
-        Dictionary<String, String> dic = new Hashtable<String, String>();
+        Dictionary<String, String> dic = new Hashtable<>();
         
         if(request.getQueryString() != null) {
             String[] qs = request.getQueryString().split("&");

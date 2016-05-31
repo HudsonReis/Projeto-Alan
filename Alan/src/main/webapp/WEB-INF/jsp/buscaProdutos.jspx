@@ -30,6 +30,7 @@
                             <th>Nome</th>
                             <th>Filial</th>
                             <th>Quantidade</th>
+                            <th>Valor</th>
                             <th>Usuário</th>
                             <th>Ativo</th>
                         </tr>
@@ -37,10 +38,11 @@
                     <tbody>
                         <c:forEach var="produto" items="${Produtos}">
                             <tr>
-                                <td class="id">${produto.codigoPeca}</td>
+                                <td class="id">${produto.codigoProduto}</td>
                                 <td>${produto.produto}</td>
                                 <td>${produto.filial}</td>
                                 <td>${produto.qtdPeca}</td>
+                                <td>${produto.getValorFormatado()}</td>
                                 <td>${produto.usuario}</td>
                                 <td>${produto.getStatus()}</td>
                             </tr>           

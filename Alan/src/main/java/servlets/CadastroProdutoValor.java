@@ -5,14 +5,17 @@
  */
 package servlets;
 
-import DAO.FilialDAO;
 import DAO.ProdutoDAO;
-import classes.entidades.Filial;
+import DAO.ProdutoValorDAO;
 import classes.entidades.Produto;
+import classes.entidades.ProdutoValor;
 import classes.entidades.Usuario;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,10 +25,10 @@ import util.Resposta;
 
 /**
  *
- * @author Nicolas
+ * @author Arthur
  */
-@WebServlet(name = "CadastroProduto", urlPatterns = {"/CadastroProduto"})
-public class CadastroProduto extends BaseServlet {
+@WebServlet(name = "CadastroProdutoValor", urlPatterns = {"/CadastroProdutoValor"})
+public class CadastroProdutoValor extends BaseServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -39,36 +42,28 @@ public class CadastroProduto extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        //pego as filiais de usuario do banco de dados para preenchimento de campos no html
-        ArrayList<Filial> filiais = new ArrayList<Filial>();
         
+        
+        List<ProdutoValor> valores = new ArrayList<>();
         Produto produto = new Produto();
         Integer id = identificarEdicao(request);
-        boolean edicao = false;
         
         try {
-            filiais = FilialDAO.listar();
             
             if (id != null) {
                 produto = ProdutoDAO.consultarPorId(id);
-                edicao = true;
-            } else {
-                id = ProdutoDAO.maxId();
-                produto.setCodigoProduto(id);
-            }
+                valores = ProdutoValorDAO.listar();
+            } 
             
-        } catch (SQLException ex) {
-            logar(CadastroProduto.class.getName(), ex);
-        } catch (ClassNotFoundException ex) {
-            logar(CadastroProduto.class.getName(), ex);
+        } catch (SQLException | ClassNotFoundException ex) {
+            logar(CadastroProdutoValor.class.getName(), ex);
         }
-        request.setAttribute("filiais", filiais);
-        request.setAttribute("produto", produto);
-        request.setAttribute("edicao", edicao);
         
-        processRequest(request, response, "/WEB-INF/jsp/cadastroProduto.jspx");
-
+        request.setAttribute("nomeProduto", produto.getNome());
+        request.setAttribute("codigoProduto", produto.getCodigoProduto());
+        request.setAttribute("ProdutoValores", valores);
+        
+        processRequest(request, response, "/WEB-INF/jsp/cadastroProdutoValor.jspx");
     }
 
     /**
@@ -88,38 +83,29 @@ public class CadastroProduto extends BaseServlet {
         HttpSession sessao = request.getSession(false);
         Usuario usuario = (Usuario)sessao.getAttribute("usuarioLogado");
         
-        int codigoProduto = Integer.parseInt(request.getParameter("prodId"));
-        int codFilial = Integer.parseInt(request.getParameter("filialId"));        
-        int codUsuario = usuario.getCodigoUsuario();
-        int qtdPeca = 0; 
-        String nome = request.getParameter("nomeProd");        
-        boolean status = Boolean.parseBoolean(request.getParameter("Status"));
-        boolean edicao = Boolean.parseBoolean(request.getParameter("edicao"));
+        int codigoProduto = Integer.parseInt(request.getParameter("codigoProduto"));
+        Date inicioVigencia = Date.valueOf(request.getParameter("inicioVigencia"));        
+        Date terminoVigencia = Date.valueOf(request.getParameter("terminoVigencia")); 
+        double valor = Double.parseDouble(request.getParameter("valor")); 
         
-        Produto produto = new Produto(codigoProduto, codFilial, codUsuario, nome, qtdPeca, status);
+        ProdutoValor produtoValor = new ProdutoValor(codigoProduto, inicioVigencia, terminoVigencia, valor);
         
         try {
             
             if(resposta.getSucesso()) {
-                if(edicao) {
-                    ProdutoDAO.alterar(produto);
-                } else {
-                    ProdutoDAO.adicionar(produto);
-                }
+                ProdutoValorDAO.adicionar(produtoValor);
             }
             
             request.getSession().setAttribute("resposta", resposta);
             
-        } catch (SQLException ex) {
-            logar(CadastroProduto.class.getName(), ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             logar(CadastroProduto.class.getName(), ex);
         }
         
         if(resposta.getSucesso()) {
             response.sendRedirect(request.getContextPath() + "/BuscaProdutos");
         } else {
-            response.sendRedirect(request.getContextPath() + "/CadastroProduto");
+            response.sendRedirect(request.getContextPath() + "/CadastroProdutoValor");
         }
     }
 

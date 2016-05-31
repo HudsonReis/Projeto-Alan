@@ -8,6 +8,7 @@ package servlets;
 import DAO.ProdutoDAO;
 import classes.ProdutoListagem;
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -36,6 +37,10 @@ public class BuscaProdutos extends BaseServlet {
             throws ServletException, IOException {
         
         List<ProdutoListagem> lista = new ArrayList<ProdutoListagem>();
+        
+        NumberFormat format = NumberFormat.getCurrencyInstance();
+        
+        String teste = format.format(25);
         
         try {
             lista = ProdutoDAO.listar();

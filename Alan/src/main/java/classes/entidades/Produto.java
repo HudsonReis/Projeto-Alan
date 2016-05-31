@@ -11,7 +11,7 @@ package classes.entidades;
  */
 public class Produto {
 
-    private int codigoPeca;
+    private int codigoProduto;
     private int codigoFilial;
     private int codUsuario;
     private String nome;
@@ -23,8 +23,8 @@ public class Produto {
         
     }
 
-    public Produto(int codigoPeca, int codigoFilial, int codUsuario, String nome, int qtdPeca, boolean status) {
-        this.codigoPeca = codigoPeca;
+    public Produto(int codigoProduto, int codigoFilial, int codUsuario, String nome, int qtdPeca, boolean status) {
+        this.codigoProduto = codigoProduto;
         this.codigoFilial = codigoFilial;
         this.codUsuario = codUsuario;
         this.nome = nome;
@@ -32,12 +32,12 @@ public class Produto {
         this.status = status;
     }
     
-    public int getCodigoPeca() {
-        return codigoPeca;
+    public int getCodigoProduto() {
+        return codigoProduto;
     }
 
-    public void setCodigoPeca(int codigoPeca) {
-        this.codigoPeca = codigoPeca;
+    public void setCodigoProduto(int codigoProduto) {
+        this.codigoProduto = codigoProduto;
     }
 
     public int getCodigoFilial() {

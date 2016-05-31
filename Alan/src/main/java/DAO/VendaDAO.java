@@ -18,7 +18,7 @@ public class VendaDAO {
         //linguagem sql -> inserir no banco
         String sql = "INSERT INTO VENDA  "
                 //Nomes dos campos no banco
-                + "(codigoPeca, codFilial, idUsuario, quantidade)"
+                + "(codigoProduto, codFilial, idUsuario, quantidade)"
                 + "VALUES(?,?,?,?)";
 
         PreparedStatement stmt = conexao.prepareStatement(sql);

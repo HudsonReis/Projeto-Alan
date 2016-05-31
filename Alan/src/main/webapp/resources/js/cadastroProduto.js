@@ -4,6 +4,12 @@ $(document).ready(function () {
         window.location.href = url;
     });
     
+    $(document).on("click", "button[id='btnValores']", function () {
+        var id = $("#prodId").val();
+        var url = window.location.origin + "/Alan/CadastroProdutoValor?id=" + id;
+        window.location.href = url;
+    });
+    
     var setarSelects = function(array, id) {
         for(var x = 0; x < array.length; x++) {
             

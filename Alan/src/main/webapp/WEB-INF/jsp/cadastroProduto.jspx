@@ -28,8 +28,8 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="prodId">ID</label>
-                                    <input type="text" class="form-control" disabled="" value="${produto.codigoPeca}"/>
-                                    <input type="hidden" id="prodId" name="prodId" value="${produto.codigoPeca}"/>
+                                    <input type="text" class="form-control" disabled="" value="${produto.codigoProduto}"/>
+                                    <input type="hidden" id="prodId" name="prodId" value="${produto.codigoProduto}"/>
                                     <input type="hidden" id="edicao" name="edicao" value="${edicao}"/>
                                 </div>
                             </div>
@@ -64,12 +64,21 @@
                                 </div> 
                             </div>
                         </div>
-                        
-                        <div class="right">
-                            <button type="submit" class="btn btn-success">Salvar</button>
-                            <button type="button" id="btnCancelar" class="btn btn-default">Cancelar</button>
-                        </div>
-                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <c:if test="${edicao}">
+                                    <div class="left">
+                                        <button type="button" id="btnValores" class="btn btn-info">Valores</button>                                  
+                                    </div>
+                                </c:if>                                
+                            </div>
+                            <div class="col-md-6">
+                                <div class="right">
+                                    <button type="submit" class="btn btn-success">Salvar</button>
+                                    <button type="button" id="btnCancelar" class="btn btn-default">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>                        
                     </form>
                 </div>
             </div>
