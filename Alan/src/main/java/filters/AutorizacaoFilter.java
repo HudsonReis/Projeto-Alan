@@ -20,7 +20,8 @@ import javax.servlet.http.HttpSession;
 import util.FuncionalidadesEnum;
 
 @WebFilter(filterName = "AutorizacaoFilter", 
-        servletNames = {"CadastroFilial", "CadastroProduto", "CadastroUsuario", "BuscaUsuarios", "Home"},
+        servletNames = {"CadastroFilial", "CadastroProduto", "CadastroUsuario", "BuscaUsuarios", "Home"
+                , "BuscaProdutos", "BuscaFiliais"},
         urlPatterns = {"/protegido/*"})
 public class AutorizacaoFilter implements Filter {
 
@@ -66,15 +67,21 @@ public class AutorizacaoFilter implements Filter {
         
         if (pagina.endsWith("CadastroFilial") 
                 && usuario.autorizado(FuncionalidadesEnum.CadastroFiliais.value)) {
-          return true;
+            return true;
         } else if (pagina.endsWith("CadastroProduto") 
                 && usuario.autorizado(FuncionalidadesEnum.CadastroProdutos.value)) {
-          return true;
+            return true;
         } else if (pagina.endsWith("CadastroUsuario") 
                 && usuario.autorizado(FuncionalidadesEnum.CadastroUsuarios.value)) {
-          return true;
+            return true;
         } else if (pagina.endsWith("BuscaUsuarios")
                 && usuario.autorizado(FuncionalidadesEnum.BuscaUsuarios.value)) {
+            return true;
+        } else if (pagina.endsWith("BuscaProdutos")
+                && usuario.autorizado(FuncionalidadesEnum.BuscaProdutos.value)) {
+            return true;
+        } else if (pagina.endsWith("BuscaFiliais")
+                && usuario.autorizado(FuncionalidadesEnum.BuscaFiliais.value)) {
             return true;
         } else if (pagina.endsWith("Home")) {
             return true;

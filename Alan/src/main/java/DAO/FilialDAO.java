@@ -22,7 +22,7 @@ public class FilialDAO {
         stmt.setString(1, filial.getNome());
         stmt.setString(2, filial.getNomeFantasia());
         stmt.setString(3, filial.getRua());
-        stmt.setInt(4, filial.getNum());
+        stmt.setInt(4, filial.getNumero());
         stmt.setString(5, filial.getBairro());
         stmt.setString(6, filial.getEstado());
         stmt.setString(7, filial.getCidade());
@@ -34,7 +34,7 @@ public class FilialDAO {
     public static void alterar(Filial filial) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         //linguagem sql -> inserir no banco
-        String sql = "UPDATE FILIAL SET NOME = ?, NOMEFANTASIA = ?, RUA = ?, NUM = ?, "
+        String sql = "UPDATE FILIAL SET NOME = ?, FANTASIA = ?, RUA = ?, NUMERO = ?, "
                 + "BAIRRO = ?, ESTADO = ?, CIDADE = ?, CNPJ = ? WHERE CODIGOFILIAL = ?";
 
         PreparedStatement stmt = conexao.prepareStatement(sql);
@@ -42,7 +42,7 @@ public class FilialDAO {
         stmt.setString(1, filial.getNome());
         stmt.setString(2, filial.getNomeFantasia());
         stmt.setString(3, filial.getRua());
-        stmt.setInt(4, filial.getNum());
+        stmt.setInt(4, filial.getNumero());
         stmt.setString(5, filial.getBairro());
         stmt.setString(6, filial.getEstado());
         stmt.setString(7, filial.getCidade());
@@ -90,7 +90,7 @@ public class FilialDAO {
         Connection conexao = ConexaoBanco.obterConexao();
         
         String sql = "SELECT codigoFilial, nome, fantasia, rua, numero, bairro, estado, cidade, cnpj"
-                + "FROM FILIAL WHERE codigoFilial = ?";
+                + " FROM FILIAL WHERE codigoFilial = ?";
         
         PreparedStatement stmt = conexao.prepareStatement(sql);
         

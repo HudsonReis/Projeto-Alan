@@ -15,7 +15,7 @@ public class Filial {
     private String nome;
     private String nomeFantasia;
     private String rua;
-    private int num;
+    private int numero;
     private String bairro;
     private String estado;
     private String cidade;
@@ -30,12 +30,12 @@ public class Filial {
         this.nome = nome;   
     }
 
-    public Filial(int codigoFilial, String nome, String nomeFantasia, String rua, int num, String bairro, String estado, String cidade, String cnpj) {
+    public Filial(int codigoFilial, String nome, String nomeFantasia, String rua, int numero, String bairro, String estado, String cidade, String cnpj) {
         this.codigoFilial = codigoFilial;
         this.nome = nome;
         this.nomeFantasia = nomeFantasia;
         this.rua = rua;
-        this.num = num;
+        this.numero = numero;
         this.bairro = bairro;
         this.estado = estado;
         this.cidade = cidade;
@@ -74,12 +74,12 @@ public class Filial {
         this.rua = rua;
     }
 
-    public int getNum() {
-        return num;
+    public int getNumero() {
+        return numero;
     }
 
-    public void setNum(int num) {
-        this.num = num;
+    public void setNumero(int num) {
+        this.numero = numero;
     }
 
     public String getBairro() {
