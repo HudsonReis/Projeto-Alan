@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Nicolas
  */
-@WebServlet(name = "MovimentacaoSaida", urlPatterns = {"/MovimentacaoSaida"})
-public class MovimentacaoSaida extends BaseServlet {
+@WebServlet(name = "Venda", urlPatterns = {"/Venda"})
+public class Venda extends BaseServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -30,7 +30,7 @@ public class MovimentacaoSaida extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response, "/WEB-INF/jsp/movimentacaoSaida.jspx");
+        processRequest(request, response, "/WEB-INF/jsp/venda.jspx");
     }
 
     /**
@@ -44,7 +44,7 @@ public class MovimentacaoSaida extends BaseServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response, "/WEB-INF/jsp/movimentacaoSaida.jspx");
+        processRequest(request, response, "/WEB-INF/jsp/venda.jspx");
     }
 
     /**

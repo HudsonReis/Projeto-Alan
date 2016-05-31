@@ -9,14 +9,14 @@ package classes.entidades;
  *
  * @author Nicolas
  */
-public class MovimentacaoSaida {
+public class Venda {
 
     private int quantidade;
     private int codigoProduto;
     private int codigoUsuario;
     private int codigoFilial;
 
-    public MovimentacaoSaida(int qtd, int codProduto, int codUsuario,
+    public Venda(int qtd, int codProduto, int codUsuario,
             int codFilial) {
         quantidade = qtd;
         codigoProduto = codProduto;

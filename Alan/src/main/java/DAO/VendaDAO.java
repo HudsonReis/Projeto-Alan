@@ -2,7 +2,7 @@
 package DAO;
 
 import conexao.ConexaoBanco;
-import classes.entidades.MovimentacaoSaida;
+import classes.entidades.Venda;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -11,12 +11,12 @@ import java.sql.SQLException;
  *
  * @author caiqu
  */
-public class MovimentacaoSaidaDAO {
+public class VendaDAO {
     
-    public static void adicionar(MovimentacaoSaida saida) throws SQLException, ClassNotFoundException {
+    public static void adicionar(Venda saida) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         //linguagem sql -> inserir no banco
-        String sql = "INSERT INTO MOVIMENTACAOSAIDA  "
+        String sql = "INSERT INTO VENDA  "
                 //Nomes dos campos no banco
                 + "(codigoPeca, codFilial, idUsuario, quantidade)"
                 + "VALUES(?,?,?,?)";

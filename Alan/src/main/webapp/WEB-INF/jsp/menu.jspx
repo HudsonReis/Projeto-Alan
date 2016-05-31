@@ -28,12 +28,12 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Movimentação
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Operação
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Entrada</a></li>
-                            <li><a href="#">Saída</a></li>
+                            <li><a href="#">Compra</a></li>
+                            <li><a href="Venda">Venda</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
