@@ -53,6 +53,7 @@
                         <button type="button" id="btnEditar" class="btn btn-success" disabled="disabled">Editar</button>
                     </div>
                 </div>
+                <input type="hidden" id="mensagem" value="${resposta.mensagem}"/>
             </div>
             <script type="text/javascript" src="resources/js/jquery-2.2.3.min.js"><![CDATA[/*Teste*/]]></script>
             <script type="text/javascript" src="resources/js/bootstrap.min.js"><![CDATA[/*Teste*/]]></script>

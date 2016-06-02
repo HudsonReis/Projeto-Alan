@@ -17,6 +17,7 @@ public class Produto {
     private String nome;
     private int qtdPeca;
     private boolean status;
+    private ProdutoValor produtoValor;
     
     public Produto()
     {
@@ -79,4 +80,12 @@ public class Produto {
     public void setStatus(boolean status) {
         this.status = status;
     }        
+    
+    public ProdutoValor getProdutoValor() {
+        return this.produtoValor;
+    }
+    
+    public void setProdutoValor(ProdutoValor produtoValor) {
+        this.produtoValor = produtoValor;
+    }
 }

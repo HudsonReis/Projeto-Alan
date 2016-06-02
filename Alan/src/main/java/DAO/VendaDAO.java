@@ -21,14 +21,14 @@ public class VendaDAO {
                 + "(codigoProduto, codFilial, idUsuario, quantidade)"
                 + "VALUES(?,?,?,?)";
 
-        PreparedStatement stmt = conexao.prepareStatement(sql);
-        stmt.setInt(1, saida.getCodigoProduto());
-        stmt.setInt(2, saida.getCodigoFilial());
-        stmt.setInt(3, saida.getCodigoUsuario());
-        stmt.setInt(4, saida.getQuantidade());
-
-        stmt.execute();
-        stmt.close();
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setInt(1, saida.getCodigoProduto());
+            stmt.setInt(2, saida.getCodigoFilial());
+            stmt.setInt(3, saida.getCodigoUsuario());
+            stmt.setInt(4, saida.getQuantidade());
+            
+            stmt.execute();
+        }
     }
     
 }

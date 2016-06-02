@@ -33,3 +33,8 @@ table tbody tr:hover {
 button {
     margin-left:5px;
 }
+
+.has-error, .has-error:focus {
+    background-color:#FFE5E5;
+    border:1px solid red;
+}

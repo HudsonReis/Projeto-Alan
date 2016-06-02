@@ -3,7 +3,40 @@ $(document).ready(function () {
         var url = window.location.origin + "/Alan/Home";
         window.location.href = url;
     });
+    
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+    
+    dispararResposta();
 });
+
+var dispararResposta = function () {
+    var sucesso = $("#sucesso").val();
+    var mensagem = $("#mensagem").val();
+    var campo = $("#campo").val();
+    
+    if (sucesso === "false") {
+        $("#" + campo).addClass("has-error");
+        toastr.error(mensagem, 'Erro!')
+    } else if (sucesso === "true") {
+        toastr.success(mensagem, 'Sucesso!')
+    }
+};
 
 // JavaScript Document
 //adiciona mascara de cnpj

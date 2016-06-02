@@ -8,6 +8,7 @@ package servlets;
 import classes.entidades.Filial;
 import DAO.FilialDAO;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -34,11 +35,11 @@ public class BuscaFiliais extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Filial> lista = new ArrayList<Filial>();
+        List<Filial> lista = new ArrayList<>();
         
         try {
             lista = FilialDAO.listar();
-        } catch(Exception ex) {
+        } catch(SQLException | ClassNotFoundException ex) {
             logar(BuscaFiliais.class.getName(), ex);
         }
         

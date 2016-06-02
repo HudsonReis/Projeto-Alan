@@ -6,7 +6,6 @@
 package classes.entidades;
 
 import java.sql.Date;
-import org.apache.derby.client.am.Decimal;
 import util.Formatacoes;
 
 /**
@@ -19,8 +18,8 @@ public class ProdutoValor {
     private Date terminoVigencia;
     private double valor;
     
-    public ProdutoValor() {
-        
+    public ProdutoValor(double valor) {
+        this.valor = valor;
     }
     
     public ProdutoValor(int codigoProduto, Date inicioVigencia, Date terminoVigencia, double valor) {

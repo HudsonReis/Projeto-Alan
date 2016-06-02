@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -89,11 +87,7 @@ public class LoginServlet extends BaseServlet {
         if (usuario != null && usuario.autenticar(login, senha)) {
             return usuario;
         }
-    } catch(SQLException ex) {
-        logar(LoginServlet.class.getName(), ex);
-    } catch (ClassNotFoundException ex) {
-        logar(LoginServlet.class.getName(), ex);
-    } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
+    } catch(SQLException | ClassNotFoundException | NoSuchAlgorithmException | InvalidKeySpecException ex) {
         logar(LoginServlet.class.getName(), ex);
     }
     

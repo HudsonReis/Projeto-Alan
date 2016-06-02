@@ -12,13 +12,15 @@ package util;
 public class Resposta {
     private boolean Sucesso;
     private String Mensagem;
+    private String Campo;
     
     public Resposta() {
         Sucesso = true;
     }
     
-    public void setErro(String msg){
+    public void setErro(String msg, String campo){
         Mensagem = msg;
+        Campo = campo;
         Sucesso = false;
     }
     
@@ -26,7 +28,15 @@ public class Resposta {
         return this.Mensagem;
     }
     
+    public void setMensagem(String mensagem) {
+        this.Mensagem = mensagem;
+    }
+    
     public boolean getSucesso() {
         return this.Sucesso;
+    }
+    
+    public String getCampo() {
+        return this.Campo;
     }
 }

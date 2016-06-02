@@ -38,13 +38,11 @@ public class Venda extends BaseServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        List<ProdutoListagem> lista = new ArrayList<ProdutoListagem>();
+        List<ProdutoListagem> lista = new ArrayList<>();
         
         try {
             lista = ProdutoDAO.listar();
-        } catch (SQLException ex) {
-            Logger.getLogger(Venda.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(Venda.class.getName()).log(Level.SEVERE, null, ex);
         }
         

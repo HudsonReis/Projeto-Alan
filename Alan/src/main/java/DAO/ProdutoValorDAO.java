@@ -37,6 +37,8 @@ public class ProdutoValorDAO {
         }
     }
     
+   
+    
     public static List<ProdutoValor> listar(int id) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         
@@ -46,7 +48,7 @@ public class ProdutoValorDAO {
         PreparedStatement stmt = conexao.prepareStatement(sql);
         stmt.setInt(1, id);
         
-        List<ProdutoValor> retorno = new ArrayList<ProdutoValor>();
+        List<ProdutoValor> retorno = new ArrayList<>();
         ResultSet result = stmt.executeQuery();
         
         while(result.next()) {

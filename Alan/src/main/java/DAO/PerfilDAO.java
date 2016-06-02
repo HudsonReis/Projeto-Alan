@@ -12,7 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -27,7 +26,7 @@ public class PerfilDAO {
         PreparedStatement stmt = conexao.prepareStatement(sql);
         ResultSet result = stmt.executeQuery();
         
-        ArrayList <Perfil> retorno = new ArrayList<Perfil>();
+        ArrayList <Perfil> retorno = new ArrayList<>();
         
         while(result.next()){
             int codigoPerfil = result.getInt("codigoPerfil");

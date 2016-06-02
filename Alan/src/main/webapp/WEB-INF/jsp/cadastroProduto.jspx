@@ -53,6 +53,14 @@
                                     <input type="hidden" id="hiddenFilialId" value="${produto.codigoFilial}" />
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="nomeProd">Valor</label>
+                                        <input type="text" class="form-control" id="valor" name="valor" required="required" value="${produto.produtoValor.valor}"/>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">

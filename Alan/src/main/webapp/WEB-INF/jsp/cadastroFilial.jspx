@@ -13,6 +13,7 @@
             <title>Cadastro Filial</title>
           
             <link rel="stylesheet" href="resources/css/bootstrap.min.css"/>
+            <link rel="stylesheet" href="resources/css/toastr.min.css"/>
             <link rel="stylesheet" href="resources/css/style.css"/>
         </head>
         <body>
@@ -87,12 +88,15 @@
                             <button type="submit" class="btn btn-success">Salvar</button>
                             <button type="button" id="btnCancelar" class="btn btn-default">Cancelar</button>
                         </div>
-
                     </form>
                 </div>
+                <input type="hidden" id="mensagem" value="${resposta.mensagem}"/>
+                <input type="hidden" id="sucesso" value="${resposta.sucesso}"/>
+                <input type="hidden" id="campo" value="${resposta.campo}" />
             </div>
             <script type="text/javascript" src="resources/js/jquery-2.2.3.min.js"><![CDATA[/*Teste*/]]></script>
             <script type="text/javascript" src="resources/js/bootstrap.min.js"><![CDATA[/*Teste*/]]></script>
+            <script type="text/javascript" src="resources/js/toastr.min.js"><![CDATA[/*Teste*/]]></script>
             <script type="text/javascript" src="resources/js/cadastroFilial.js"><![CDATA[/*Teste*/]]></script>
         </body>
     </html>

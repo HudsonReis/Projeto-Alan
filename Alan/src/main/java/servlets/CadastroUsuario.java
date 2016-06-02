@@ -39,17 +39,13 @@ public class CadastroUsuario extends BaseServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        //pego os perfis de usuario do banco de dados para preenchimento de campos no html
-        ArrayList<Perfil> perfis = new ArrayList<>();
-        ArrayList<Filial> filiais = new ArrayList<Filial>();
+        preencherInformacoes(request);
         
         Usuario usuario = new Usuario();
         Integer id = identificarEdicao(request);
         boolean edicao = false;
         
         try {
-            perfis  = PerfilDAO.consultar();
-            filiais = FilialDAO.listar();
             
             if (id != null) {
                 usuario = UsuarioDAO.consultarPorId(id);
@@ -58,16 +54,10 @@ public class CadastroUsuario extends BaseServlet {
                 id = UsuarioDAO.maxId();
                 usuario.setCodigoUsuario(id);
             }
-            
-            
-        } catch (SQLException ex) {
-            logar(CadastroUsuario.class.getName(), ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             logar(CadastroUsuario.class.getName(), ex);
         }
-        
-        request.setAttribute("perfis", perfis);
-        request.setAttribute("filiais", filiais);
+
         request.setAttribute("usuario", usuario);
         request.setAttribute("edicao", edicao);
         
@@ -112,24 +102,42 @@ public class CadastroUsuario extends BaseServlet {
            
             request.setAttribute("resposta", resposta);
             
-        } catch (SQLException ex) {
-            logar(CadastroUsuario.class.getName(), ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             logar(CadastroUsuario.class.getName(), ex);
         }
         
         if(resposta.getSucesso()) {
             response.sendRedirect(request.getContextPath() + "/BuscaUsuarios");
         } else {
+            preencherInformacoes(request);
+            request.setAttribute("usuario", usuario);
+            request.setAttribute("edicao", edicao);
+        
             processRequest(request, response, "/WEB-INF/jsp/cadastroUsuario.jspx");
         }
+    }
+    
+    public void preencherInformacoes(HttpServletRequest request) {
+        ArrayList<Perfil> perfis = new ArrayList<>();
+        ArrayList<Filial> filiais = new ArrayList<>();
+        
+        try {
+            perfis  = PerfilDAO.consultar();
+            filiais = FilialDAO.listar();
+            
+        } catch (SQLException | ClassNotFoundException ex) {
+            logar(CadastroUsuario.class.getName(), ex);
+        }
+        
+        request.setAttribute("perfis", perfis);
+        request.setAttribute("filiais", filiais);
     }
     
     public Resposta validar(Usuario usuario) throws SQLException, ClassNotFoundException {
         Resposta resposta = new Resposta();
         
         if(UsuarioDAO.consultarLoginExistente(usuario)) {
-            resposta.setErro("Esse login já existe, por favor, informe outro");
+            resposta.setErro("Esse login já existe, por favor, informe outro.", "login");
         }
         
         return resposta;

@@ -50,9 +50,7 @@ public class CadastroFilial extends BaseServlet {
                 filial.setCodigoFilial(id);
             }
             
-        } catch (SQLException ex) {
-            logar(CadastroFilial.class.getName(), ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             logar(CadastroFilial.class.getName(), ex);
         }
         
@@ -87,9 +85,9 @@ public class CadastroFilial extends BaseServlet {
         String estado = request.getParameter("Estado");
         String cidade = request.getParameter("Cidade");
         
-        //Criando objeto da filial
         Filial filial = new Filial(id, nome, nomeFantasia, rua, num, bairro, estado, cidade, cnpj);
         try {
+            
             resposta = validar(filial);
             
             if(resposta.getSucesso()) {
@@ -98,20 +96,20 @@ public class CadastroFilial extends BaseServlet {
                 } else {
                     FilialDAO.adicionar(filial);
                 }
+                
+                
             }
             
             request.getSession().setAttribute("resposta", resposta);
                        
-        } catch (SQLException ex) {
-            logar(CadastroFilial.class.getName(), ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             logar(CadastroFilial.class.getName(), ex);
         } 
 
         if(resposta.getSucesso()) {
             response.sendRedirect(request.getContextPath() + "/BuscaFiliais");
         } else {
-            response.sendRedirect(request.getContextPath() + "/CadastroFilial");
+            processRequest(request, response, "/WEB-INF/jsp/cadastroFilial.jspx");
         }
     }
     
@@ -119,7 +117,7 @@ public class CadastroFilial extends BaseServlet {
         Resposta resposta = new Resposta();
         
         if(!Funcoes.isCNPJ(filial.getCnpj())) {
-            resposta.setErro("Este CNPJ é inválido");
+            resposta.setErro("Este CNPJ é inválido.", "cnpj");
         }
         
         return resposta;

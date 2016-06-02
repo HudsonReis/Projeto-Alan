@@ -41,7 +41,7 @@ public class CadastroProduto extends BaseServlet {
             throws ServletException, IOException {
 
         //pego as filiais de usuario do banco de dados para preenchimento de campos no html
-        ArrayList<Filial> filiais = new ArrayList<Filial>();
+        ArrayList<Filial> filiais = new ArrayList<>();
         
         Produto produto = new Produto();
         Integer id = identificarEdicao(request);
@@ -58,9 +58,7 @@ public class CadastroProduto extends BaseServlet {
                 produto.setCodigoProduto(id);
             }
             
-        } catch (SQLException ex) {
-            logar(CadastroProduto.class.getName(), ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             logar(CadastroProduto.class.getName(), ex);
         }
         request.setAttribute("filiais", filiais);
@@ -95,6 +93,7 @@ public class CadastroProduto extends BaseServlet {
         String nome = request.getParameter("nomeProd");        
         boolean status = Boolean.parseBoolean(request.getParameter("Status"));
         boolean edicao = Boolean.parseBoolean(request.getParameter("edicao"));
+        double valor = Double.parseDouble(request.getParameter("valor"));
         
         Produto produto = new Produto(codigoProduto, codFilial, codUsuario, nome, qtdPeca, status);
         
@@ -104,22 +103,20 @@ public class CadastroProduto extends BaseServlet {
                 if(edicao) {
                     ProdutoDAO.alterar(produto);
                 } else {
-                    ProdutoDAO.adicionar(produto);
+                    ProdutoDAO.adicionar(produto, false);
                 }
             }
             
             request.getSession().setAttribute("resposta", resposta);
             
-        } catch (SQLException ex) {
-            logar(CadastroProduto.class.getName(), ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             logar(CadastroProduto.class.getName(), ex);
         }
         
         if(resposta.getSucesso()) {
             response.sendRedirect(request.getContextPath() + "/BuscaProdutos");
         } else {
-            response.sendRedirect(request.getContextPath() + "/CadastroProduto");
+            processRequest(request, response, "/WEB-INF/jsp/cadastroProduto.jspx");
         }
     }
 
