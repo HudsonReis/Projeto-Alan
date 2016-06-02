@@ -21,7 +21,7 @@ import util.FuncionalidadesEnum;
 
 @WebFilter(filterName = "AutorizacaoFilter", 
         servletNames = {"CadastroFilial", "CadastroProduto", "CadastroUsuario", "BuscaUsuarios", "Home"
-                , "BuscaProdutos", "BuscaFiliais"},
+                , "BuscaProdutos", "BuscaFiliais", "Venda"},
         urlPatterns = {"/protegido/*"})
 public class AutorizacaoFilter implements Filter {
 
@@ -82,6 +82,9 @@ public class AutorizacaoFilter implements Filter {
             return true;
         } else if (pagina.endsWith("BuscaFiliais")
                 && usuario.autorizado(FuncionalidadesEnum.BuscaFiliais.value)) {
+            return true;
+        } else if (pagina.endsWith("Venda")
+                && usuario.autorizado(FuncionalidadesEnum.RegistroMovimentacaoVendas.value)) {
             return true;
         } else if (pagina.endsWith("Home")) {
             return true;

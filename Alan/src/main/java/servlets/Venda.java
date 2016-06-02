@@ -5,7 +5,14 @@
  */
 package servlets;
 
+import DAO.ProdutoDAO;
+import classes.ProdutoListagem;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +37,19 @@ public class Venda extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        List<ProdutoListagem> lista = new ArrayList<ProdutoListagem>();
+        
+        try {
+            lista = ProdutoDAO.listar();
+        } catch (SQLException ex) {
+            Logger.getLogger(Venda.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Venda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        request.setAttribute("produtos", lista);
+        
         processRequest(request, response, "/WEB-INF/jsp/venda.jspx");
     }
 

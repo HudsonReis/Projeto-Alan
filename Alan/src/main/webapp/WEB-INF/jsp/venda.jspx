@@ -25,52 +25,62 @@
                             <div class="row">                                   
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="Produto">Produto</label>
-                                        <select class="form-control" id="Produto" name="Produto" required="">
+                                        <label for="produto">Produto</label>
+                                        <select class="form-control" id="produto" name="produto" required="">
                                             <option value="0">Selecione...</option>
-                                        </select>                                        
-                                    </div>
+                                        <c:forEach items="${produtos}" var="produto">
+                                            <option value="${produto.codigoProduto}">${produto.produto}</option>
+                                        </c:forEach>
+                                    </select>                                        
                                 </div>
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        <label for="Quantidade">Quantidade</label>
-                                        <input type="number" class="form-control" id="quantidade" name="Quantidade" min="0"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label for="Valor">Valor</label>
-                                        <input type="text" class="form-control" id="valor" name="Valor" disabled="true"/>
-                                    </div>                                    
-                                </div>                                                                                                
-                            </div>    
-                            <div class="right">
-                                <button type="button" class="btn btn-primary" id="btnIncluir">Incluir</button>
                             </div>
-                        </form>
-                    </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <label for="quantidade">Quantidade</label>
+                                    <input type="number" class="form-control" id="quantidade" name="quantidade" min="0" required="required"/>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="valor">Valor</label>
+                                    <input type="text" class="form-control" id="valor" name="valor" disabled="true"/>
+                                </div>                                    
+                            </div>                                                                                                
+                        </div>    
+                        <div class="right">
+                            <button type="button" class="btn btn-primary" id="btnIncluir">Incluir</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="container">
-                    <div class="box">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table id="vendas" class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Produto</th>
-                                            <th>Quantidade</th>
-                                            <th>Valor</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                            </div>
+            </div>
+            <div class="container">
+                <div class="box">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="vendas" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Produto</th>
+                                        <th>Quantidade</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                                <tfoot hidden="true">
+                                    <tr>
+                                        <th colspan="2">Total</th>
+                                        <th id="valorTotal"></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div>
                     </div>
                 </div>
-                <script type="text/javascript" src="resources/js/jquery-2.2.3.min.js"><![CDATA[/*Teste*/]]></script>
-                <script type="text/javascript" src="resources/js/bootstrap.min.js"><![CDATA[/*Teste*/]]></script>
-                <script type="text/javascript" src="resources/js/venda.js"><![CDATA[/*Teste*/]]></script>
-            </body>
-        </html>
+            </div>
+
+            <script type="text/javascript" src="resources/js/jquery-2.2.3.min.js"><![CDATA[/*Teste*/]]></script>
+            <script type="text/javascript" src="resources/js/bootstrap.min.js"><![CDATA[/*Teste*/]]></script>
+            <script type="text/javascript" src="resources/js/venda.js"><![CDATA[/*Teste*/]]></script>
+        </body>
+    </html>
 </jsp:root>
