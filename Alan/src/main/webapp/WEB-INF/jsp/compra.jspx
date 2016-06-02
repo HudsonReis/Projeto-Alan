@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Document   : compra
+    Created on : 01/06/2016, 20:01:01
+    Author     : hudson.rsilva1
+-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:x="http://java.sun.com/jsp/jstl/core"
+          version="2.0">
+
+    <jsp:directive.page contentType="text/html" pageEncoding="UTF-8"/>
+
+    <html>
+        <head>
+            <title>Compra</title>
+            <meta http-equiv="Content-type" content="text/html; charset=UTF-8"/>
+            <link rel="stylesheet" href="resources/css/bootstrap.min.css"/>
+            <link rel="stylesheet" href="resources/css/style.css"/>
+        </head>
+        <body>
+            <jsp:include page="menu.jspx"></jsp:include>
+                <div class="container">
+                    <h2>Compra</h2>
+                        <div class="box">
+                            <form method="post">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="CodigoDoProduto">Código do produto</label>
+                                            <input type="number" class="form-control" id="codProduto" name="CodigoProduto" min="0"/>
+                                        </div>
+                                    </div>
+                                        
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="Produto">Produto</label>
+                                            <input type="text" class="form-control" id="Produto" name="Produto"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="Preco">Preço</label>
+                                            <input type="number" class="form-control" id="Preco" name="Preco" min="0"/>
+                                        </div>    
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            <label for="Quantidade">Quantidade</label>
+                                            <input type="number" class="form-control" id="Quantidade" name="Quantidade" min="0"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <button type="button" class="btn btn-primary" id="btnIncluir">Incluir</button>
+                                </div>
+                                
+                            </form>
+                        </div>
+                </div>
+                <div class="container">
+                    <div class="box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table id="compras" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-md-2">Código do Produto</th>
+                                            <th class="col-md-4">Produto</th>
+                                            <th class="col-md-2">Preço</th>
+                                            <th class="col-md-2">Quantidade</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript" src="resources/js/jquery-2.2.3.min.js"><![CDATA[/*Teste*/]]></script>
+                <script type="text/javascript" src="resources/js/bootstrap.min.js"><![CDATA[/*Teste*/]]></script>
+                <script type="text/javascript" src="resources/js/compra.js"><![CDATA[/*Teste*/]]></script>
+        </body>
+    </html>
+</jsp:root>

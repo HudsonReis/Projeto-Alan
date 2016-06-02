@@ -32,7 +32,7 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Compra</a></li>
+                            <li><a href="Compra">Compra</a></li>
                             <li><a href="Venda">Venda</a></li>
                         </ul>
                     </li>
