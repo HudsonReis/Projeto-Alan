@@ -20,7 +20,7 @@
             <div class="container">
                 <h2>Cadastro de Filiais</h2>
                 <div class="box">
-                    <form method="post">
+                    <form method="post" name="form1">
                         <div class="row">   
                             <div class="col-md-2">
                                 <div class="form-group">
@@ -47,7 +47,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="cnpj">CNPJ</label>
-                                    <input type="text" required="required" class="form-control" id="cnpj" name="cnpj" placeholder="CNPJ" value="${filial.cnpj}"/>
+                                    <input type="text" required="required" class="form-control" id="cnpj" name="cnpj" placeholder="CNPJ"  onKeyPress="MascaraCNPJ(form1.cnpj);" value="${filial.cnpj}" onBlur="ValidarCNPJ(form1.cnpj);"/>
                                 </div>
                             </div>
                         </div>
