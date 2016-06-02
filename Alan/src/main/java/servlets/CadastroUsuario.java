@@ -109,8 +109,8 @@ public class CadastroUsuario extends BaseServlet {
                     UsuarioDAO.adicionar(usuario);
                 }
             }
-            
-            request.getSession().setAttribute("resposta", resposta);
+           
+            request.setAttribute("resposta", resposta);
             
         } catch (SQLException ex) {
             logar(CadastroUsuario.class.getName(), ex);
@@ -121,7 +121,7 @@ public class CadastroUsuario extends BaseServlet {
         if(resposta.getSucesso()) {
             response.sendRedirect(request.getContextPath() + "/BuscaUsuarios");
         } else {
-            response.sendRedirect(request.getContextPath() + "/CadastroUsuario");
+            processRequest(request, response, "/WEB-INF/jsp/cadastroUsuario.jspx");
         }
     }
     
