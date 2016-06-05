@@ -5,6 +5,8 @@ $(document).ready(function () {
     $(document).on("click", "button[id='btnIncluir']", function () {
         var produtoId = $("#produto").val();
         var quantidade = $("#quantidade").val();
+        
+        //validação se os campos do form estão vazios
         if (produtoId == 0) {
             alert("Selecione um produto");
         } else if (quantidade == 0 || quantidade == null) {
@@ -48,6 +50,6 @@ $(document).ready(function () {
         }
         
         $("#valorTotal").val(total);
-    }
+    };
 });
 

@@ -1,21 +1,32 @@
 var carrinhoCompra = [];
 $(document).ready(function () {
+    var remover = $('#remover').val();
 
     $(document).on("click", "button[id='btnIncluir']", function () {
 
-        if (valida_form() === false) {
-            alert('Por favor, preencha todos os campos!');
+        var codProduto = $("#codProduto").val();
+        var nomeProduto = $("#Produto").val();
+        var quantidade = $("#Quantidade").val();
+        var preco = $("#Preco").val();
         
-        } else {    
-            console.log("ae");
-            var codProduto = $("#codProduto").val();
-            var produto = $("#Produto").text();
-            var quantidade = $("#Quantidade").val();
-            var preco = $("#Preco").val();
 
+        //validação se os campos do form estão vazios
+        if (codProduto == 0 || codProduto == null) {
+            alert("Informe o codigo do produto de maneira correta");
+            document.getElementById("codProduto").focus();
+        } else if (nomeProduto == 0 || nomeProduto == null) {
+            alert("Informe o produto de maneira correta");
+            document.getElementById("Produto").focus();
+        } else if (preco == 0 || preco == null) {
+            alert("Informe o preço do produto de maneira correta");
+            document.getElementById("Preco").focus();
+        } else if (quantidade == 0 || quantidade == null) {
+            alert("Informe a quantidade do produto de maneira correta");
+            document.getElementById("Quantidade").focus();
+        } else {
             var compra = {
                 codProduto: codProduto,
-                produto: produto,
+                nomeProduto: nomeProduto,
                 preco: preco,
                 quantidade: quantidade
             };
@@ -28,28 +39,14 @@ $(document).ready(function () {
 
     var preencherTabela = function (compra) {
         var tbody = $("#compras tbody");
-        var htmlStr = "<tr><td>" + compra.codProduto + "</td><td>" + compra.produto + "</td><td>" + compra.preco + "</td></tr>" + compra.quantidade + "</td></tr>";
+        var htmlStr = "<tr><td>" + compra.codProduto + "</td><td>" + compra.nomeProduto + "</td><td>" + compra.preco + "</td><td>" + compra.quantidade + "</td>" + inserirRemover() + "</tr>";
 
         tbody.append(htmlStr);
     };
-});
 
-function valida_form() {
-    if (document.getElementById("codProduto").value === "") {
-        document.getElementById("codProduto").focus();
-        return false;
-    } else
-    if (document.getElementById("Produto").value === "") {
-        document.getElementById("Produto").focus();
-        return false;
-    } else
-    if (document.getElementById("Preco").value === "") {
-        document.getElementById("Preco").focus();
-        return false;
-    }else
-    if (document.getElementById("Quantidade").value === "") {
-        document.getElementById("Quantidade").focus();
-        return false;
+    function inserirRemover() {
+       document.getElementById("remover").innerHTML = "<button type='button' class='btn btn-primary' id='btnRemover'>Remover</button>";
     }
-}
+
+});
 

@@ -22,7 +22,7 @@
                 <div class="container">
                     <h2>Compra</h2>
                         <div class="box">
-                            <form method="post">
+                            <form method="post" name="formCompra">
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="form-group">
@@ -37,13 +37,13 @@
                                             <input type="text" class="form-control" id="Produto" name="Produto"/>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="Preco">Preço</label>
                                             <input type="number" class="form-control" id="Preco" name="Preco" min="0"/>
                                         </div>    
                                     </div>
-                                    <div class="col-md-1">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="Quantidade">Quantidade</label>
                                             <input type="number" class="form-control" id="Quantidade" name="Quantidade" min="0"/>
@@ -68,9 +68,12 @@
                                             <th class="col-md-4">Produto</th>
                                             <th class="col-md-2">Preço</th>
                                             <th class="col-md-2">Quantidade</th>
+                                            
                                         </tr>
                                     </thead>
-                                    <tbody></tbody>
+                                    <tbody>
+                                    <div class="right" id="remover"></div>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
