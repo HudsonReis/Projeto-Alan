@@ -8,7 +8,7 @@ $(document).ready(function () {
         var nomeProduto = $("#Produto").val();
         var quantidade = $("#Quantidade").val();
         var preco = $("#Preco").val();
-        
+
 
         //validação se os campos do form estão vazios
         if (codProduto == 0 || codProduto == null) {
@@ -24,6 +24,11 @@ $(document).ready(function () {
             alert("Informe a quantidade do produto de maneira correta");
             document.getElementById("Quantidade").focus();
         } else {
+
+            $("#codProduto").val(0);
+            $("#Produto").val(null);
+            $("#Preco").val(0);
+            $("#Quantidade").val(0);
             var compra = {
                 codProduto: codProduto,
                 nomeProduto: nomeProduto,
@@ -34,18 +39,22 @@ $(document).ready(function () {
             carrinhoCompra.push(compra);
 
             preencherTabela(compra);
+
+            inserirSalvar();
         }
     });
 
+
+
     var preencherTabela = function (compra) {
         var tbody = $("#compras tbody");
-        var htmlStr = "<tr><td>" + compra.codProduto + "</td><td>" + compra.nomeProduto + "</td><td>" + compra.preco + "</td><td>" + compra.quantidade + "</td>" + inserirRemover() + "</tr>";
+        var htmlStr = "<tr><td>" + compra.codProduto + "</td><td>" + compra.nomeProduto + "</td><td>" + compra.preco + "</td><td>" + compra.quantidade + "</td><td>" + "<button type='button' class='btn btn-primary' id='btnRemoverCompra'>Remover</button>" + "</td></tr>";
 
         tbody.append(htmlStr);
     };
 
-    function inserirRemover() {
-       document.getElementById("remover").innerHTML = "<button type='button' class='btn btn-primary' id='btnRemover'>Remover</button>";
+    function inserirSalvar() {
+        document.getElementById("salvarCompra").innerHTML = "<button type='button' class='btn btn-success' id='btnSalvarCompra'>Salvar</button>";
     }
 
 });

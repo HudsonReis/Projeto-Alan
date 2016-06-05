@@ -30,16 +30,21 @@ $(document).ready(function () {
 
         carrinhoCompra.push(venda);
         preencherTabela(venda);
+        inserirSalvarVenda();
 
 
     });
 
     var preencherTabela = function (venda) {
         var tbody = $("#vendas tbody");
-        var htmlStr = "<tr><td>" + venda.nome + "</td><td>" + venda.quantidade + "</td><td>" + venda.valor + "</td></tr>";
+        var htmlStr = "<tr><td>" + venda.nome + "</td><td>" + venda.quantidade + "</td><td>" + venda.valor + "</td><td>"+ "<button type='button' class='btn btn-primary' id='btnRemoverVenda'>Remover</button>" +"</td></tr>";
 
         tbody.append(htmlStr);
     };
+    
+    function inserirSalvarVenda() {
+        document.getElementById("salvarVenda").innerHTML = "<button type='submit' class='btn btn-success' id='btnSalvarVenda'>Salvar</button>";
+    }
 
     var atualizarTotal = function (venda) {
         var total = 0;

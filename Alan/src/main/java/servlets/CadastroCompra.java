@@ -5,7 +5,10 @@
  */
 package servlets;
 
+import DAO.CompraDAO;
+import classes.entidades.Compra;
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author hudson.rsilva1
  */
 @WebServlet(name = "Compra", urlPatterns = {"/Compra"})
-public class Compra extends BaseServlet {
+public class CadastroCompra extends BaseServlet {
 
      // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -44,6 +47,22 @@ public class Compra extends BaseServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        
+        
+        String produto = request.getParameter("Produto");
+        int codProduto = Integer.parseInt(request.getParameter("CodigoProduto"));
+        float preco = Float.parseFloat(request.getParameter("Preco"));
+        int qtd = Integer.parseInt(request.getParameter("Quantidade"));
+        
+        Compra compra = new Compra(codProduto, produto, preco, qtd);
+        
+        try {
+        CompraDAO.adicionar(compra);
+        } catch (SQLException | ClassNotFoundException ex) {
+            logar(CadastroCompra.class.getName(), ex);
+        }
+        
         processRequest(request, response, "/WEB-INF/jsp/compra.jspx");
     }
 

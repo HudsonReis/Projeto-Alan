@@ -60,9 +60,10 @@
                             <table id="vendas" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Produto</th>
-                                        <th>Quantidade</th>
-                                        <th>Valor</th>
+                                        <th class="col-md-4">Produto</th>
+                                        <th class="col-md-2">Quantidade</th>
+                                        <th class="col-md-2">Valor</th>
+                                        <th class="col-md-1"></th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -75,6 +76,7 @@
                             </table>
                         </div>
                     </div>
+                    <div class="right" id="salvarVenda"></div>
                 </div>
             </div>
 

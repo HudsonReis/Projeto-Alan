@@ -18,12 +18,13 @@ public class VendaDAO {
         //linguagem sql -> inserir no banco
         String sql = "INSERT INTO VENDA  "
                 //Nomes dos campos no banco
-                + "(codigoProduto, codFilial, idUsuario, quantidade)"
+                + "(codigoProduto, produto, valor, idUsuario, quantidade)"
                 + "VALUES(?,?,?,?)";
 
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
-            stmt.setInt(1, saida.getCodigoProduto());
-            stmt.setInt(2, saida.getCodigoFilial());
+            stmt.setInt(1, saida.getCodProduto());
+            stmt.setString(2, saida.getProduto());
+            stmt.setFloat(2, saida.getValor());
             stmt.setInt(3, saida.getCodigoUsuario());
             stmt.setInt(4, saida.getQuantidade());
             

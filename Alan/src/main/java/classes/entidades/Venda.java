@@ -12,16 +12,17 @@ package classes.entidades;
 public class Venda {
 
     private int quantidade;
-    private int codigoProduto;
+    private String produto;
     private int codigoUsuario;
-    private int codigoFilial;
+    private float valor;
+    private int codProduto;
 
-    public Venda(int qtd, int codProduto, int codUsuario,
-            int codFilial) {
-        quantidade = qtd;
-        codigoProduto = codProduto;
-        codigoUsuario = codUsuario;
-        codigoFilial = codFilial;
+    public Venda(int qtd, float valor, String produto, int codUsuario, int codProduto) {
+        this.quantidade = qtd;
+        this.valor = valor;
+        this.codigoUsuario = codUsuario;
+        this.produto = produto;
+        this.codProduto = codProduto;
 
     }
 
@@ -33,12 +34,12 @@ public class Venda {
         this.quantidade = quantidade;
     }
 
-    public int getCodigoProduto() {
-        return codigoProduto;
+    public String getProduto() {
+        return produto;
     }
 
-    public void setCodigoProduto(int codigoProduto) {
-        this.codigoProduto = codigoProduto;
+    public void setProduto(String produto) {
+        this.produto = produto;
     }
 
     public int getCodigoUsuario() {
@@ -49,11 +50,19 @@ public class Venda {
         this.codigoUsuario = codigoUsuario;
     }
 
-    public int getCodigoFilial() {
-        return codigoFilial;
+    public float getValor() {
+        return valor;
     }
 
-    public void setCodigoFilial(int codigoFilial) {
-        this.codigoFilial = codigoFilial;
+    public void setValor(float valor) {
+        this.valor = valor;
+    }
+    
+    public int getCodProduto() {
+        return codProduto;
+    }
+
+    public void setCodProduto(int codProduto) {
+        this.codProduto = codProduto;
     }
 }

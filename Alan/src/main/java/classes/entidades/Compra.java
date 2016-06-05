@@ -12,13 +12,17 @@ package classes.entidades;
 public class Compra {
 
     private int codigoProduto;
+    private String produto;
+    private float preco;
     private int codigoUsuario;
     private int quantidade;
 
-    public Compra(int codProduto, int codUsuario, int qtd) {
-        codigoProduto = codProduto;
-        codigoUsuario = codUsuario;
-        quantidade = qtd;
+    public Compra(int codProduto, String produto, float preco, int qtd) {
+        this.codigoProduto = codProduto;
+        this.produto = produto;
+        this.preco = preco;
+        //this.codigoUsuario = codUsuario;
+        this.quantidade = qtd;
     }
 
     public int getCodigoProduto() {
@@ -27,6 +31,22 @@ public class Compra {
 
     public void setCodigoProduto(int codigoProduto) {
         this.codigoProduto = codigoProduto;
+    }
+    
+    public String getProduto() {
+        return produto;
+    }
+
+    public void setProduto(String produto) {
+        this.produto = produto;
+    }
+    
+     public float getPreco() {
+        return preco;
+    }
+
+    public void setPreco(float preco) {
+        this.preco = preco;
     }
 
     public int getCodigoUsuario() {
