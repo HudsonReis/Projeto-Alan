@@ -60,7 +60,7 @@
                 <div class="container">
                     <div class="box">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-11">
                                 <table id="compras" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
@@ -68,7 +68,6 @@
                                             <th class="col-md-4">Produto</th>
                                             <th class="col-md-2">Preço</th>
                                             <th class="col-md-2">Quantidade</th>
-                                            <th class="col-md-1"></th>
                                         </tr>
                                     </thead>
                                     <tbody>

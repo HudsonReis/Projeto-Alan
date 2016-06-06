@@ -1,4 +1,6 @@
 var carrinhoCompra = [];
+var auxRemover = 0;
+
 $(document).ready(function () {
     var remover = $('#remover').val();
 
@@ -37,18 +39,16 @@ $(document).ready(function () {
             };
 
             carrinhoCompra.push(compra);
-
             preencherTabela(compra);
-
+            atualizarTotal();
             inserirSalvar();
         }
     });
 
 
-
     var preencherTabela = function (compra) {
         var tbody = $("#compras tbody");
-        var htmlStr = "<tr><td>" + compra.codProduto + "</td><td>" + compra.nomeProduto + "</td><td>" + compra.preco + "</td><td>" + compra.quantidade + "</td><td>" + "<button type='button' class='btn btn-primary' id='btnRemoverCompra'>Remover</button>" + "</td></tr>";
+        var htmlStr = "<tr><td>" + compra.codProduto + "</td><td>" + compra.nomeProduto + "</td><td>" + compra.preco + "</td><td>" + compra.quantidade + "</td><td>" + inserirRemover();
 
         tbody.append(htmlStr);
     };
@@ -56,6 +56,28 @@ $(document).ready(function () {
     function inserirSalvar() {
         document.getElementById("salvarCompra").innerHTML = "<button type='button' class='btn btn-success' id='btnSalvarCompra'>Salvar</button>";
     }
+    
+    function inserirRemover() {
+        var tbody = $("#compras");
+        var htmlStr = "<button type='button' class='btn btn-primary' id='btnRemoverCompra"+ auxRemover +"'"+">Remover</button></td></tr>";
+        tbody.append(htmlStr);
+        auxRemover++;
+    }
+    
+    function remover(auxRemover){
+        
+    };
+    
+    var atualizarTotal = function () {
+        var total = 0;
+
+        //$("table tfoot").
+        for(var i =0; i < carrinhoCompra.length; i++){
+            total += carrinhoCompra[i].valor;
+        }
+        
+        $("#valorTotal").val(total);
+    };
 
 });
 
