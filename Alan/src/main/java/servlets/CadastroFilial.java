@@ -94,7 +94,11 @@ public class CadastroFilial extends BaseServlet {
                 if(edicao) {
                     FilialDAO.alterar(filial);
                 } else {
-                    FilialDAO.adicionar(filial);
+                    if(FilialDAO.cnpjJaCadastrado(cnpj)){
+                        //Incluir exceção aqui
+                    }else{
+                        FilialDAO.adicionar(filial);
+                    }
                 }
                 
                 

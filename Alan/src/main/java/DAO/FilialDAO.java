@@ -124,5 +124,28 @@ public class FilialDAO {
         }
         return prox;
     }
+    
+    public static boolean cnpjJaCadastrado(String cnpj) throws SQLException, ClassNotFoundException {
+        boolean jaCadastrado = false;
+        
+        Connection conexao = ConexaoBanco.obterConexao();
+
+        String sql = "SELECT * FROM FILIAL";
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+
+        ResultSet result = stmt.executeQuery();
+        
+
+        while (result.next()) {
+            //pego o retorno do banco e atribuo à variaveis
+            String resultCnpj = result.getString("cnpj");
+            if (cnpj.equals(resultCnpj)){
+                jaCadastrado = true;
+            }
+            
+        }
+
+        return jaCadastrado;
+    }
 
 }
