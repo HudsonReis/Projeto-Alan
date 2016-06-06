@@ -35,13 +35,13 @@ public class CadastroFilial extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         Filial filial = new Filial();
         Integer id = identificarEdicao(request);
         boolean edicao = false;
-        
+
         try {
-            
+
             if (id != null) {
                 filial = FilialDAO.consultarPorId(id);
                 edicao = true;
@@ -49,14 +49,14 @@ public class CadastroFilial extends BaseServlet {
                 id = FilialDAO.maxId();
                 filial.setCodigoFilial(id);
             }
-            
+
         } catch (SQLException | ClassNotFoundException ex) {
             logar(CadastroFilial.class.getName(), ex);
         }
-        
+
         request.setAttribute("filial", filial);
         request.setAttribute("edicao", edicao);
-        
+
         processRequest(request, response, "/WEB-INF/jsp/cadastroFilial.jspx");
     }
 
@@ -73,9 +73,9 @@ public class CadastroFilial extends BaseServlet {
             throws ServletException, IOException {
 
         Resposta resposta = new Resposta();
-        
+
         boolean edicao = Boolean.parseBoolean(request.getParameter("edicao"));
-        int id = Integer.parseInt(request.getParameter("filialId")) ;
+        int id = Integer.parseInt(request.getParameter("filialId"));
         String nome = request.getParameter("NomeFilial");
         String nomeFantasia = request.getParameter("NomeFantasia");
         String cnpj = request.getParameter("cnpj");
@@ -84,46 +84,45 @@ public class CadastroFilial extends BaseServlet {
         String bairro = request.getParameter("Bairro");
         String estado = request.getParameter("Estado");
         String cidade = request.getParameter("Cidade");
-        
+
         Filial filial = new Filial(id, nome, nomeFantasia, rua, num, bairro, estado, cidade, cnpj);
         try {
-            
+
             resposta = validar(filial);
-            
-            if(resposta.getSucesso()) {
-                if(edicao) {
+
+            if (resposta.getSucesso()) {
+                if (edicao) {
                     FilialDAO.alterar(filial);
                 } else {
-                    if(FilialDAO.cnpjJaCadastrado(cnpj)){
-                        //Incluir exceção aqui
-                    }else{
-                        FilialDAO.adicionar(filial);
-                    }
+                    FilialDAO.adicionar(filial);
+
                 }
-                
-                
+
             }
-            
+
             request.getSession().setAttribute("resposta", resposta);
-                       
+
         } catch (SQLException | ClassNotFoundException ex) {
             logar(CadastroFilial.class.getName(), ex);
-        } 
+        }
 
-        if(resposta.getSucesso()) {
+        if (resposta.getSucesso()) {
             response.sendRedirect(request.getContextPath() + "/BuscaFiliais");
         } else {
             processRequest(request, response, "/WEB-INF/jsp/cadastroFilial.jspx");
         }
     }
-    
+
     public Resposta validar(Filial filial) throws SQLException, ClassNotFoundException {
         Resposta resposta = new Resposta();
-        
-        if(!Funcoes.isCNPJ(filial.getCnpj())) {
+
+        if (!Funcoes.isCNPJ(filial.getCnpj())) {
             resposta.setErro("Este CNPJ é inválido.", "cnpj");
         }
-        
+        if (FilialDAO.cnpjJaCadastrado(filial.getCnpj())) {
+            resposta.setErro("Esse CNPJ já está cadastrado", "cnpj");
+        }
+
         return resposta;
     }
 
