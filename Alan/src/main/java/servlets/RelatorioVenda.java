@@ -74,6 +74,29 @@ public class RelatorioVenda extends BaseServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        
+        
+        String dataInicial = request.getParameter("dataInicial");
+        String dataFinal = request.getParameter("dataFinal");
+        int codProduto = Integer.parseInt(request.getParameter("produtoId"));
+        
+        List<VendaListagem> lista = new ArrayList<>();
+        List<ProdutoListagem> produtos = new ArrayList<>();
+        try {
+            lista = VendaDAO.listar(dataInicial, dataFinal);
+            produtos = ProdutoDAO.listar();
+        } catch (SQLException ex) {
+            Logger.getLogger(RelatorioVenda.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RelatorioVenda.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
+        }
+        
+        request.setAttribute("Vendas", lista);
+        request.setAttribute("produtos", produtos);
+
         processRequest(request, response, "/WEB-INF/jsp/relatorioVendas.jspx");
     }
 
