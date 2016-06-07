@@ -83,6 +83,8 @@ public class CadastroCompra extends BaseServlet {
         double valorTotal = Double.parseDouble(request.getParameter("valorTotalItens"));
         String json = request.getParameter("jsonItens");
         
+        int teste = 0;
+        
         ArrayList<Item> itens = new Gson().fromJson(json, ArrayList.class);
 
         Compra compra = new Compra(codigoFilial, idUsuario, valorTotal, itens);
