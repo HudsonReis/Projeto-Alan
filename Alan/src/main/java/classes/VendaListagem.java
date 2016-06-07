@@ -19,9 +19,10 @@ public class VendaListagem {
     private int idUsuario;
     private String nomeUsuario;
     private double quantidade;
+    private double vrUnitario;
     private double valor;
 
-    public VendaListagem(int idVenda, String dataVenda, int codigoProduto, String nomeProduto, int idUsuario, String nomeUsuario, double quantidade, double valor) {
+    public VendaListagem(int idVenda, String dataVenda, int codigoProduto, String nomeProduto, int idUsuario, String nomeUsuario, double quantidade, double vrUnitario, double valor) {
         this.idVenda = idVenda;
         this.dataVenda = dataVenda;
         this.codigoProduto = codigoProduto;
@@ -29,6 +30,7 @@ public class VendaListagem {
         this.idUsuario = idUsuario;
         this.nomeUsuario = nomeUsuario;
         this.quantidade = quantidade;
+        this.vrUnitario = vrUnitario;
         this.valor = valor;
     }
 
@@ -59,6 +61,11 @@ public class VendaListagem {
     public double getQuantidade() {
         return quantidade;
     }
+
+    public double getVrUnitario() {
+        return vrUnitario;
+    }
+    
 
     public double getValor() {
         return valor;

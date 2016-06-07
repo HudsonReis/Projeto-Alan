@@ -45,6 +45,7 @@
                             <th>Id Usuario</th>
                             <th>Usuário</th>
                             <th>Quantidade</th>
+                            <th>Valor Unitário</th>
                             <th>Valor</th>
                         </tr>
                     </thead>
@@ -58,6 +59,7 @@
                                 <td>${venda.idUsuario}</td>
                                 <td>${venda.nomeUsuario}</td>
                                 <td>${venda.quantidade}</td>
+                                <td>${venda.vrUnitario}</td>
                                 <td>${venda.valor}</td>
                             </tr>           
                         </c:forEach>

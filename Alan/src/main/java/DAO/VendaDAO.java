@@ -40,20 +40,23 @@ public class VendaDAO {
     public static List<VendaListagem> listar() throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
 
-        String sql = "SELECT"
-                + " v.IDVENDA, "
+        String sql
+                = " select "
+                + " vi.IDVENDA, "
                 + " v.DATAVENDA, "
-                + " v.CODIGOPRODUTO, "
-                + " p.NOME AS NOME_PRODUTO, "
+                + " vi.CODIGOPRODUTO, "
+                + " p.NOME as NOME_PRODUTO, "
                 + " v.IDUSUARIO, "
-                + " u.NOME NOME_USUARIO, "
-                + " v.QUANTIDADE, "
-                + " v.VALOR "
-                + " from venda v "
-                + " inner join produto p on p.CODIGOPRODUTO = v.CODIGOPRODUTO "
-                + " and p.CODIGOFILIAL = v.CODIGOFILIAL "
-                + " inner join usuario u on u.CODIGOUSUARIO = v.IDUSUARIO "
-                + " and u.CODIGOFILIAL = v.CODIGOFILIAL ";
+                + " u.NOME as NOME_USUARIO, "
+                + " vi.QUANTIDADE, "
+                + " vi.VALORUNITARIO, "
+                + " v.VALORTOTAL "
+                + " from venda_item vi "
+                + " inner join venda v  "
+                + " on vi.IDVENDA = v.IDVENDA "
+                + " inner join produto p on vi.CODIGOPRODUTO = p.CODIGOPRODUTO "
+                + " inner join usuario u on u.CODIGOUSUARIO = v.IDUSUARIO ";
+
 
         PreparedStatement stmt;
         stmt = conexao.prepareStatement(sql);
@@ -70,10 +73,11 @@ public class VendaDAO {
             int idUsuario = result.getInt("IDUSUARIO");
             String nomeUsuario = result.getString("NOME_USUARIO");
             double quantidade = result.getDouble("QUANTIDADE");
-            double valor = result.getDouble("VALOR");
+            double vrUnitario = result.getDouble("VALORUNITARIO");
+            double valor = result.getDouble("VALORTOTAL");
 
             VendaListagem venda = new VendaListagem(idVenda, dataVenda, codigoProduto, nomeProduto,
-                    idUsuario, nomeUsuario, quantidade, valor);
+                    idUsuario, nomeUsuario, quantidade,vrUnitario, valor);
             retorno.add(venda);
 
         }
