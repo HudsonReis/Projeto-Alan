@@ -8,6 +8,7 @@ package servlets;
 import classes.UsuarioListagem;
 import DAO.UsuarioDAO;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,11 +36,11 @@ public class BuscaUsuarios extends BaseServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        List<UsuarioListagem> lista = new ArrayList<UsuarioListagem>();
+        List<UsuarioListagem> lista = new ArrayList<>();
         
         try {
             lista = UsuarioDAO.listar();
-        } catch(Exception ex) {
+        } catch(SQLException | ClassNotFoundException ex) {
             logar(BuscaUsuarios.class.getName(), ex);
         }
         

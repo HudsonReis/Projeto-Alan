@@ -64,8 +64,8 @@ var dispararResposta = function () {
     
     if (sucesso === "false") {
         $("#" + campo).addClass("has-error");
-        toastr.error(mensagem, 'Erro!')
+        toastr.error(mensagem, 'Erro!');
     } else if (sucesso === "true") {
-        toastr.success(mensagem, 'Sucesso!')
+        toastr.success(mensagem, 'Sucesso!');
     }
 };

@@ -24,6 +24,7 @@ input[type='radio'] {
 
 table {
     border-collapse:collapse !important;
+    font-size: 14px;
 }
 
 table tbody tr:hover {
@@ -37,4 +38,9 @@ button {
 .has-error, .has-error:focus {
     background-color:#FFE5E5;
     border:1px solid red;
+}
+
+.has-warning, .has-warning:focus {
+    background-color:#fff9e5;
+    border:1px solid #f89406;
 }

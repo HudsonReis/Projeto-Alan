@@ -1,82 +1,162 @@
-var carrinhoCompra = [];
-var auxRemover = 0;
-
+var carrinhoCompra = [],
+prosseguir = true;
+    
 $(document).ready(function () {
-    var remover = $('#remover').val();
+    
+    var formatarValor = function (valor) {
+        if (valor != null) {
+            valor = String(valor);
+            if (valor.indexOf(".") > -1) {
+                var arr = valor.split(".");
+                if(arr[1].length == 1) valor += "0";
+                
+                valor = valor.replace(".", ",");
+            } else {
+                valor += ",00";
+            }
+            
+            return "R$ " + valor;
+        }
+        
+        return "R$ 0,00";
+    };
+    
+    var retornarDecimal = function(valor) {
+        if (valor != null) {
+            if (valor.indexOf("$") > -1) valor = valor.replace("R$", "");
+            if (valor.indexOf(",") > -1) valor = valor.replace(",", ".");
+            
+            return parseFloat(valor);
+        }
+        
+        return 0;
+    };
+    
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-bottom-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+    
+    $(document).on("click", "#btnSalvar", function () {
+       $("#filialId").val($("codigoFilial").val());
+       $("#jsonItens").val(JSON.stringify(carrinhoCompra));
+    });
 
     $(document).on("click", "button[id='btnIncluir']", function () {
 
-        var codProduto = $("#codProduto").val();
-        var nomeProduto = $("#Produto").val();
+        $("#itens").removeClass("hidden");
+
+        var codigoFilial = $("#codigoFilial").val();
+        var codigoProduto = $("#codigoProduto").val();
+        var nomeProduto = $("#codigoProduto option:selected").text();
         var quantidade = $("#Quantidade").val();
-        var preco = $("#Preco").val();
-
-
-        //validação se os campos do form estão vazios
-        if (codProduto == 0 || codProduto == null) {
-            alert("Informe o codigo do produto de maneira correta");
-            document.getElementById("codProduto").focus();
-        } else if (nomeProduto == 0 || nomeProduto == null) {
-            alert("Informe o produto de maneira correta");
-            document.getElementById("Produto").focus();
-        } else if (preco == 0 || preco == null) {
-            alert("Informe o preço do produto de maneira correta");
-            document.getElementById("Preco").focus();
-        } else if (quantidade == 0 || quantidade == null) {
-            alert("Informe a quantidade do produto de maneira correta");
-            document.getElementById("Quantidade").focus();
-        } else {
-
-            $("#codProduto").val(0);
-            $("#Produto").val(null);
-            $("#Preco").val(0);
-            $("#Quantidade").val(0);
+        var valorUnitario = $("#valorUnitario").val();
+        var valorTotal = $("#valorTotal").val();
+        
+        validarCampos(codigoFilial, "Informe uma Filial.", "codigoFilial");
+        validarCampos(codigoProduto, "Informe o codigo do produto de maneira correta", "codigoProduto");
+        validarCampos(quantidade, "Informe a quantidade do produto de maneira correta", "Quantidade");
+   
+        if (prosseguir) {
+            
             var compra = {
-                codProduto: codProduto,
+                codigoProduto: codigoProduto,
                 nomeProduto: nomeProduto,
-                preco: preco,
-                quantidade: quantidade
+                quantidade: parseInt(quantidade),
+                valorUnitario: retornarDecimal(valorUnitario),
+                valorTotal: retornarDecimal(valorTotal)
             };
 
             carrinhoCompra.push(compra);
             preencherTabela(compra);
             atualizarTotal();
-            inserirSalvar();
+            limparCampos();
         }
     });
+    
+    $(document).on("focus", "#Quantidade", function () {
+       $(this).val(""); 
+    });
+    
+    $(document).on("blur", "#Quantidade", function () {
+        var quantidade = $("#Quantidade").val();
+        
+        if(quantidade != 0 || quantidade != null) {
+            var valorProduto = $("#codigoProduto option:selected").data("valor");   
+            var valorTotal = quantidade * valorProduto;
+            
+            $("#valorTotal").val(formatarValor(valorTotal));
+        }
+    });
+    
+    $(document).on("change", "#codigoProduto", function () {
+        var valorProduto = $("#codigoProduto option:selected").data("valor");  
+        
+        $("#valorUnitario").val(formatarValor(valorProduto));
+        $("#Quantidade").focus();
+    });
+    
+    $(document).on("click", "button[name='btnRemoverItem']", function() {
+        var valorTotalCompra = retornarDecimal($("#valorTotalCompra").text());
+        var valorTotalItem = retornarDecimal($(this).parent().prev().text());
+        var subtracao = valorTotalCompra - valorTotalItem;
 
+        $(this).parent().parent().remove();
+        $("#valorTotalCompra").text(formatarValor(subtracao));
+    });
+    
+    var validarCampos = function (valor, mensagem, campo) {
+        if (valor == 0 || valor == null) {
+            toastr.warning(mensagem, "Alerta!");
+            $("#" + campo).addClass("has-warning");
+            prosseguir = false;
+        } else {
+            $("#" + campo).removeClass("has-warning");
+            prosseguir = true;
+        } 
+    };
+    
+    var limparCampos = function () {
+        $("#codigoFilial").val(0);
+        $("#codigoProduto").val(0);
+        $("#Quantidade").val(0);
+        $("#valorUnitario").val("RS 0,00");
+        $("#valorTotal").val("RS 0,00");
+    };
 
     var preencherTabela = function (compra) {
         var tbody = $("#compras tbody");
-        var htmlStr = "<tr><td>" + compra.codProduto + "</td><td>" + compra.nomeProduto + "</td><td>" + compra.preco + "</td><td>" + compra.quantidade + "</td><td>" + inserirRemover();
+        var htmlStr = "<tr><td>" + compra.codigoProduto + 
+                      "</td><td>" + compra.nomeProduto + 
+                      "</td><td>" + compra.quantidade + 
+                      "</td><td>" + formatarValor(compra.valorUnitario) + 
+                      "</td><td>" + formatarValor(compra.valorTotal) + 
+                      "</td><td><button type='button' class='btn btn-primary btn-danger btn-xs' name='btnRemoverItem'>Remover</button></td></tr>";
 
         tbody.append(htmlStr);
-    };
-
-    function inserirSalvar() {
-        document.getElementById("salvarCompra").innerHTML = "<button type='button' class='btn btn-success' id='btnSalvarCompra'>Salvar</button>";
-    }
-    
-    function inserirRemover() {
-        var tbody = $("#compras");
-        var htmlStr = "<button type='button' class='btn btn-primary' id='btnRemoverCompra"+ auxRemover +"'"+">Remover</button></td></tr>";
-        tbody.append(htmlStr);
-        auxRemover++;
-    }
-    
-    function remover(auxRemover){
-        
     };
     
     var atualizarTotal = function () {
         var total = 0;
 
-        //$("table tfoot").
-        for(var i =0; i < carrinhoCompra.length; i++){
-            total += carrinhoCompra[i].valor;
+        for(var i = 0; i < carrinhoCompra.length; i++){        
+            total += carrinhoCompra[i].valorTotal;
         }
         
-        $("#valorTotal").val(total);
+        $("#valorTotalCompra").text(formatarValor(total));
     };
 
 });

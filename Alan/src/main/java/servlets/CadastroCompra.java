@@ -6,12 +6,17 @@
 package servlets;
 
 import DAO.CompraDAO;
+import DAO.FilialDAO;
+import DAO.ProdutoDAO;
 import classes.entidades.Compra;
+import classes.entidades.Filial;
 import classes.entidades.Usuario;
 import classes.entidades.Item;
+import classes.ProdutoListagem;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,6 +45,21 @@ public class CadastroCompra extends BaseServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        List<ProdutoListagem> produtos = new ArrayList<>();
+        List<Filial> filiais = new ArrayList<>();
+        
+        try {
+            produtos = ProdutoDAO.listar();
+            filiais = FilialDAO.listar();
+            
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(CadastroCompra.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        request.setAttribute("Filiais", filiais);
+        request.setAttribute("Produtos", produtos);
+        
         processRequest(request, response, "/WEB-INF/jsp/compra.jspx");
     }
 

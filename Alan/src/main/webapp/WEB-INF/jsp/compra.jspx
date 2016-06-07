@@ -5,7 +5,7 @@
     Author     : hudson.rsilva1
 -->
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
-          xmlns:x="http://java.sun.com/jsp/jstl/core"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
           version="2.0">
 
     <jsp:directive.page contentType="text/html" pageEncoding="UTF-8"/>
@@ -15,71 +15,96 @@
             <title>Compra</title>
             <meta http-equiv="Content-type" content="text/html; charset=UTF-8"/>
             <link rel="stylesheet" href="resources/css/bootstrap.min.css"/>
+            <link rel="stylesheet" href="resources/css/toastr.min.css"/>
             <link rel="stylesheet" href="resources/css/style.css"/>
         </head>
         <body>
             <jsp:include page="menu.jspx"></jsp:include>
                 <div class="container">
                     <h2>Compra</h2>
-                        <div class="box">
-                            <form method="post" name="formCompra">
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="CodigoDoProduto">Código do produto</label>
-                                            <input type="number" class="form-control" id="codProduto" name="CodigoProduto" min="0" value="${compra.codigoProduto}"/>
-                                        </div>
-                                    </div>
-                                        
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="Produto">Produto</label>
-                                            <input type="text" class="form-control" id="Produto" name="Produto" value="${compra.produto}"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="Preco">Preço</label>
-                                            <input type="number" class="form-control" id="Preco" name="Preco" min="0" value="${compra.preco}"/>
-                                        </div>    
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="Quantidade">Quantidade</label>
-                                            <input type="number" class="form-control" id="Quantidade" name="Quantidade" min="0" value="${compra.quantidade}"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="right">
-                                    <button type="button" class="btn btn-primary" id="btnIncluir">Incluir</button>
-                                </div>
-                                
-                            </form>
-                        </div>
-                </div>
-                <div class="container">
                     <div class="box">
                         <div class="row">
-                            <div class="col-md-11">
-                                <table id="compras" class="table table-bordered table-striped">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="Produto">Filial</label>
+                                    <select id="codigoFilial" name="codigoFilial" class="form-control">
+                                        <option value="0">Selecione...</option>
+                                        <c:forEach var="filial" items="${Filiais}">
+                                            <option value="${filial.codigoFilial}">${filial.nome}</option>   
+                                        </c:forEach>
+                                    </select>                                    
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="codigoProduto">Produto</label>
+                                    <select id="codigoProduto" name="codigoProduto" class="form-control">
+                                        <option value="0">Selecione...</option>
+                                        <c:forEach var="produto" items="${Produtos}">
+                                            <option value="${produto.codigoProduto}" data-valor="${produto.valor}">${produto.produto}</option>   
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>   
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="Quantidade">Quantidade</label>
+                                    <input type="number" class="form-control" id="Quantidade" name="Quantidade" min="0" value="${compra.quantidade}"/>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="Preco">Valor Unitário</label>
+                                    <input type="text" class="form-control" id="valorUnitario" name="valorUnitario" value="R$ 0,00" disabled="disabled"/>
+                                </div>    
+                            </div>   
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="Preco">Valor Total</label>
+                                    <input type="text" class="form-control" id="valorTotal" name="valorTotal"  value="R$ 0,00" disabled="disabled"/>
+                                </div>    
+                            </div> 
+                        </div>
+                        <div class="right">
+                            <button type="button" class="btn btn-primary" id="btnIncluir">Incluir</button>
+                        </div>                                
+                    </div>
+                </div>
+                <br />
+                <div id="itens" class="container hidden">
+                    <div class="box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table id="compras" class="table table-striped">
                                     <thead>
                                         <tr>
                                             <th class="col-md-2">Código do Produto</th>
-                                            <th class="col-md-4">Produto</th>
-                                            <th class="col-md-2">Preço</th>
+                                            <th class="col-md-3">Produto</th>
                                             <th class="col-md-2">Quantidade</th>
+                                            <th class="col-md-2">Valor Unitário</th>
+                                            <th class="col-md-2">Valor Total</th>
+                                            <th class="col-md-1">Remover</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     </tbody>
+                                    <tfoot>
+                                        <td class="col-md-9" colspan="4">Total</td>
+                                        <td class="col-md-3" colspan="2" id="valorTotalCompra"></td>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
-                        <div class="right" id="salvarCompra"></div>
+                        <form method="post">
+                            <input type="hidden" id="jsonItens" name="jsonItens"/>
+                            <input type="hidden" id="filialId" name="filialId"/>
+                            <button type="submit" class="btn btn-primary btn-success" id="btnSalvar">Salvar</button>
+                        </form>                        
                     </div>
                 </div>
                 <script type="text/javascript" src="resources/js/jquery-2.2.3.min.js"><![CDATA[/*Teste*/]]></script>
                 <script type="text/javascript" src="resources/js/bootstrap.min.js"><![CDATA[/*Teste*/]]></script>
+                <script type="text/javascript" src="resources/js/toastr.min.js"><![CDATA[/*Teste*/]]></script>
                 <script type="text/javascript" src="resources/js/compra.js"><![CDATA[/*Teste*/]]></script>
         </body>
     </html>

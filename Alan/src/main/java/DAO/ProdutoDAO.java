@@ -61,7 +61,7 @@ public class ProdutoDAO {
         Connection conexao = ConexaoBanco.obterConexao();
 
         String sql = "SELECT codigoProduto, codigoFilial, idUsuario, nome, quantidadePeca, status," +
-                     " valor, percentualLucro FROM PRODUTO WHERE p.codigoProduto = ?";
+                     " valor, percentualLucro FROM PRODUTO WHERE codigoProduto = ?";
 
         Produto produto;
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
