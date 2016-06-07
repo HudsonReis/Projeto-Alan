@@ -100,7 +100,7 @@ public class RelatorioCompra extends BaseServlet {
             System.out.println(ex.getMessage());
         }
         
-        request.setAttribute("Compra", lista);
+        request.setAttribute("Compras", lista);
         request.setAttribute("produtos", produtos);
 
         processRequest(request, response, "/WEB-INF/jsp/relatorioCompras.jspx");

@@ -6,7 +6,6 @@
 package DAO;
 
 import classes.CompraListagem;
-import classes.VendaListagem;
 import classes.entidades.Compra;
 import classes.entidades.Item;
 import com.google.gson.internal.LinkedTreeMap;
@@ -118,10 +117,10 @@ public class CompraDAO {
         ResultSet result = stmt.executeQuery();
 
         while (result.next()) {
-            int idVenda = result.getInt("IDCOMPRA");
+            int idCompra = result.getInt("IDCOMPRA");
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
             Date data = result.getDate("DATACOMPRA");
-            String dataVenda = format.format(data);
+            String dataCompra = format.format(data);
             int codigoProduto = result.getInt("CODIGOPRODUTO");
             String nomeProduto = result.getString("NOME_PRODUTO");
             int idUsuario = result.getInt("IDUSUARIO");
@@ -130,7 +129,7 @@ public class CompraDAO {
             double vrUnitario = result.getDouble("VALORUNITARIO");
             double valor = result.getDouble("VALORTOTAL");
 
-            CompraListagem compra = new CompraListagem(idVenda, dataVenda, codigoProduto, nomeProduto,
+            CompraListagem compra = new CompraListagem(idCompra, dataCompra, codigoProduto, nomeProduto,
                     idUsuario, nomeUsuario, quantidade, vrUnitario, valor);
             retorno.add(compra);
 
@@ -158,7 +157,7 @@ public class CompraDAO {
                 + " and c.CODIGOFILIAL = p.CODIGOFILIAL "
                 + " inner join usuario u on u.CODIGOUSUARIO = C.IDUSUARIO " 
                 + " and c.CODIGOFILIAL = u.CODIGOFILIAL"
-                + " WHERE v.DATAVENDA BETWEEN ? AND ? ";
+                + " WHERE c.DATACOMPRA BETWEEN ? AND ? ";
 
         PreparedStatement stmt;
         stmt = conexao.prepareStatement(sql);
@@ -169,10 +168,10 @@ public class CompraDAO {
         ResultSet result = stmt.executeQuery();
 
         while (result.next()) {
-            int idVenda = result.getInt("IDCOMPRA");
+            int idCompra = result.getInt("IDCOMPRA");
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
             Date data = result.getDate("DATACOMPRA");
-            String dataVenda = format.format(data);
+            String dataCompra = format.format(data);
             int codigoProduto = result.getInt("CODIGOPRODUTO");
             String nomeProduto = result.getString("NOME_PRODUTO");
             int idUsuario = result.getInt("IDUSUARIO");
@@ -181,7 +180,7 @@ public class CompraDAO {
             double vrUnitario = result.getDouble("VALORUNITARIO");
             double valor = result.getDouble("VALORTOTAL");
 
-            CompraListagem compra = new CompraListagem(idVenda, dataVenda, codigoProduto, nomeProduto,
+            CompraListagem compra = new CompraListagem(idCompra, dataCompra, codigoProduto, nomeProduto,
                     idUsuario, nomeUsuario, quantidade, vrUnitario, valor);
             retorno.add(compra);
 
@@ -209,8 +208,8 @@ public class CompraDAO {
                 + " and c.CODIGOFILIAL = p.CODIGOFILIAL "
                 + " inner join usuario u on u.CODIGOUSUARIO = C.IDUSUARIO " 
                 + " and c.CODIGOFILIAL = u.CODIGOFILIAL"
-                + " WHERE v.DATAVENDA BETWEEN ? AND ? "
-                + " AND vi.CODIGOPRODUTO = ?";
+                + " WHERE c.DATACOMPRA BETWEEN ? AND ? "
+                + " AND ci.CODIGOPRODUTO = ?";
 
         PreparedStatement stmt;
         stmt = conexao.prepareStatement(sql);
@@ -222,10 +221,10 @@ public class CompraDAO {
         ResultSet result = stmt.executeQuery();
 
         while (result.next()) {
-            int idVenda = result.getInt("IDVENDA");
+            int idCompra = result.getInt("IDCOMPRA");
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-            Date data = result.getDate("DATAVENDA");
-            String dataVenda = format.format(data);
+            Date data = result.getDate("DATACOMPRA");
+            String dataCompra = format.format(data);
             int codigoProduto = result.getInt("CODIGOPRODUTO");
             String nomeProduto = result.getString("NOME_PRODUTO");
             int idUsuario = result.getInt("IDUSUARIO");
@@ -234,7 +233,7 @@ public class CompraDAO {
             double vrUnitario = result.getDouble("VALORUNITARIO");
             double valor = result.getDouble("VALORTOTAL");
 
-            CompraListagem compra = new CompraListagem(idVenda, dataVenda, codigoProduto, nomeProduto,
+            CompraListagem compra = new CompraListagem(idCompra, dataCompra, codigoProduto, nomeProduto,
                     idUsuario, nomeUsuario, quantidade, vrUnitario, valor);
             retorno.add(compra);
 
