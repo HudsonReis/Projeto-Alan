@@ -83,8 +83,14 @@ public class RelatorioVenda extends BaseServlet {
         
         List<VendaListagem> lista = new ArrayList<>();
         List<ProdutoListagem> produtos = new ArrayList<>();
+        
         try {
-            lista = VendaDAO.listar(dataInicial, dataFinal);
+            if(codProduto==0){
+                lista = VendaDAO.listar(dataInicial, dataFinal);
+            }
+            else{
+                lista = VendaDAO.listar(dataInicial, dataFinal, codProduto);
+            }
             produtos = ProdutoDAO.listar();
         } catch (SQLException ex) {
             Logger.getLogger(RelatorioVenda.class.getName()).log(Level.SEVERE, null, ex);

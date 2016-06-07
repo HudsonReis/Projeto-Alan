@@ -134,5 +134,58 @@ public class VendaDAO {
         }
         return retorno;
     }
+    
+    public static List<VendaListagem> listar(String dataInicial, String dataFinal, int codProduto) throws SQLException, ClassNotFoundException {
+        Connection conexao = ConexaoBanco.obterConexao();
+
+        String sql
+                = " select "
+                + " vi.IDVENDA, "
+                + " v.DATAVENDA, "
+                + " vi.CODIGOPRODUTO, "
+                + " p.NOME as NOME_PRODUTO, "
+                + " v.IDUSUARIO, "
+                + " u.NOME as NOME_USUARIO, "
+                + " vi.QUANTIDADE, "
+                + " vi.VALORUNITARIO, "
+                + " v.VALORTOTAL "
+                + " from venda_item vi "
+                + " inner join venda v  "
+                + " on vi.IDVENDA = v.IDVENDA "
+                + " inner join produto p on vi.CODIGOPRODUTO = p.CODIGOPRODUTO "
+                + " inner join usuario u on u.CODIGOUSUARIO = v.IDUSUARIO "
+                + " WHERE v.DATAVENDA BETWEEN ? AND ? "
+                + " AND vi.CODIGOPRODUTO = ?";
+
+
+        PreparedStatement stmt;
+        stmt = conexao.prepareStatement(sql);
+        stmt.setString(1, dataInicial);
+        stmt.setString(2, dataFinal);
+        stmt.setInt(3, codProduto);
+        
+        List<VendaListagem> retorno = new ArrayList<>();
+        ResultSet result = stmt.executeQuery();
+
+        while (result.next()) {
+            int idVenda = result.getInt("IDVENDA");
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            Date data = result.getDate("DATAVENDA");
+            String dataVenda = format.format(data);
+            int codigoProduto = result.getInt("CODIGOPRODUTO");
+            String nomeProduto = result.getString("NOME_PRODUTO");
+            int idUsuario = result.getInt("IDUSUARIO");
+            String nomeUsuario = result.getString("NOME_USUARIO");
+            double quantidade = result.getDouble("QUANTIDADE");
+            double vrUnitario = result.getDouble("VALORUNITARIO");
+            double valor = result.getDouble("VALORTOTAL");
+
+            VendaListagem venda = new VendaListagem(idVenda, dataVenda, codigoProduto, nomeProduto,
+                    idUsuario, nomeUsuario, quantidade,vrUnitario, valor);
+            retorno.add(venda);
+
+        }
+        return retorno;
+    }
 
 }

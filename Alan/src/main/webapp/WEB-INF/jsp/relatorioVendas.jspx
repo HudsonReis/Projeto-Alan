@@ -41,7 +41,7 @@
                             <div class="form-group">
                                 <label for="produtoId">Produto</label>
                                 <select class="form-control" id="produtoId" name="produtoId" required="required">
-                                    <option value="">Todos</option>
+                                    <option value="0">Todos</option>
                                     <c:forEach items="${produtos}" var="produto">
                                         <option value="${produto.codigoProduto}">${produto.produto}</option>
                                     </c:forEach>
