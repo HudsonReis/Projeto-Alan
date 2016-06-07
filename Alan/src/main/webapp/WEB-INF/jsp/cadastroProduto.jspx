@@ -53,33 +53,31 @@
                                     <input type="hidden" id="hiddenFilialId" value="${produto.codigoFilial}" />
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="nomeProd">Valor</label>
-                                        <input type="text" class="form-control" id="valor" name="valor" required="required" value="${produto.valor}"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="nomeProd">Percentual Lucro</label>
-                                        <input type="text" class="form-control" id="percentualLucro" name="percentualLucro" required="required" value="${produto.percentualLucro}"/>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-4">
+                           <div class="col-md-4">
+                               <div class="form-group">
+                                   <label for="nomeProd">Valor</label>
+                                   <input type="text" class="form-control" id="valor" name="valor" required="required" value="${produto.valor}"/>
+                               </div>
+                           </div>
+                           <div class="col-md-4">
+                               <div class="form-group">
+                                   <label for="nomeProd">Percentual Lucro</label>
+                                   <input type="text" class="form-control" id="percentualLucro" name="percentualLucro" required="required" value="${produto.percentualLucro}"/>
+                               </div>
+                           </div>
+                           <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="block">Status</label>
                                     <input type="radio" id="ativo" name="Status" value="true" /><label for="ativo" class="espacamento">Ativo</label>
                                     <input type="radio" id="inativo" name="Status" value="false" /><label for="inativo">Inativo</label>
                                     <input type="hidden" id="statusEdit" value="${produto.status}"/>
                                 </div> 
-                            </div>
+                           </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="right">
                                     <button type="submit" class="btn btn-success">Salvar</button>
                                     <button type="button" id="btnCancelar" class="btn btn-default">Cancelar</button>

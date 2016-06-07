@@ -18,20 +18,20 @@ public class ProdutoDAO {
 
     public static void adicionar(Produto produto, boolean incluirProdutoValor) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
-        //linguagem sql -> inserir no banco
+        
         String sql = "INSERT INTO PRODUTO"
-                //Nomes dos campos no banco
-                + "(CODIGOFILIAL, IDUSUARIO, NOME, STATUS, VALOR, PERCENTUALLUCRO)"
-                + "VALUES(?,?,?,?,?,?,?)";
+                + " (CODIGOFILIAL, IDUSUARIO, NOME, QUANTIDADEPECA, STATUS, VALOR, PERCENTUALLUCRO)"
+                + " VALUES(?,?,?,?,?,?,?)";
 
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             
             stmt.setInt(1, produto.getCodigoFilial());
             stmt.setInt(2, produto.getCodUsuario());
             stmt.setString(3, produto.getNome());
-            stmt.setBoolean(4, produto.getStatus());
-            stmt.setDouble(5, produto.getValor());
-            stmt.setDouble(6, produto.getPercentualLucro());
+            stmt.setString(4, "0");
+            stmt.setBoolean(5, produto.getStatus());
+            stmt.setDouble(6, produto.getValor());
+            stmt.setDouble(7, produto.getPercentualLucro());
             
             stmt.execute();
         }

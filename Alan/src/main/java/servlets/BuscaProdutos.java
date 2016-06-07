@@ -9,7 +9,6 @@ import DAO.ProdutoDAO;
 import classes.ProdutoListagem;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;

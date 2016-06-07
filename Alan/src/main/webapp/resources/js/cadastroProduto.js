@@ -31,5 +31,6 @@ $(document).ready(function () {
         $("#ativo").attr("checked", "checked");
     }
 
+    $("#nomeProd").focus();
 });
 
