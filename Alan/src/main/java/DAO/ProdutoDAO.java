@@ -2,7 +2,6 @@ package DAO;
 
 import conexao.ConexaoBanco;
 import classes.entidades.Produto;
-import classes.entidades.ProdutoValor;
 import classes.ProdutoListagem;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,38 +21,37 @@ public class ProdutoDAO {
         //linguagem sql -> inserir no banco
         String sql = "INSERT INTO PRODUTO"
                 //Nomes dos campos no banco
-                + "(CODIGOFILIAL, IDUSUARIO, NOME, QUANTIDADEPECA, STATUS)"
-                + "VALUES(?,?,?,?,?)";
+                + "(CODIGOFILIAL, IDUSUARIO, NOME, STATUS, VALOR, PERCENTUALLUCRO)"
+                + "VALUES(?,?,?,?,?,?,?)";
 
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             
             stmt.setInt(1, produto.getCodigoFilial());
             stmt.setInt(2, produto.getCodUsuario());
             stmt.setString(3, produto.getNome());
-            stmt.setInt(4, produto.getQtdPeca());
-            stmt.setBoolean(5, produto.getStatus());
+            stmt.setBoolean(4, produto.getStatus());
+            stmt.setDouble(5, produto.getValor());
+            stmt.setDouble(6, produto.getPercentualLucro());
             
             stmt.execute();
-        }
-        
-        if(incluirProdutoValor) {
-            ProdutoValorDAO.adicionar(produto.getProdutoValor());
         }
     }
 
     public static void alterar(Produto produto) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         //linguagem sql -> inserir no banco
-        String sql = "UPDATE PRODUTO SET CODIGOFILIAL = ?, IDUSUARIO = ?, NOME = ?, QUANTIDADEPECA = ?, "
-                + "STATUS = ? WHERE CODIGOPRODUTO = ?";
+        String sql = "UPDATE PRODUTO SET CODIGOFILIAL = ?, IDUSUARIO = ?, NOME = ?, "
+                + "STATUS = ?, VALOR = ?, PERCENTUALLUCRO = ? WHERE CODIGOPRODUTO = ?";
 
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            
             stmt.setInt(1, produto.getCodigoFilial());
             stmt.setInt(2, produto.getCodUsuario());
             stmt.setString(3, produto.getNome());
-            stmt.setInt(4, produto.getQtdPeca());
-            stmt.setBoolean(5, produto.getStatus());
-            stmt.setInt(6, produto.getCodigoProduto());
+            stmt.setBoolean(4, produto.getStatus());
+            stmt.setDouble(5, produto.getValor());
+            stmt.setDouble(6, produto.getPercentualLucro());
+            stmt.setInt(7, produto.getCodigoProduto());
             
             stmt.execute();
         }
@@ -62,16 +60,8 @@ public class ProdutoDAO {
     public static Produto consultarPorId(int id) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
 
-        String sql = "SELECT P.codigoProduto, P.codigoFilial, P.idUsuario, P.nome, P.quantidadePeca, P.status, PV.VALORPRODUTO" +
-                     " FROM PRODUTO P LEFT JOIN PRODUTO_VALOR PV ON P.CODIGOPRODUTO = PV.CODIGOPRODUTO" +
-                     " WHERE p.codigoProduto = ?" +
-                     " AND" +
-                     " (" +
-                     "   PV.VALORPRODUTO IS NULL" +
-                     "   OR" +
-                     "   PV.VALORPRODUTO IS NOT NULL" +
-                     "   AND PV.DATATERMINOVIGENCIA IS NULL" + 
-                     " )";
+        String sql = "SELECT codigoProduto, codigoFilial, idUsuario, nome, quantidadePeca, status," +
+                     " valor, percentualLucro FROM PRODUTO WHERE p.codigoProduto = ?";
 
         Produto produto;
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
@@ -86,12 +76,11 @@ public class ProdutoDAO {
             String nome = result.getString("NOME");
             int qtdPeca = result.getInt("QUANTIDADEPECA");
             boolean status = result.getBoolean("STATUS");
-            double valor = result.getDouble("VALORPRODUTO");
+            double valor = result.getDouble("VALOR");
+            double percentualLucro = result.getDouble("PERCENTUALLUCRO");
             
-            ProdutoValor produtoValor = new ProdutoValor(valor);
-            
-            produto = new Produto(codigoProduto, codFilial, idUsuario, nome, qtdPeca, status);       
-            produto.setProdutoValor(produtoValor);
+            produto = new Produto(codigoProduto, codFilial, idUsuario, nome, qtdPeca, status, valor
+            , percentualLucro);       
         }
 
         return produto;
@@ -101,17 +90,8 @@ public class ProdutoDAO {
         Connection conexao = ConexaoBanco.obterConexao();
 
         String sql = "SELECT P.CODIGOPRODUTO, F.NOME AS FILIAL, U.NOME AS USUARIO, P.NOME AS PRODUTO,"
-                + " P.QUANTIDADEPECA, P.STATUS, PV.VALORPRODUTO FROM PRODUTO P INNER JOIN FILIAL F ON"
-                + " P.CODIGOFILIAL = F.CODIGOFILIAL INNER JOIN USUARIO U ON P.IDUSUARIO = U.CODIGOUSUARIO"
-                + " LEFT JOIN PRODUTO_VALOR PV ON P.CODIGOPRODUTO = PV.CODIGOPRODUTO WHERE"
-                + " PV.VALORPRODUTO IS NULL"
-                + " OR"
-                + " ("
-                + "   PV.DATATERMINOVIGENCIA IS NULL"
-                + "   AND PV.DATAINICIOVIGENCIA < CURRENT_DATE"
-                + "   OR"
-                + "   CURRENT_DATE BETWEEN PV.DATAINICIOVIGENCIA AND PV.DATATERMINOVIGENCIA\n"
-                + " )";
+                + " P.QUANTIDADEPECA, P.STATUS, P.VALOR FROM PRODUTO P INNER JOIN FILIAL F ON"
+                + " P.CODIGOFILIAL = F.CODIGOFILIAL INNER JOIN USUARIO U ON P.IDUSUARIO = U.CODIGOUSUARIO";
 
         PreparedStatement stmt = conexao.prepareStatement(sql);
         List<ProdutoListagem> retorno = new ArrayList<>();
@@ -124,7 +104,7 @@ public class ProdutoDAO {
             String usuario = result.getString("USUARIO");
             String nomeProduto = result.getString("PRODUTO");
             int qtdPeca = result.getInt("QUANTIDADEPECA");
-            double valor = result.getDouble("VALORPRODUTO");
+            double valor = result.getDouble("VALOR");
             boolean status = result.getBoolean("STATUS");
 
             ProdutoListagem produto = new ProdutoListagem(codigoProduto, filial, usuario, nomeProduto,

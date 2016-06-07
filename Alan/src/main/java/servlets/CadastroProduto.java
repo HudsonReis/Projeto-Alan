@@ -61,6 +61,7 @@ public class CadastroProduto extends BaseServlet {
         } catch (SQLException | ClassNotFoundException ex) {
             logar(CadastroProduto.class.getName(), ex);
         }
+        
         request.setAttribute("filiais", filiais);
         request.setAttribute("produto", produto);
         request.setAttribute("edicao", edicao);
@@ -94,8 +95,10 @@ public class CadastroProduto extends BaseServlet {
         boolean status = Boolean.parseBoolean(request.getParameter("Status"));
         boolean edicao = Boolean.parseBoolean(request.getParameter("edicao"));
         double valor = Double.parseDouble(request.getParameter("valor"));
+        double percentualLucro = Double.parseDouble(request.getParameter("percentualLucro"));
         
-        Produto produto = new Produto(codigoProduto, codFilial, codUsuario, nome, qtdPeca, status);
+        Produto produto = new Produto(codigoProduto, codFilial, codUsuario, nome, qtdPeca, status, valor
+        , percentualLucro);
         
         try {
             

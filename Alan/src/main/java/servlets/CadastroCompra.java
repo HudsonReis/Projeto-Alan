@@ -7,14 +7,20 @@ package servlets;
 
 import DAO.CompraDAO;
 import classes.entidades.Compra;
+import classes.entidades.Usuario;
+import classes.entidades.Item;
+import com.google.gson.Gson;
+import com.sun.corba.se.impl.corba.TypeCodeFactory;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -50,23 +56,24 @@ public class CadastroCompra extends BaseServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String produto = request.getParameter("Produto");
-        int codProduto = Integer.parseInt(request.getParameter("CodigoProduto"));
-        float preco = Float.parseFloat(request.getParameter("Preco"));
-        int qtd = Integer.parseInt(request.getParameter("Quantidade"));
-
-        Compra compra = new Compra(codProduto, produto, preco, qtd);
-        CompraDAO compraDAO = new CompraDAO();
+        HttpSession session = request.getSession();
+        Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");
         
+        int codigoFilial = Integer.parseInt(request.getParameter("codigoFilial"));
+        int idUsuario = usuario.getCodigoUsuario();
+        int valorTotal = 0;
+        String json = request.getParameter("itens");
+        
+        List<Item> itens = new Gson().fromJson(json, List.class);
+
+        Compra compra = new Compra(codigoFilial, idUsuario, valorTotal, itens);
+  
         try {
-            compraDAO.adicionar(compra);
-        } catch (SQLException ex) {
-            Logger.getLogger(CadastroCompra.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+            CompraDAO.adicionar(compra);
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(CadastroCompra.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-
         processRequest(request, response, "/WEB-INF/jsp/compra.jspx");
     }
 

@@ -6,10 +6,13 @@
 package DAO;
 
 import classes.entidades.Compra;
+import classes.entidades.Item;
 import conexao.ConexaoBanco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  *
@@ -18,20 +21,64 @@ import java.sql.SQLException;
 public class CompraDAO {
      public static void adicionar(Compra compra) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
-        //linguagem sql -> inserir no banco
+        
         String sql = "INSERT INTO COMPRA  "
-                //Nomes dos campos no banco
-                + "(codigoProduto, valor, idUsuario, quantidade)"
+                + "(codigoFilial, idUsuario, valorTotal, dataCompra)"
                 + "VALUES(?,?,?,?)";
 
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
-            stmt.setInt(1, compra.getCodigoProduto());
-            stmt.setFloat(2, compra.getPreco());
-            stmt.setInt(3, compra.getCodigoUsuario());
-            stmt.setInt(4, compra.getQuantidade());
+            
+            stmt.setInt(1, compra.getCodigoFilial());
+            stmt.setInt(2, compra.getCodigoUsuario());
+            stmt.setDouble(3, compra.getValorTotal());
+            stmt.setDate(4, new java.sql.Date(compra.getDataCompra().getTime()));
             
             stmt.execute();
         }
+        
+        for (Item item: compra.getItens()) {
+            item.setIdItem(consultarIdCompra(compra));
+        }
+             
+        adicionarItens(compra.getItens());
+    }
+     
+    public static void adicionarItens(List<Item> itens) throws SQLException, ClassNotFoundException {
+        Connection conexao = ConexaoBanco.obterConexao();
+        
+        String sql = "INSERT INTO COMPRA_ITEM (idCompra, codigoProduto, quantidade, valorUnitario)" +
+                     " VALUES(?,?,?,?)";
+        
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        
+        for (Item item: itens) {
+            
+            stmt.setInt(1, item.getIdMovimentacao());
+            stmt.setInt(2, item.getCodigoProduto());
+            stmt.setInt(3, item.getQuantidade());
+            stmt.setDouble(4, item.getValorUnitario());
+            
+            stmt.execute();
+        }
+        
+        stmt.close();
     }
     
+    public static int consultarIdCompra(Compra compra) throws SQLException, ClassNotFoundException {
+        Connection conexao = ConexaoBanco.obterConexao();
+        
+        String sql = "SELECT TOP 1 idCompra FROM COMPRA_ITEM ORDER BY idCompra desc";
+        
+        int idCompra = 0;
+        
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            
+            ResultSet result = stmt.executeQuery();
+            result.next();
+            
+            idCompra = result.getInt("idCompra");
+        }
+        
+        return idCompra;
+    }
 }

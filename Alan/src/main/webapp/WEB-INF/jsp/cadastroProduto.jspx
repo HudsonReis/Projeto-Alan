@@ -57,7 +57,13 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="nomeProd">Valor</label>
-                                        <input type="text" class="form-control" id="valor" name="valor" required="required" value="${produto.produtoValor.valor}"/>
+                                        <input type="text" class="form-control" id="valor" name="valor" required="required" value="${produto.valor}"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="nomeProd">Percentual Lucro</label>
+                                        <input type="text" class="form-control" id="percentualLucro" name="percentualLucro" required="required" value="${produto.percentualLucro}"/>
                                     </div>
                                 </div>
                             </div>
@@ -73,13 +79,6 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <c:if test="${edicao}">
-                                    <div class="left">
-                                        <button type="button" id="btnValores" class="btn btn-info">Valores</button>                                  
-                                    </div>
-                                </c:if>                                
-                            </div>
                             <div class="col-md-6">
                                 <div class="right">
                                     <button type="submit" class="btn btn-success">Salvar</button>

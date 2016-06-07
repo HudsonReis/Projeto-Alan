@@ -86,6 +86,9 @@ public class AutorizacaoFilter implements Filter {
         } else if (pagina.endsWith("Venda")
                 && usuario.autorizado(FuncionalidadesEnum.RegistroMovimentacaoVendas.value)) {
             return true;
+        } else if (pagina.endsWith("Compra")
+                && usuario.autorizado(FuncionalidadesEnum.RegistroMovimentacaoCompras.value)) {
+            return true;
         } else if (pagina.endsWith("Home")) {
             return true;
         } 

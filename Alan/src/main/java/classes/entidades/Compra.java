@@ -5,64 +5,75 @@
  */
 package classes.entidades;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  *
  * @author Nicolas
  */
 public class Compra {
 
-    private int codigoProduto;
-    private String produto;
-    private float preco;
-    private int codigoUsuario;
-    private int quantidade;
-
-    public Compra(int codProduto, String produto, float preco, int qtd) {
-        this.codigoProduto = codProduto;
-        this.produto = produto;
-        this.preco = preco;
-        //this.codigoUsuario = codUsuario;
-        this.quantidade = qtd;
+    private int idCompra;
+    private int codigoFilial;
+    private int idUsuario;
+    private double valorTotal;
+    private Date dataCompra;
+    private List<Item> itens;
+    
+    public Compra() {
+        
     }
 
-    public int getCodigoProduto() {
-        return codigoProduto;
-    }
-
-    public void setCodigoProduto(int codigoProduto) {
-        this.codigoProduto = codigoProduto;
+    public Compra(int codigoFilial, int idUsuario, double valorTotal, List<Item> itens) {
+        this.codigoFilial = codigoFilial;
+        this.idUsuario = idUsuario;
+        this.valorTotal = valorTotal;
+        this.dataCompra = new Date();
+        this.itens = itens;
     }
     
-    public String getProduto() {
-        return produto;
-    }
-
-    public void setProduto(String produto) {
-        this.produto = produto;
+    public int getIdCompra() {
+        return this.idCompra;
     }
     
-     public float getPreco() {
-        return preco;
+    public void setIdCompra(int idCompra) {
+        this.idCompra = idCompra;
     }
-
-    public void setPreco(float preco) {
-        this.preco = preco;
+    
+    public int getCodigoFilial() {
+        return this.codigoFilial;
+    }
+    
+    public void setCodigoFilial(int codigoFilial) {
+        this.codigoFilial = codigoFilial;
     }
 
     public int getCodigoUsuario() {
-        return codigoUsuario;
+        return idUsuario;
     }
 
-    public void setCodigoUsuario(int codigoUsuario) {
-        this.codigoUsuario = codigoUsuario;
+    public void setCodigoUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
-    public int getQuantidade() {
-        return quantidade;
+    public Double getValorTotal() {
+        return this.valorTotal;
+    }
+    
+    public void setValorTotal(double valorTotal) {
+        this.valorTotal = valorTotal;
     }
 
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
+    public Date getDataCompra() {
+        return this.dataCompra;
     }
-
+    
+    public List<Item> getItens() {
+        return this.itens;
+    }
+    
+    public void setItens(List<Item> itens) {
+        this.itens = itens;
+    }
 }

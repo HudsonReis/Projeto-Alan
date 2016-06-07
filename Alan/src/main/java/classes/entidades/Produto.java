@@ -17,20 +17,24 @@ public class Produto {
     private String nome;
     private int qtdPeca;
     private boolean status;
-    private ProdutoValor produtoValor;
+    private double valor;
+    private double percentualLucro;
     
     public Produto()
     {
         
     }
 
-    public Produto(int codigoProduto, int codigoFilial, int codUsuario, String nome, int qtdPeca, boolean status) {
+    public Produto(int codigoProduto, int codigoFilial, int codUsuario, String nome, 
+            int qtdPeca, boolean status, double valor, double percentualLucro) {
         this.codigoProduto = codigoProduto;
         this.codigoFilial = codigoFilial;
         this.codUsuario = codUsuario;
         this.nome = nome;
         this.qtdPeca = qtdPeca;
         this.status = status;
+        this.valor = valor;
+        this.percentualLucro = percentualLucro;
     }
     
     public int getCodigoProduto() {
@@ -81,11 +85,19 @@ public class Produto {
         this.status = status;
     }        
     
-    public ProdutoValor getProdutoValor() {
-        return this.produtoValor;
+    public double getValor() {
+        return this.valor;
     }
     
-    public void setProdutoValor(ProdutoValor produtoValor) {
-        this.produtoValor = produtoValor;
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+    
+    public double getPercentualLucro() {
+        return this.percentualLucro;
+    }
+    
+    public void setPercentualLucro(double percentualLucro) {
+        this.percentualLucro = percentualLucro;
     }
 }
