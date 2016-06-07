@@ -95,7 +95,8 @@ public class ProdutoDAO {
                 +    " U.NOME AS USUARIO, "
                 +    " P.NOME AS PRODUTO,"
                 +    " P.QUANTIDADEPECA, "
-                +    " P.STATUS "
+                +    " P.STATUS, "
+                +    " P.VALOR"
                 +    " FROM PRODUTO P "
                 +    " INNER JOIN FILIAL F ON P.CODIGOFILIAL = F.CODIGOFILIAL "
                 +    " INNER JOIN USUARIO U ON P.IDUSUARIO = U.CODIGOUSUARIO ";
@@ -111,7 +112,7 @@ public class ProdutoDAO {
             String usuario = result.getString("USUARIO");
             String nomeProduto = result.getString("PRODUTO");
             int qtdPeca = result.getInt("QUANTIDADEPECA");
-            double valor = 777.00;
+            double valor = result.getDouble("VALOR");
             boolean status = result.getBoolean("STATUS");
 
             ProdutoListagem produto = new ProdutoListagem(codigoProduto, filial, usuario, nomeProduto,
