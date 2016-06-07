@@ -4,26 +4,52 @@ prosseguir = true;
 $(document).ready(function () {
     
     var formatarValor = function (valor) {
-        if (valor != null) {
+        if (valor != null) {            
+            
             valor = String(valor);
-            if (valor.indexOf(".") > -1) {
-                var arr = valor.split(".");
-                if(arr[1].length == 1) valor += "0";
+            var temDecimal = valor.indexOf(".") > -1;
+            var inteiros = temDecimal ? valor.split(".")[0] : valor; 
+            var decimais = temDecimal ? valor.split(".")[1] : "";                       
+            
+            var contador = 0;
+            var novoInteiro = "";
+            
+            for (var i = inteiros.length; i > 0; i--) {
+                if (contador != 0 && contador % 3 == 0 && i > 0) {
+                    novoInteiro += ".";
+                    contador = 0;
+                }
                 
-                valor = valor.replace(".", ",");
-            } else {
-                valor += ",00";
+                novoInteiro += inteiros[i - 1];                                    
+                contador++;
             }
             
-            return "R$ " + valor;
+            inteiros = "";
+            
+            for (var i = novoInteiro.length; i > 0; i--) {
+                inteiros += novoInteiro[i - 1];
+            }            
+            
+            if (temDecimal) {
+                if(decimais.length == 1) decimais += "0";
+                
+                decimais = "," + decimais;
+            } else {
+                decimais += ",00";
+            }
+            
+            return "R$ " + inteiros + decimais;
         }
         
         return "R$ 0,00";
-    };
+    };    
     
     var retornarDecimal = function(valor) {
         if (valor != null) {
+            console.log(valor);
+            
             if (valor.indexOf("$") > -1) valor = valor.replace("R$", "");
+            if (valor.indexOf(".") > -1) valor = valor.replace(".", "");
             if (valor.indexOf(",") > -1) valor = valor.replace(",", ".");
             
             return parseFloat(valor);
@@ -51,7 +77,11 @@ $(document).ready(function () {
     };
     
     $(document).on("click", "#btnSalvar", function () {
-       $("#filialId").val($("codigoFilial").val());
+       var filialId = $("#codigoFilial").val();
+       var valorTotalItens = $("#valorTotalCompra").text();       
+       
+       $("#filialId").val(filialId);
+       $("#valorTotalItens").val(retornarDecimal(valorTotalItens));
        $("#jsonItens").val(JSON.stringify(carrinhoCompra));
     });
 
@@ -112,7 +142,7 @@ $(document).ready(function () {
     $(document).on("click", "button[name='btnRemoverItem']", function() {
         var valorTotalCompra = retornarDecimal($("#valorTotalCompra").text());
         var valorTotalItem = retornarDecimal($(this).parent().prev().text());
-        var subtracao = valorTotalCompra - valorTotalItem;
+        var subtracao = valorTotalCompra - valorTotalItem;        
 
         $(this).parent().parent().remove();
         $("#valorTotalCompra").text(formatarValor(subtracao));
@@ -130,7 +160,6 @@ $(document).ready(function () {
     };
     
     var limparCampos = function () {
-        $("#codigoFilial").val(0);
         $("#codigoProduto").val(0);
         $("#Quantidade").val(0);
         $("#valorUnitario").val("RS 0,00");
