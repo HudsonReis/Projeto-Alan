@@ -83,6 +83,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="RelatorioVenda">Venda</a></li>
+                            <li><a href="RelatorioCompra">Compra</a></li>
                         </ul>
                         </li>
                     </c:if>                    
