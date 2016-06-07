@@ -78,12 +78,12 @@ public class CadastroCompra extends BaseServlet {
         HttpSession session = request.getSession();
         Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");
         
-        int codigoFilial = Integer.parseInt(request.getParameter("codigoFilial"));
+        int codigoFilial = Integer.parseInt(request.getParameter("filialId"));
         int idUsuario = usuario.getCodigoUsuario();
-        int valorTotal = 0;
-        String json = request.getParameter("itens");
+        double valorTotal = Double.parseDouble(request.getParameter("valorTotalItens"));
+        String json = request.getParameter("jsonItens");
         
-        List<Item> itens = new Gson().fromJson(json, List.class);
+        ArrayList<Item> itens = new Gson().fromJson(json, ArrayList.class);
 
         Compra compra = new Compra(codigoFilial, idUsuario, valorTotal, itens);
   

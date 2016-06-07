@@ -7,11 +7,13 @@ package DAO;
 
 import classes.entidades.Compra;
 import classes.entidades.Item;
+import com.google.gson.internal.LinkedTreeMap;
 import conexao.ConexaoBanco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,7 +38,10 @@ public class CompraDAO {
             stmt.execute();
         }
         
-        for (Item item: compra.getItens()) {
+        List<Item> itens = compra.getItens();
+        
+        for (int i = 0; i < itens.size(); i++) {
+            Item item = (Item)itens.get(i);
             item.setIdItem(consultarIdCompra(compra));
         }
              
@@ -49,19 +54,16 @@ public class CompraDAO {
         String sql = "INSERT INTO COMPRA_ITEM (idCompra, codigoProduto, quantidade, valorUnitario)" +
                      " VALUES(?,?,?,?)";
         
-        PreparedStatement stmt = conexao.prepareStatement(sql);
-        
-        for (Item item: itens) {
-            
-            stmt.setInt(1, item.getIdMovimentacao());
-            stmt.setInt(2, item.getCodigoProduto());
-            stmt.setInt(3, item.getQuantidade());
-            stmt.setDouble(4, item.getValorUnitario());
-            
-            stmt.execute();
-        }
-        
-        stmt.close();
+         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+             for (Item item: itens) {
+                 
+                 stmt.setInt(1, item.getIdMovimentacao());
+                 stmt.setInt(2, item.getCodigoProduto());
+                 stmt.setInt(3, item.getQuantidade());
+                 stmt.setDouble(4, item.getValorUnitario());
+                 
+                 stmt.execute();
+             }}
     }
     
     public static int consultarIdCompra(Compra compra) throws SQLException, ClassNotFoundException {

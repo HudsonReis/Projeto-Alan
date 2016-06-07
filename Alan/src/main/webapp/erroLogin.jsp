@@ -12,8 +12,8 @@
     <body>
         <div class="container">
             <div class="jumbotron">
-                <h1><i class="fa fa-ban red"></i> Sem permissão</h1>
-                <p class="lead">Você não tem permissão de acesso a essa página, entre em contato com o Administrador do Sistema. <em><span id="display-domain"></span></em>.</p>
+                <h1><i class="fa fa-ban red"></i> Erro interno</h1>
+                <p class="lead">Ocorreram erros ao processar solicitação, por favor entre em contato com o Administrador do Sistema. <em><span id="display-domain"></span></em>.</p>
                 <p><a onclick=javascript:checkSite(); class="btn btn-default btn-lg green">UI</a>
                     <script type="text/javascript">
                         function checkSite() {

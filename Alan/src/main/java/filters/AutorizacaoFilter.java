@@ -21,7 +21,7 @@ import util.FuncionalidadesEnum;
 
 @WebFilter(filterName = "AutorizacaoFilter", 
         servletNames = {"CadastroFilial", "CadastroProduto", "CadastroUsuario", "BuscaUsuarios", "Home"
-                , "BuscaProdutos", "BuscaFiliais", "Venda"},
+                , "BuscaProdutos", "BuscaFiliais", "Venda", "Compra"},
         urlPatterns = {"/protegido/*"})
 public class AutorizacaoFilter implements Filter {
 
@@ -49,6 +49,7 @@ public class AutorizacaoFilter implements Filter {
             }
         } catch (Throwable t) {
             t.printStackTrace();
+            httpResponse.sendRedirect(httpRequest.getContextPath() + "/erroLogin.jsp");
         }
     }
 

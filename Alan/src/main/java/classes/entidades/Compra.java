@@ -5,6 +5,7 @@
  */
 package classes.entidades;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -73,7 +74,7 @@ public class Compra {
         return this.itens;
     }
     
-    public void setItens(List<Item> itens) {
+    public void setItens(ArrayList<Item> itens) {
         this.itens = itens;
     }
 }

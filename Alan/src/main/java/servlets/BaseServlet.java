@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import util.FuncionalidadesEnum;
 
 public class BaseServlet extends HttpServlet {
 
@@ -31,6 +32,17 @@ public class BaseServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response, String pagina)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        request.setAttribute("funcionalidadeCadastroFilial", FuncionalidadesEnum.CadastroFiliais.value);
+        request.setAttribute("funcionalidadeCadastroProduto", FuncionalidadesEnum.CadastroProdutos.value);
+        request.setAttribute("funcionalidadeCadastroUsuario", FuncionalidadesEnum.CadastroUsuarios.value);
+        request.setAttribute("funcionalidadeBuscaFiliais", FuncionalidadesEnum.BuscaFiliais.value);
+        request.setAttribute("funcionalidadeBuscaProdutos", FuncionalidadesEnum.BuscaProdutos.value);
+        request.setAttribute("funcionalidadeBuscaUsuarios", FuncionalidadesEnum.CadastroUsuarios.value);
+        request.setAttribute("funcionalidadeCompras", FuncionalidadesEnum.RegistroMovimentacaoCompras.value);
+        request.setAttribute("funcionalidadeVendas", FuncionalidadesEnum.RegistroMovimentacaoVendas.value);
+        request.setAttribute("funcionalidadeRelatorios", FuncionalidadesEnum.VisualizacaoRelatorios.value);
+        
         try (PrintWriter out = response.getWriter()) {
             RequestDispatcher rd
                     = request.getRequestDispatcher(pagina);

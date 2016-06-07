@@ -35,6 +35,8 @@
                                     </select>                                    
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="codigoProduto">Produto</label>
@@ -95,9 +97,10 @@
                                 </table>
                             </div>
                         </div>
-                        <form method="post">
+                        <form method="post">                            
                             <input type="hidden" id="jsonItens" name="jsonItens"/>
                             <input type="hidden" id="filialId" name="filialId"/>
+                            <input type="hidden" id="valorTotalItens" name="valorTotalItens"/>
                             <button type="submit" class="btn btn-primary btn-success" id="btnSalvar">Salvar</button>
                         </form>                        
                     </div>
