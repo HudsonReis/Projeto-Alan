@@ -89,9 +89,16 @@ public class ProdutoDAO {
     public static List<ProdutoListagem> listar() throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
 
-        String sql = "SELECT P.CODIGOPRODUTO, F.NOME AS FILIAL, U.NOME AS USUARIO, P.NOME AS PRODUTO,"
-                + " P.QUANTIDADEPECA, P.STATUS, P.VALOR FROM PRODUTO P INNER JOIN FILIAL F ON"
-                + " P.CODIGOFILIAL = F.CODIGOFILIAL INNER JOIN USUARIO U ON P.IDUSUARIO = U.CODIGOUSUARIO";
+        String sql = "SELECT "
+                +    " P.CODIGOPRODUTO, "
+                +    " F.NOME AS FILIAL, "
+                +    " U.NOME AS USUARIO, "
+                +    " P.NOME AS PRODUTO,"
+                +    " P.QUANTIDADEPECA, "
+                +    " P.STATUS "
+                +    " FROM PRODUTO P "
+                +    " INNER JOIN FILIAL F ON P.CODIGOFILIAL = F.CODIGOFILIAL "
+                +    " INNER JOIN USUARIO U ON P.IDUSUARIO = U.CODIGOUSUARIO ";
 
         PreparedStatement stmt = conexao.prepareStatement(sql);
         List<ProdutoListagem> retorno = new ArrayList<>();
@@ -104,7 +111,7 @@ public class ProdutoDAO {
             String usuario = result.getString("USUARIO");
             String nomeProduto = result.getString("PRODUTO");
             int qtdPeca = result.getInt("QUANTIDADEPECA");
-            double valor = result.getDouble("VALOR");
+            double valor = 777.00;
             boolean status = result.getBoolean("STATUS");
 
             ProdutoListagem produto = new ProdutoListagem(codigoProduto, filial, usuario, nomeProduto,

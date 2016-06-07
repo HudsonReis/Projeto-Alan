@@ -5,8 +5,13 @@
  */
 package servlets;
 
+import DAO.FilialDAO;
+import DAO.ProdutoDAO;
 import DAO.VendaDAO;
+import classes.ProdutoListagem;
 import classes.VendaListagem;
+import classes.entidades.Filial;
+import classes.entidades.Produto;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -39,8 +44,10 @@ public class RelatorioVenda extends BaseServlet {
             throws ServletException, IOException {
 
         List<VendaListagem> lista = new ArrayList<>();
+        List<ProdutoListagem> produtos = new ArrayList<>();
         try {
             lista = VendaDAO.listar();
+            produtos = ProdutoDAO.listar();
         } catch (SQLException ex) {
             Logger.getLogger(RelatorioVenda.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
@@ -49,7 +56,9 @@ public class RelatorioVenda extends BaseServlet {
             System.out.println(ex.getMessage());
         }
 
+        
         request.setAttribute("Vendas", lista);
+        request.setAttribute("produtos", produtos);
 
         processRequest(request, response, "/WEB-INF/jsp/relatorioVendas.jspx");
     }
