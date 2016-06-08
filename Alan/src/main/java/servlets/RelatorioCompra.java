@@ -62,7 +62,18 @@ public class RelatorioCompra extends BaseServlet {
             Logger.getLogger(RelatorioCompra.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
         }
-
+        
+        double quantidadeTotal=0;
+        double valorTotal=0;
+        
+        for(CompraListagem cl : lista){
+            quantidadeTotal+=cl.getQuantidade();
+            valorTotal+=cl.getValor();
+            
+        }
+        
+        request.setAttribute("quantidadeTotal", quantidadeTotal);
+        request.setAttribute("valorTotal", valorTotal);
         
         request.setAttribute("filiais", filiais);
         request.setAttribute("Compras", lista);
@@ -92,6 +103,8 @@ public class RelatorioCompra extends BaseServlet {
         int codProduto = Integer.parseInt(request.getParameter("produtoId"));
         int codFilial = Integer.parseInt(request.getParameter("filialId"));
         
+        
+        
         List<CompraListagem> lista = new ArrayList<>();
         List<ProdutoListagem> produtos = new ArrayList<>();
         
@@ -111,7 +124,17 @@ public class RelatorioCompra extends BaseServlet {
             Logger.getLogger(RelatorioCompra.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
         }
+        double quantidadeTotal=0;
+        double valorTotal=0;
         
+        for(CompraListagem cl : lista){
+            quantidadeTotal+=cl.getQuantidade();
+            valorTotal+=cl.getValor();
+            
+        }
+        
+        request.setAttribute("quantidadeTotal", quantidadeTotal);
+        request.setAttribute("valorTotal", valorTotal);
         request.setAttribute("filiais", filiais);
         request.setAttribute("Compras", lista);
         request.setAttribute("produtos", produtos);
@@ -130,3 +153,4 @@ public class RelatorioCompra extends BaseServlet {
     }// </editor-fold>
 
 }
+

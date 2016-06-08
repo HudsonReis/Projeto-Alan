@@ -8,6 +8,7 @@ package servlets;
 import DAO.FilialDAO;
 import DAO.ProdutoDAO;
 import DAO.VendaDAO;
+import classes.CompraListagem;
 import classes.ProdutoListagem;
 import classes.VendaListagem;
 import classes.entidades.Filial;
@@ -63,6 +64,17 @@ public class RelatorioVenda extends BaseServlet {
             System.out.println(ex.getMessage());
         }
 
+        double quantidadeTotal = 0;
+        double valorTotal = 0;
+
+        for (VendaListagem cl : lista) {
+            quantidadeTotal += cl.getQuantidade();
+            valorTotal += cl.getValor();
+
+        }
+
+        request.setAttribute("quantidadeTotal", quantidadeTotal);
+        request.setAttribute("valorTotal", valorTotal);
         request.setAttribute("filiais", filiais);
         request.setAttribute("Vendas", lista);
         request.setAttribute("produtos", produtos);
@@ -96,7 +108,7 @@ public class RelatorioVenda extends BaseServlet {
 
         try {
             if (codProduto == 0) {
-                lista = VendaDAO.listar(dataInicial, dataFinal, usuario,codFilial);
+                lista = VendaDAO.listar(dataInicial, dataFinal, usuario, codFilial);
             } else {
                 lista = VendaDAO.listar(dataInicial, dataFinal, codProduto, usuario, codFilial);
             }
@@ -111,7 +123,16 @@ public class RelatorioVenda extends BaseServlet {
             String message = ex.getMessage();
             String message2 = ex.getMessage();
         }
+        double quantidadeTotal = 0;
+        double valorTotal = 0;
+        for (VendaListagem cl : lista) {
+            quantidadeTotal += cl.getQuantidade();
+            valorTotal += cl.getValor();
 
+        }
+
+        request.setAttribute("quantidadeTotal", quantidadeTotal);
+        request.setAttribute("valorTotal", valorTotal);
         request.setAttribute("filiais", filiais);
         request.setAttribute("Vendas", lista);
         request.setAttribute("produtos", produtos);
