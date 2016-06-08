@@ -65,6 +65,7 @@
                             <thead>
                                 <tr>
                                     <th>Id Compra</th>
+                                    <th>Id Filial</th>
                                     <th>Data Compra</th>
                                     <th>Código Produto</th>
                                     <th>Nome Produto</th>
@@ -79,6 +80,7 @@
                                 <c:forEach var="compra" items="${Compras}">
                                     <tr>
                                         <td class="id">${compra.idCompra}</td>
+                                        <td>${compra.idFilial}</td>
                                         <td>${compra.dataCompra}</td>
                                         <td>${compra.codigoProduto}</td>
                                         <td>${compra.nomeProduto}</td>

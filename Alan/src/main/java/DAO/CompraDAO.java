@@ -29,6 +29,7 @@ public class CompraDAO {
     private static String select
             = " select "
             + " ci.IDCOMPRA, "
+            + " c.CODIGOFILIAL, "
             + " c.DATACOMPRA, "
             + " ci.CODIGOPRODUTO, "
             + " p.NOME as NOME_PRODUTO, "
@@ -183,6 +184,7 @@ public class CompraDAO {
         List<CompraListagem> retorno = new ArrayList<>();
         while (result.next()) {
             int idCompra = result.getInt("IDCOMPRA");
+            int idFilial = result.getInt("CODIGOFILIAL");
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
             Date data = result.getDate("DATACOMPRA");
             String dataCompra = format.format(data);
@@ -194,7 +196,7 @@ public class CompraDAO {
             double vrUnitario = result.getDouble("VALORUNITARIO");
             double valor = result.getDouble("VALORTOTAL");
 
-            CompraListagem compra = new CompraListagem(idCompra, dataCompra, codigoProduto, nomeProduto,
+            CompraListagem compra = new CompraListagem(idCompra,idFilial, dataCompra, codigoProduto, nomeProduto,
                     idUsuario, nomeUsuario, quantidade, vrUnitario, valor);
             retorno.add(compra);
         }

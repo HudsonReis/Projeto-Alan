@@ -13,6 +13,7 @@ package classes;
 public class VendaListagem {
 
     private int idVenda;
+    private int idFilial;
     private String dataVenda;
     private int codigoProduto;
     private String nomeProduto;
@@ -22,8 +23,9 @@ public class VendaListagem {
     private double vrUnitario;
     private double valor;
 
-    public VendaListagem(int idVenda, String dataVenda, int codigoProduto, String nomeProduto, int idUsuario, String nomeUsuario, double quantidade, double vrUnitario, double valor) {
+    public VendaListagem(int idVenda, int idFilial, String dataVenda, int codigoProduto, String nomeProduto, int idUsuario, String nomeUsuario, double quantidade, double vrUnitario, double valor) {
         this.idVenda = idVenda;
+        this.idFilial = idFilial;
         this.dataVenda = dataVenda;
         this.codigoProduto = codigoProduto;
         this.nomeProduto = nomeProduto;
@@ -70,5 +72,10 @@ public class VendaListagem {
     public double getValor() {
         return valor;
     }
+
+    public int getIdFilial() {
+        return idFilial;
+    }
+    
 
 }

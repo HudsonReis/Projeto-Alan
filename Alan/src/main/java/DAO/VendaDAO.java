@@ -22,7 +22,8 @@ public class VendaDAO {
 
     private static String select
             = " select "
-            + " vi.IDVENDA, "
+            + " vi.IDVENDA,"
+            + " v.CODIGOFILIAL, "
             + " v.DATAVENDA, "
             + " vi.CODIGOPRODUTO, "
             + " p.NOME as NOME_PRODUTO, "
@@ -182,6 +183,7 @@ public class VendaDAO {
         List<VendaListagem> retorno = new ArrayList<>();
         while (result.next()) {
             int idVenda = result.getInt("IDVENDA");
+            int idFilial = result.getInt("CODIGOFILIAL");
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
             Date data = result.getDate("DATAVENDA");
             String dataVenda = format.format(data);
@@ -193,7 +195,7 @@ public class VendaDAO {
             double vrUnitario = result.getDouble("VALORUNITARIO");
             double valor = result.getDouble("VALORTOTAL");
 
-            VendaListagem venda = new VendaListagem(idVenda, dataVenda, codigoProduto, nomeProduto,
+            VendaListagem venda = new VendaListagem(idVenda,idFilial, dataVenda, codigoProduto, nomeProduto,
                     idUsuario, nomeUsuario, quantidade, vrUnitario, valor);
             retorno.add(venda);
 
