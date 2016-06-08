@@ -15,17 +15,19 @@ public class Item {
     private int codigoProduto;
     private int quantidade;
     private double valorUnitario;
+    private String nomeProduto;
     
     public Item() {
         
     }
     
-    public Item(int idItem, int idMovimentacao, int codigoProduto, int quantidade, double valorUnitario) {
+    public Item(int idItem, int idMovimentacao, int codigoProduto, int quantidade, double valorUnitario, String nomeProduto) {
         this.idItem = idItem;
         this.idMovimentacao = idMovimentacao;
         this.codigoProduto = codigoProduto;
         this.quantidade = quantidade;
         this.valorUnitario = valorUnitario;
+        this.nomeProduto = nomeProduto;
     }
     
     public int getIdItem() {
@@ -66,5 +68,9 @@ public class Item {
     
     public void setValorUnitario(double valorUnitario) {
         this.valorUnitario = valorUnitario;
+    }
+    
+    public String getNomeProduto() {
+        return this.nomeProduto;
     }
 }

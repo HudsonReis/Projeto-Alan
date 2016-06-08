@@ -8,11 +8,13 @@ package util;
 /**
  *
  * @author arthur.lrsouza1
+ * @param <T>
  */
-public class Resposta {
+public class Resposta<T> {
     private boolean Sucesso;
     private String Mensagem;
     private String Campo;
+    private T Resultado;
     
     public Resposta() {
         Sucesso = true;
@@ -38,5 +40,13 @@ public class Resposta {
     
     public String getCampo() {
         return this.Campo;
+    }
+    
+    public T getResultado() {
+        return this.Resultado;
+    }
+    
+    public void setResultado(T resultado) {
+        this.Resultado = resultado;
     }
 }

@@ -23,7 +23,7 @@ public class VendaDAO {
         Connection conexao = ConexaoBanco.obterConexao();
 
         String sql = "INSERT INTO VENDA "
-                + "(codigoFilial, idUsuario, valorTotal, dataCompra)"
+                + "(codigoFilial, idUsuario, valorTotal, dataVenda)"
                 + "VALUES(?,?,?,?)";
 
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {

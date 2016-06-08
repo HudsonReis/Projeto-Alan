@@ -1,30 +1,25 @@
-var carrinhoVenda = [];
+var carrinhoVenda = [],
+contador = 0;
 
 $(document).ready(function () {
-    iniciarToastr();
-    dispararResposta();
     
     $(document).on("click", "#btnSalvar", function () {
-       var filialId = $("#codigoFilial").val();
        var valorTotalItens = $("#valorTotalVenda").text();       
        
-       $("#filialId").val(filialId);
        $("#valorTotalItens").val(retornarDecimal(valorTotalItens));
-       $("#jsonItens").val(JSON.stringify(carrinhoCompra));
+       $("#jsonItens").val(JSON.stringify(carrinhoVenda));
     });
     
     $(document).on("click", "button[id='btnIncluir']", function () {
         
         $("#itens").removeClass("hidden");
         
-        var codigoFilial = $("#codigoFilial").val();
         var codigoProduto = $("#codigoProduto").val();
         var nomeProduto = $("#codigoProduto option:selected").text();
         var quantidade = $("#Quantidade").val();
         var valorUnitario = $("#valorUnitario").val();
         var valorTotal = $("#valorTotal").val();
         
-        validarCampos(codigoFilial, "Informe uma Filial.", "codigoFilial");
         validarCampos(codigoProduto, "Informe o codigo do produto de maneira correta", "codigoProduto");
         validarCampos(quantidade, "Informe a quantidade do produto de maneira correta", "Quantidade");
         
@@ -71,21 +66,21 @@ $(document).ready(function () {
         var valorTotalCompra = retornarDecimal($("#valorTotalCompra").text());
         var valorTotalItem = retornarDecimal($(this).parent().prev().text());
         var subtracao = valorTotalCompra - valorTotalItem;        
-
-        $(this).parent().parent().remove();
+        
+        var tr = $(this).parent().parent();
+        var indexTr = tr.attr("id");
+        
+        tr.remove();
         $("#valorTotalCompra").text(formatarValor(subtracao));
+        var index = indexTr;
+        var item = carrinhoVenda.splice(index, 1);
+        
+        contador--;
     });
     
-    var limparCampos = function () {
-        $("#codigoProduto").val(0);
-        $("#Quantidade").val(0);
-        $("#valorUnitario").val("RS 0,00");
-        $("#valorTotal").val("RS 0,00");
-    };
-
     var preencherTabela = function (venda) {
         var tbody = $("#vendas tbody");
-        var htmlStr = "<tr><td>" + venda.codigoProduto + 
+        var htmlStr = "<tr id='item" + contador + "'><td>" + venda.codigoProduto + 
                       "</td><td>" + venda.nomeProduto + 
                       "</td><td>" + venda.quantidade + 
                       "</td><td>" + formatarValor(venda.valorUnitario) + 
@@ -93,6 +88,30 @@ $(document).ready(function () {
                       "</td><td><button type='button' class='btn btn-primary btn-danger btn-xs' name='btnRemoverItem'>Remover</button></td></tr>";
 
         tbody.append(htmlStr);
+        contador++;
+    };
+    
+    var preencherTabelaItens = function () {
+        var jsonItens = $("#jsonItens").val();    
+        if (jsonItens != "" && jsonItens != undefined) {
+            
+            $("#itens").removeClass("hidden");
+            jsonItens = jsonItens.replaceAll("'", "\"");          
+            var itens = JSON.parse(jsonItens);                        
+            
+            carrinhoVenda = itens;
+            
+            for(var x = 0; x < carrinhoVenda.length; x++) {
+                preencherTabela(carrinhoVenda[x]);
+            }
+        }
+    };
+    
+    var limparCampos = function () {
+        $("#codigoProduto").val(0);
+        $("#Quantidade").val(0);
+        $("#valorUnitario").val("RS 0,00");
+        $("#valorTotal").val("RS 0,00");
     };
     
     var atualizarTotal = function () {
@@ -104,5 +123,9 @@ $(document).ready(function () {
         
         $("#valorTotalVenda").text(formatarValor(total));
     };
+    
+    iniciarToastr();
+    preencherTabelaItens();
+    dispararResposta();
 });
 

@@ -1,5 +1,10 @@
 var prosseguir = true;
 
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.split(search).join(replacement);
+};
+
 function iniciarToastr () {
    toastr.options = {
        "closeButton": false,

@@ -44,3 +44,8 @@ button {
     background-color:#fff9e5;
     border:1px solid #f89406;
 }
+
+tr.has-error td {
+    background-color:#FFE5E5;
+    border:1px solid red;
+}

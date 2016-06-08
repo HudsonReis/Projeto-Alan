@@ -23,7 +23,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -65,26 +64,16 @@ public class CadastroVenda extends BaseServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        Resposta resposta = validar(request);
-        HttpSession session = request.getSession();
-        Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");
+        Resposta<Venda> resposta = validar(request);
         
         if (resposta.getSucesso()){
-            
-            int codigoFilial = Integer.parseInt(request.getParameter("filialId"));
-            int idUsuario = usuario.getCodigoUsuario();
-            double valorTotal = Double.parseDouble(request.getParameter("valorTotalItens"));
-            String json = request.getParameter("jsonItens");
-
-            ArrayList<Item> itens = new Gson().fromJson(json, new TypeToken<List<Item>>(){}.getType());
-
-            Venda venda = new Venda(codigoFilial, idUsuario, valorTotal, itens);
 
             try {
-                VendaDAO.adicionar(venda);
+                VendaDAO.adicionar(resposta.getResultado());
             } catch (SQLException | ClassNotFoundException ex) {
                 Logger.getLogger(CadastroCompra.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
         } else {
             request.setAttribute("resposta", resposta);
         }
@@ -111,26 +100,54 @@ public class CadastroVenda extends BaseServlet {
         }
         
         request.setAttribute("Produtos", lista);
-        request.setAttribute("Filial", filial);
+        request.setAttribute("filial", filial);
     }
     
     public Resposta validar(HttpServletRequest request) {
-        Resposta resposta = new Resposta();
+        Resposta<Venda> resposta = new Resposta<Venda>();
+        
+        HttpSession session = request.getSession();
+        Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");
         
         String codigoFilialStr = request.getParameter("filialId");
         String valorTotalStr = request.getParameter("valorTotalItens");
         String json = request.getParameter("jsonItens");
+        ArrayList<Item> itens = new ArrayList<>();
         
         if(codigoFilialStr.equals("") || codigoFilialStr.equals("0")) {
             resposta.setErro("É necessário informar uma filial.", "codigoFilial");
-        }
-        
-        if(valorTotalStr.equals("")) {
+        } else if(valorTotalStr.equals("")) {
             resposta.setErro("Ocorreram erros e valor Total não foi preenchido.", "valorTotalItens");
+        } else if(json.equals("")) {
+            resposta.setErro("Ocorreram erros e a lista de Itens não foi preenchida.", "");
+        } else {
+            itens = new Gson().fromJson(json, new TypeToken<List<Item>>(){}.getType());
+            
+            try {
+                
+                for (int x = 0; x < itens.size(); x++) {
+                    Item item = itens.get(x);
+                    if (ProdutoDAO.consultarEstoque(item.getCodigoProduto()) < item.getQuantidade()){
+                        resposta.setErro("Não há quantidade suficiente de " + 
+                                item.getNomeProduto() + " no estoque.", "item" + x);
+                        break;
+                    }
+                }
+                
+            } catch (SQLException | ClassNotFoundException ex) {
+                Logger.getLogger(CadastroVenda.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
-        if(json.equals("")) {
-            resposta.setErro("Ocorreram erros e a lista de Itens não foi preenchida.", "");
+        if (resposta.getSucesso()) {
+            int codigoFilial = Integer.parseInt(codigoFilialStr);
+            int idUsuario = usuario.getCodigoUsuario();
+            double valorTotal = Double.parseDouble(valorTotalStr);
+            
+            resposta.setResultado(new Venda(codigoFilial, idUsuario, valorTotal, itens));
+        } else {
+            json = json.replace("\"", "'");
+            request.setAttribute("jsonItens", json);
         }
         
         return resposta;

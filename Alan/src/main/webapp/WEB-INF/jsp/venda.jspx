@@ -25,8 +25,8 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="Produto">Filial</label>
-                                    <input type="text" id="codigoFilial" class="form-control" value="${filial.nome}" disabled="disabled" />                                    
+                                    <label>Filial</label>
+                                    <input type="text" class="form-control" value="${filial.nome}" disabled="disabled" />                                    
                                 </div>
                             </div>
                         </div>
@@ -36,7 +36,7 @@
                                     <label for="produto">Produto</label>
                                     <select class="form-control" id="codigoProduto" name="codigoProduto">
                                         <option value="0">Selecione...</option>
-                                        <c:forEach items="${produtos}" var="produto">
+                                        <c:forEach items="${Produtos}" var="produto">
                                             <option value="${produto.codigoProduto}" data-valor="${produto.valor}" data-percentual="${produto.percentualLucro}">${produto.nome}</option>
                                         </c:forEach>
                                     </select>                                        
@@ -45,7 +45,7 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="quantidade">Quantidade</label>
-                                    <input type="number" class="form-control" id="quantidade" name="quantidade" min="0"/>
+                                    <input type="number" class="form-control" id="Quantidade" name="Quantidade" min="0"/>
                                 </div>
                             </div>
                             <div class="col-md-2">
@@ -66,7 +66,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="container">
+                <div id="itens" class="container hidden">
                     <div class="box">
                         <div class="row">
                             <div class="col-md-12">
@@ -90,8 +90,8 @@
                             </div>
                         </div>
                         <form method="post">                            
-                            <input type="hidden" id="jsonItens" name="jsonItens"/>
-                            <input type="hidden" id="filialId" name="filialId"/>
+                            <input type="hidden" id="jsonItens" name="jsonItens" value="${jsonItens}"/>
+                            <input type="hidden" id="filialId" name="filialId" value="${filial.codigoFilial}"/>
                             <input type="hidden" id="valorTotalItens" name="valorTotalItens"/>
                             <button type="submit" class="btn btn-primary btn-success" id="btnSalvar">Salvar</button>
                         </form>  
