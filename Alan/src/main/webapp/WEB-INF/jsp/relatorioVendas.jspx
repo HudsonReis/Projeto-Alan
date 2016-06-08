@@ -96,12 +96,7 @@
                             
                             <tfoot>
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td colspan="6"></td>
                                     <td>Total Quantidade: </td>
                                     <td>${quantidadeTotal}</td>
                                      <td>Total valor:   </td>
