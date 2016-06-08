@@ -43,10 +43,10 @@ public class CompraDAO {
         }
 
         List<Item> itens = compra.getItens();
+        int idCompra = consultarIdCompra();
 
         for (int i = 0; i < itens.size(); i++) {
-            Item item = (Item) itens.get(i);
-            item.setIdItem(consultarIdCompra(compra));
+            itens.get(i).setIdMovimentacao(idCompra);
         }
 
         adicionarItens(compra.getItens());
@@ -58,31 +58,31 @@ public class CompraDAO {
         String sql = "INSERT INTO COMPRA_ITEM (idCompra, codigoProduto, quantidade, valorUnitario)"
                 + " VALUES(?,?,?,?)";
 
-        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
-            for (Item item : itens) {
+        for (Item item : itens) {
+            try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
 
-                stmt.setInt(1, item.getIdMovimentacao());
-                stmt.setInt(2, item.getCodigoProduto());
-                stmt.setInt(3, item.getQuantidade());
-                stmt.setDouble(4, item.getValorUnitario());
+                    stmt.setInt(1, item.getIdMovimentacao());
+                    stmt.setInt(2, item.getCodigoProduto());
+                    stmt.setInt(3, item.getQuantidade());
+                    stmt.setDouble(4, item.getValorUnitario());
 
-                stmt.execute();
+                    stmt.execute();
             }
         }
     }
 
-    public static int consultarIdCompra(Compra compra) throws SQLException, ClassNotFoundException {
+    public static int consultarIdCompra() throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
 
-        String sql = "SELECT TOP 1 idCompra FROM COMPRA_ITEM ORDER BY idCompra desc";
+        String sql = "SELECT idCompra FROM COMPRA ORDER BY idCompra desc FETCH FIRST 1 ROWS ONLY";
 
-        int idCompra = 0;
+        int idCompra;
 
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
 
             ResultSet result = stmt.executeQuery();
             result.next();
-
+            
             idCompra = result.getInt("idCompra");
         }
 

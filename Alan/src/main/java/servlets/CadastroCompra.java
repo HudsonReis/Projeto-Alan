@@ -14,6 +14,7 @@ import classes.entidades.Usuario;
 import classes.entidades.Item;
 import classes.ProdutoListagem;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -83,10 +84,8 @@ public class CadastroCompra extends BaseServlet {
         double valorTotal = Double.parseDouble(request.getParameter("valorTotalItens"));
         String json = request.getParameter("jsonItens");
         
-        int teste = 0;
+        ArrayList<Item> itens = new Gson().fromJson(json, new TypeToken<List<Item>>(){}.getType());
         
-        ArrayList<Item> itens = new Gson().fromJson(json, ArrayList.class);
-
         Compra compra = new Compra(codigoFilial, idUsuario, valorTotal, itens);
   
         try {
