@@ -1,60 +1,107 @@
-var carrinhoCompra = [];
+var carrinhoVenda = [];
 
 $(document).ready(function () {
-
-    $(document).on("click", "button[id='btnIncluir']", function () {
-        var produtoId = $("#produto").val();
-        var quantidade = $("#quantidade").val();
-        
-        //validação se os campos do form estão vazios
-        if (produtoId == 0) {
-            alert("Selecione um produto");
-        } else if (quantidade == 0 || quantidade == null) {
-            alert("Informe uma quantidade para o produto");
-        } else {
-
-            var produto = $("#produto option:selected").text();
-            var valor = $("#valor").val();
-
-            var venda = {
-                codigoProduto: produtoId,
-                nome: produto,
-                valor: valor,
-                quantidade: quantidade
-            }
-        }
-        ;
-
-        $("#produto").val(0);
-        $("#quantidade").val(0);
-
-        carrinhoCompra.push(venda);
-        preencherTabela(venda);
-        inserirSalvarVenda();
-
-
+    iniciarToastr();
+    
+    $(document).on("click", "#btnSalvar", function () {
+       var filialId = $("#codigoFilial").val();
+       var valorTotalItens = $("#valorTotalVenda").text();       
+       
+       $("#filialId").val(filialId);
+       $("#valorTotalItens").val(retornarDecimal(valorTotalItens));
+       $("#jsonItens").val(JSON.stringify(carrinhoCompra));
     });
+    
+    $(document).on("click", "button[id='btnIncluir']", function () {
+        
+        $("#itens").removeClass("hidden");
+        
+        var codigoFilial = $("#codigoFilial").val();
+        var codigoProduto = $("#codigoProduto").val();
+        var nomeProduto = $("#codigoProduto option:selected").text();
+        var quantidade = $("#Quantidade").val();
+        var valorUnitario = $("#valorUnitario").val();
+        var valorTotal = $("#valorTotal").val();
+        
+        validarCampos(codigoFilial, "Informe uma Filial.", "codigoFilial");
+        validarCampos(codigoProduto, "Informe o codigo do produto de maneira correta", "codigoProduto");
+        validarCampos(quantidade, "Informe a quantidade do produto de maneira correta", "Quantidade");
+        
+        if (prosseguir) {
+            
+            var venda = {
+                codigoProduto: codigoProduto,
+                nomeProduto: nomeProduto,
+                quantidade: parseInt(quantidade),
+                valorUnitario: retornarDecimal(valorUnitario),
+                valorTotal: retornarDecimal(valorTotal)
+            };
+            
+            carrinhoVenda.push(venda);
+            preencherTabela(venda);
+            atualizarTotal();
+            limparCampos();
+        }
+    });
+    
+    $(document).on("focus", "#Quantidade", function () {
+       $(this).val(""); 
+    });
+    
+    $(document).on("blur", "#Quantidade", function () {
+        var quantidade = $("#Quantidade").val();
+        
+        if(quantidade != 0 || quantidade != null) {
+            var valorProduto = $("#codigoProduto option:selected").data("valor");   
+            var valorTotal = quantidade * valorProduto;
+            
+            $("#valorTotal").val(formatarValor(valorTotal));
+        }
+    });
+    
+    $(document).on("change", "#codigoProduto", function () {
+        var valorProduto = $("#codigoProduto option:selected").data("valor");  
+        
+        $("#valorUnitario").val(formatarValor(valorProduto));
+        $("#Quantidade").focus();
+    });
+    
+    $(document).on("click", "button[name='btnRemoverItem']", function() {
+        var valorTotalCompra = retornarDecimal($("#valorTotalCompra").text());
+        var valorTotalItem = retornarDecimal($(this).parent().prev().text());
+        var subtracao = valorTotalCompra - valorTotalItem;        
+
+        $(this).parent().parent().remove();
+        $("#valorTotalCompra").text(formatarValor(subtracao));
+    });
+    
+    var limparCampos = function () {
+        $("#codigoProduto").val(0);
+        $("#Quantidade").val(0);
+        $("#valorUnitario").val("RS 0,00");
+        $("#valorTotal").val("RS 0,00");
+    };
 
     var preencherTabela = function (venda) {
         var tbody = $("#vendas tbody");
-        var htmlStr = "<tr><td>" + venda.nome + "</td><td>" + venda.quantidade + "</td><td>" + venda.valor + "</td><td>"+ "<button type='button' class='btn btn-primary' id='btnRemoverVenda'>Remover</button>" +"</td></tr>";
+        var htmlStr = "<tr><td>" + venda.codigoProduto + 
+                      "</td><td>" + venda.nomeProduto + 
+                      "</td><td>" + venda.quantidade + 
+                      "</td><td>" + formatarValor(venda.valorUnitario) + 
+                      "</td><td>" + formatarValor(venda.valorTotal) + 
+                      "</td><td><button type='button' class='btn btn-primary btn-danger btn-xs' name='btnRemoverItem'>Remover</button></td></tr>";
 
         tbody.append(htmlStr);
     };
     
-    function inserirSalvarVenda() {
-        document.getElementById("salvarVenda").innerHTML = "<button type='submit' class='btn btn-success' id='btnSalvarVenda'>Salvar</button>";
-    }
-
-    var atualizarTotal = function (venda) {
+    var atualizarTotal = function () {
         var total = 0;
 
-        //$("table tfoot").
-        for(var i =0; i < carrinhoCompra.length; i++){
-            total += carrinhoCompra[i].valor;
+        for(var i = 0; i < carrinhoVenda.length; i++){        
+            total += carrinhoVenda[i].valorTotal;
         }
         
-        $("#valorTotal").val(total);
+        $("#valorTotalVenda").text(formatarValor(total));
     };
 });
 

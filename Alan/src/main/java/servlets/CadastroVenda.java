@@ -5,8 +5,16 @@
  */
 package servlets;
 
+import DAO.FilialDAO;
 import DAO.ProdutoDAO;
-import classes.ProdutoListagem;
+import DAO.VendaDAO;
+import classes.entidades.Produto;
+import classes.entidades.Filial;
+import classes.entidades.Item;
+import classes.entidades.Usuario;
+import classes.entidades.Venda;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,13 +25,14 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Nicolas
  */
 @WebServlet(name = "Venda", urlPatterns = {"/Venda"})
-public class Venda extends BaseServlet {
+public class CadastroVenda extends BaseServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -38,15 +47,23 @@ public class Venda extends BaseServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        List<ProdutoListagem> lista = new ArrayList<>();
+        HttpSession session = request.getSession();
+        Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");
+        
+        List<Produto> lista = new ArrayList<>();
+        Filial filial = new Filial();
         
         try {
-            lista = ProdutoDAO.listar();
+            
+            lista = ProdutoDAO.listarPorFilial(usuario.getCodigoFilial());
+            filial = FilialDAO.consultarPorId(usuario.getCodigoFilial());
+            
         } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(Venda.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CadastroVenda.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        request.setAttribute("produtos", lista);
+        request.setAttribute("Produtos", lista);
+        request.setAttribute("Filial", filial);
         
         processRequest(request, response, "/WEB-INF/jsp/venda.jspx");
     }
@@ -62,6 +79,25 @@ public class Venda extends BaseServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        HttpSession session = request.getSession();
+        Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");
+        
+        int codigoFilial = Integer.parseInt(request.getParameter("filialId"));
+        int idUsuario = usuario.getCodigoUsuario();
+        double valorTotal = Double.parseDouble(request.getParameter("valorTotalItens"));
+        String json = request.getParameter("jsonItens");
+        
+        ArrayList<Item> itens = new Gson().fromJson(json, new TypeToken<List<Item>>(){}.getType());
+        
+        Venda venda = new Venda(codigoFilial, idUsuario, valorTotal, itens);
+        
+        try {
+            VendaDAO.adicionar(venda);
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(CadastroCompra.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         processRequest(request, response, "/WEB-INF/jsp/venda.jspx");
     }
 

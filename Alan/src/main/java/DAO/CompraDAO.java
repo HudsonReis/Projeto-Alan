@@ -8,7 +8,6 @@ package DAO;
 import classes.CompraListagem;
 import classes.entidades.Compra;
 import classes.entidades.Item;
-import com.google.gson.internal.LinkedTreeMap;
 import conexao.ConexaoBanco;
 import java.sql.Connection;
 import java.sql.Date;
@@ -49,7 +48,7 @@ public class CompraDAO {
             itens.get(i).setIdMovimentacao(idCompra);
         }
 
-        adicionarItens(compra.getItens());
+        adicionarItens(itens);
     }
 
     public static void adicionarItens(List<Item> itens) throws SQLException, ClassNotFoundException {
@@ -61,13 +60,15 @@ public class CompraDAO {
         for (Item item : itens) {
             try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
 
-                    stmt.setInt(1, item.getIdMovimentacao());
-                    stmt.setInt(2, item.getCodigoProduto());
-                    stmt.setInt(3, item.getQuantidade());
-                    stmt.setDouble(4, item.getValorUnitario());
+                stmt.setInt(1, item.getIdMovimentacao());
+                stmt.setInt(2, item.getCodigoProduto());
+                stmt.setInt(3, item.getQuantidade());
+                stmt.setDouble(4, item.getValorUnitario());
 
-                    stmt.execute();
+                stmt.execute();
             }
+            
+            ProdutoDAO.atualizarEstoque(item.getCodigoProduto(), item.getQuantidade(), true);
         }
     }
 

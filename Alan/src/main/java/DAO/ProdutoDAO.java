@@ -16,6 +16,43 @@ import java.util.List;
  */
 public class ProdutoDAO {
 
+    public static void atualizarEstoque(int codigoProduto, int quantidade, boolean compra) throws SQLException, ClassNotFoundException {
+        Connection conexao = ConexaoBanco.obterConexao();
+        
+        quantidade = compra ? quantidade : quantidade * -1;
+        
+        int estoqueAtual = consultarEstoque(codigoProduto);
+        int estoqueFinal = estoqueAtual + quantidade;
+        
+        String sql = "UPDATE PRODUTO SET QUANTIDADEPECA = ? WHERE CODIGOPRODUTO = ?";
+        
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            
+            stmt.setInt(1, estoqueFinal);
+            stmt.setInt(2, codigoProduto);
+            
+            stmt.execute();
+        }
+    }
+    
+    public static int consultarEstoque(int codigoProduto) throws SQLException, ClassNotFoundException {
+        Connection conexao = ConexaoBanco.obterConexao();
+        
+        String sql = "SELECT quantidadePeca FROM PRODUTO WHERE codigoProduto = ?";
+        
+        int quantidadePeca;
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            
+            stmt.setInt(1, codigoProduto);
+            ResultSet result = stmt.executeQuery();
+            result.next();
+            
+            quantidadePeca = result.getInt("quantidadePeca");
+        }
+        
+        return quantidadePeca;
+    }
+                
     public static void adicionar(Produto produto, boolean incluirProdutoValor) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         
@@ -117,6 +154,39 @@ public class ProdutoDAO {
 
             ProdutoListagem produto = new ProdutoListagem(codigoProduto, filial, usuario, nomeProduto,
                     valor, qtdPeca, status);
+
+            retorno.add(produto);
+        }
+
+        return retorno;
+    }
+    
+    public static List<Produto> listarPorFilial(int filialId) throws SQLException, ClassNotFoundException {
+        Connection conexao = ConexaoBanco.obterConexao();
+
+        String sql = "SELECT "
+                +    " CODIGOPRODUTO, "
+                +    " NOME,"
+                +    " VALOR,"
+                +    " PERCENTUALLUCRO"
+                +    " FROM PRODUTO"
+                +    " WHERE CODIGOFILIAL = ?";
+
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        
+        stmt.setInt(1, filialId);
+        
+        List<Produto> retorno = new ArrayList<>();
+        ResultSet result = stmt.executeQuery();
+
+        while (result.next()) {
+
+            int codigoProduto = result.getInt("CODIGOPRODUTO");
+            String nome = result.getString("NOME");
+            double valor = result.getDouble("VALOR");
+            double percentualLucro = result.getDouble("PERCENTUALLUCRO");
+
+            Produto produto = new Produto(codigoProduto, nome, valor, percentualLucro);
 
             retorno.add(produto);
         }

@@ -5,64 +5,76 @@
  */
 package classes.entidades;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 /**
  *
  * @author Nicolas
  */
 public class Venda {
 
-    private int quantidade;
-    private String produto;
-    private int codigoUsuario;
-    private float valor;
-    private int codProduto;
+    private int idVenda;
+    private int codigoFilial;
+    private int idUsuario;
+    private double valorTotal;
+    private Date dataVenda;
+    private List<Item> itens;
 
-    public Venda(int qtd, float valor, String produto, int codUsuario, int codProduto) {
-        this.quantidade = qtd;
-        this.valor = valor;
-        this.codigoUsuario = codUsuario;
-        this.produto = produto;
-        this.codProduto = codProduto;
-
+    public Venda() {
+        
+    }
+    
+    public Venda(int codigoFilial, int idUsuario, double valorTotal, List<Item> itens) {
+        this.codigoFilial = codigoFilial;
+        this.idUsuario = idUsuario;
+        this.valorTotal = valorTotal;
+        this.dataVenda = new java.util.Date();
+        this.itens = itens;
     }
 
-    public int getQuantidade() {
-        return quantidade;
+    public int getIdVenda() {
+        return this.idVenda;
     }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
+    
+    public void setIdVenda(int idVenda) {
+        this.idVenda = idVenda;
     }
-
-    public String getProduto() {
-        return produto;
+    
+    public int getCodigoFilial() {
+        return this.codigoFilial;
     }
-
-    public void setProduto(String produto) {
-        this.produto = produto;
+    
+    public void setCodigoFilial(int codigoFilial) {
+        this.codigoFilial = codigoFilial;
     }
 
     public int getCodigoUsuario() {
-        return codigoUsuario;
+        return idUsuario;
     }
 
-    public void setCodigoUsuario(int codigoUsuario) {
-        this.codigoUsuario = codigoUsuario;
+    public void setCodigoUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
-    public float getValor() {
-        return valor;
-    }
-
-    public void setValor(float valor) {
-        this.valor = valor;
+    public Double getValorTotal() {
+        return this.valorTotal;
     }
     
-    public int getCodProduto() {
-        return codProduto;
+    public void setValorTotal(double valorTotal) {
+        this.valorTotal = valorTotal;
     }
 
-    public void setCodProduto(int codProduto) {
-        this.codProduto = codProduto;
+    public Date getDataVenda() {
+        return this.dataVenda;
+    }
+    
+    public List<Item> getItens() {
+        return this.itens;
+    }
+    
+    public void setItens(ArrayList<Item> itens) {
+        this.itens = itens;
     }
 }

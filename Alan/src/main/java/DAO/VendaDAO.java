@@ -1,6 +1,7 @@
 package DAO;
 
 import classes.VendaListagem;
+import classes.entidades.Item;
 import conexao.ConexaoBanco;
 import classes.entidades.Venda;
 import java.sql.Connection;
@@ -18,23 +19,70 @@ import java.util.List;
  */
 public class VendaDAO {
 
-    public static void adicionar(Venda saida) throws SQLException, ClassNotFoundException {
+    public static void adicionar(Venda venda) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
-        //linguagem sql -> inserir no banco
-        String sql = "INSERT INTO VENDA  "
-                //Nomes dos campos no banco
-                + "(codigoProduto, produto, valor, idUsuario, quantidade)"
+
+        String sql = "INSERT INTO VENDA "
+                + "(codigoFilial, idUsuario, valorTotal, dataCompra)"
                 + "VALUES(?,?,?,?)";
 
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
-            stmt.setInt(1, saida.getCodProduto());
-            stmt.setString(2, saida.getProduto());
-            stmt.setFloat(2, saida.getValor());
-            stmt.setInt(3, saida.getCodigoUsuario());
-            stmt.setInt(4, saida.getQuantidade());
+            
+            stmt.setInt(1, venda.getCodigoFilial());
+            stmt.setInt(2, venda.getCodigoUsuario());
+            stmt.setDouble(3, venda.getValorTotal());
+            stmt.setDate(4, new java.sql.Date(venda.getDataVenda().getTime()));
 
             stmt.execute();
         }
+        
+        List<Item> itens = venda.getItens();
+        int idVenda = consultarIdVenda();
+
+        for (int i = 0; i < itens.size(); i++) {
+            itens.get(i).setIdMovimentacao(idVenda);
+        }
+
+        adicionarItens(itens);
+    }
+    
+    public static void adicionarItens(List<Item> itens) throws SQLException, ClassNotFoundException {
+        Connection conexao = ConexaoBanco.obterConexao();
+
+        String sql = "INSERT INTO VENDA_ITEM (idVenda, codigoProduto, quantidade, valorUnitario)"
+                + " VALUES(?,?,?,?)";
+
+        for (Item item : itens) {
+            try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+
+                stmt.setInt(1, item.getIdMovimentacao());
+                stmt.setInt(2, item.getCodigoProduto());
+                stmt.setInt(3, item.getQuantidade());
+                stmt.setDouble(4, item.getValorUnitario());
+
+                stmt.execute();
+            }
+            
+            ProdutoDAO.atualizarEstoque(item.getCodigoProduto(), item.getQuantidade(), false);
+        }
+    }
+    
+    public static int consultarIdVenda() throws SQLException, ClassNotFoundException {
+        Connection conexao = ConexaoBanco.obterConexao();
+
+        String sql = "SELECT idVenda FROM VENDA ORDER BY idVenda desc FETCH FIRST 1 ROWS ONLY";
+
+        int idVenda;
+
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+
+            ResultSet result = stmt.executeQuery();
+            result.next();
+            
+            idVenda = result.getInt("idVenda");
+        }
+
+        return idVenda;
     }
 
     public static List<VendaListagem> listar() throws SQLException, ClassNotFoundException {

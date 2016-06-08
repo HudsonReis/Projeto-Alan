@@ -14,6 +14,7 @@
             <title>Venda</title>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
             <link rel="stylesheet" href="resources/css/bootstrap.min.css"/>
+            <link rel="stylesheet" href="resources/css/toastr.min.css"/>
             <link rel="stylesheet" href="resources/css/style.css"/>
         </head>
         <body>
@@ -21,67 +22,86 @@
                 <div class="container">
                     <h2>Venda</h2>
                     <div class="box">
-                        <form method="post">
-                            <div class="row">                                   
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="produto">Produto</label>
-                                        <select class="form-control" id="produto" name="produto" required="">
-                                            <option value="0">Selecione...</option>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="Produto">Filial</label>
+                                    <input type="text" id="codigoFilial" value="${filial.nome}" />                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">                                   
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="produto">Produto</label>
+                                    <select class="form-control" id="codigoProduto" name="codigoProduto">
+                                        <option value="0">Selecione...</option>
                                         <c:forEach items="${produtos}" var="produto">
-                                            <option value="${produto.codigoProduto}">${produto.produto}</option>
+                                            <option value="${produto.codigoProduto}" data-valor="${produto.valor}" data-percentual="${produto.percentualLucro}">${produto.nome}</option>
                                         </c:forEach>
                                     </select>                                        
                                 </div>
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="quantidade">Quantidade</label>
-                                    <input type="number" class="form-control" id="quantidade" name="quantidade" min="0" required="required"/>
+                                    <input type="number" class="form-control" id="quantidade" name="quantidade" min="0"/>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <label for="valor">Valor</label>
-                                    <input type="text" class="form-control" id="valor" name="valor" disabled="true"/>
-                                </div>                                    
-                            </div>                                                                                                
+                                    <label for="Preco">Valor Unitário</label>
+                                    <input type="text" class="form-control" id="valorUnitario" name="valorUnitario" value="R$ 0,00" disabled="disabled"/>
+                                </div>    
+                            </div>   
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="Preco">Valor Total</label>
+                                    <input type="text" class="form-control" id="valorTotal" name="valorTotal"  value="R$ 0,00" disabled="disabled"/>
+                                </div>    
+                            </div>                                                                                             
                         </div>    
                         <div class="right">
                             <button type="button" class="btn btn-primary" id="btnIncluir">Incluir</button>
                         </div>
-                    </form>
-                </div>
-            </div>
-            <div class="container">
-                <div class="box">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <table id="vendas" class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th class="col-md-4">Produto</th>
-                                        <th class="col-md-2">Quantidade</th>
-                                        <th class="col-md-2">Valor</th>
-                                        <th class="col-md-1"></th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                                <tfoot hidden="true">
-                                    <tr>
-                                        <th colspan="2">Total</th>
-                                        <th id="valorTotal"></th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
                     </div>
-                    <div class="right" id="salvarVenda"></div>
                 </div>
-            </div>
+                <div class="container">
+                    <div class="box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table id="vendas" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-md-2">Código do Produto</th>
+                                            <th class="col-md-3">Produto</th>
+                                            <th class="col-md-2">Quantidade</th>
+                                            <th class="col-md-2">Valor Unitário</th>
+                                            <th class="col-md-2">Valor Total</th>
+                                            <th class="col-md-1">Remover</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                    <tfoot>
+                                        <td class="col-md-9" colspan="4">Total</td>
+                                        <td class="col-md-3" colspan="2" id="valorTotalVenda"></td>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <form method="post">                            
+                            <input type="hidden" id="jsonItens" name="jsonItens"/>
+                            <input type="hidden" id="filialId" name="filialId"/>
+                            <input type="hidden" id="valorTotalItens" name="valorTotalItens"/>
+                            <button type="submit" class="btn btn-primary btn-success" id="btnSalvar">Salvar</button>
+                        </form>  
+                    </div>
+                </div>
 
             <script type="text/javascript" src="resources/js/jquery-2.2.3.min.js"><![CDATA[/*Teste*/]]></script>
             <script type="text/javascript" src="resources/js/bootstrap.min.js"><![CDATA[/*Teste*/]]></script>
+            <script type="text/javascript" src="resources/js/toastr.min.js"><![CDATA[/*Teste*/]]></script>
+            <script type="text/javascript" src="resources/js/base.js"><![CDATA[/*Teste*/]]></script>
             <script type="text/javascript" src="resources/js/venda.js"><![CDATA[/*Teste*/]]></script>
         </body>
     </html>

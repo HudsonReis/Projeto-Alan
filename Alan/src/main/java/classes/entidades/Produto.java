@@ -24,6 +24,13 @@ public class Produto {
     {
         
     }
+    
+    public Produto(int codigoProduto, String nome, double valor, double percentualLucro) {
+        this.codigoProduto = codigoProduto;
+        this.nome = nome;
+        this.valor = valor;
+        this.percentualLucro = percentualLucro;
+    }
 
     public Produto(int codigoProduto, int codigoFilial, int codUsuario, String nome, 
             int qtdPeca, boolean status, double valor, double percentualLucro) {
