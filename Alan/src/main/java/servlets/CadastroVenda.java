@@ -8,10 +8,9 @@ package servlets;
 import DAO.FilialDAO;
 import DAO.ProdutoDAO;
 import DAO.VendaDAO;
-import classes.ProdutoListagem;
-import classes.entidades.Produto;
 import classes.entidades.Filial;
 import classes.entidades.Item;
+import classes.entidades.Produto;
 import classes.entidades.Usuario;
 import classes.entidades.Venda;
 import com.google.gson.Gson;
@@ -24,6 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -31,9 +31,9 @@ import util.Resposta;
 
 /**
  *
- * @author Nicolas
+ * @author Arthur
  */
-@WebServlet(name = "Venda", urlPatterns = {"/Venda"})
+@WebServlet(name = "CadastroVenda", urlPatterns = {"/Venda"})
 public class CadastroVenda extends BaseServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

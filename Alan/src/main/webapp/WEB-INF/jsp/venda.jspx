@@ -26,7 +26,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="Produto">Filial</label>
-                                    <input type="text" id="codigoFilial" value="${filial.nome}" />                                    
+                                    <input type="text" id="codigoFilial" class="form-control" value="${filial.nome}" disabled="disabled" />                                    
                                 </div>
                             </div>
                         </div>
@@ -104,8 +104,8 @@
             <script type="text/javascript" src="resources/js/jquery-2.2.3.min.js"><![CDATA[/*Teste*/]]></script>
             <script type="text/javascript" src="resources/js/bootstrap.min.js"><![CDATA[/*Teste*/]]></script>
             <script type="text/javascript" src="resources/js/toastr.min.js"><![CDATA[/*Teste*/]]></script>
-            <script type="text/javascript" src="resources/js/base.js"><![CDATA[/*Teste*/]]></script>
-            <script type="text/javascript" src="resources/js/venda.js"><![CDATA[/*Teste*/]]></script>
+            <script type="text/javascript" src="resources/js/telas/base.js"><![CDATA[/*Teste*/]]></script>
+            <script type="text/javascript" src="resources/js/telas/venda.js"><![CDATA[/*Teste*/]]></script>
         </body>
     </html>
 </jsp:root>

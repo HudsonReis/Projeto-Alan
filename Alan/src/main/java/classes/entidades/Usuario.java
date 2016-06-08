@@ -8,6 +8,7 @@ package classes.entidades;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +27,8 @@ public class Usuario {
     private String login;
     private char[] hashSenha;  
     private boolean status;
+    private Date dataUltimoLogin;
+    private String saltHash;
     private List<Integer> funcionalidades;
 
     public Usuario()
@@ -52,7 +55,9 @@ public class Usuario {
     }
 
     public Usuario(String nome, int codigoUsuario, int codFilial, int codPerfil, String login,
-            String senha, Boolean status, List<Integer> funcionalidades, String perfil) {
+            String senha, Boolean status, List<Integer> funcionalidades, String perfil, 
+            Date dataUltimoLogin, String saltHash) {
+        
         this.nome = nome;
         this.codigoUsuario = codigoUsuario;
         this.codigoFilial = codFilial;
@@ -61,6 +66,8 @@ public class Usuario {
         this.status = status;
         this.funcionalidades = funcionalidades;
         this.hashSenha = senha.toCharArray();
+        this.dataUltimoLogin = dataUltimoLogin;
+        this.saltHash = saltHash;
     }
 
     public String getNome() {
@@ -113,6 +120,18 @@ public class Usuario {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+    
+    public Date getDataUltimoLogin() {
+        return this.dataUltimoLogin;
+    }
+    
+    public String getSaltHash() {
+        return this.saltHash;
+    }
+    
+    public void setSaltHash(String saltHash) {
+        this.saltHash = saltHash;
     }
 
     public boolean autenticar(String login, String senha) {

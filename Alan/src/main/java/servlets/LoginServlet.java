@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import util.Criptografia;
+import java.util.Date;
 
 
 @WebServlet(name = "LoginServlet", urlPatterns = {"/Login"})
@@ -85,6 +86,8 @@ public class LoginServlet extends BaseServlet {
     try {
         Usuario usuario = UsuarioDAO.consultar(login, String.copyValueOf(Criptografia.gerarHashSenhaPBKDF2(senha)));
         if (usuario != null && usuario.autenticar(login, senha)) {
+            
+            UsuarioDAO.atualizarDataUltimoLogin(usuario.getCodigoUsuario(), new Date().getTime());
             return usuario;
         }
     } catch(SQLException | ClassNotFoundException | NoSuchAlgorithmException | InvalidKeySpecException ex) {

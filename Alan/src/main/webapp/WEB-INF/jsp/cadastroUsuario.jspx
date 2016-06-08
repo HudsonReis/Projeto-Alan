@@ -111,7 +111,7 @@
             <script type="text/javascript" src="resources/js/bootstrap.min.js"><![CDATA[/*Teste*/]]></script>
             <script type="text/javascript" src="resources/js/toastr.min.js"><![CDATA[/*Teste*/]]></script>
             <script type="text/javascript" src="resources/js/base.js"><![CDATA[/*Teste*/]]></script>
-            <script type="text/javascript" src="resources/js/cadastroUsuario.js"><![CDATA[/*Teste*/]]></script>
+            <script type="text/javascript" src="resources/js/telas/cadastroUsuario.js"><![CDATA[/*Teste*/]]></script>
         </body>
     </html>
 </jsp:root>

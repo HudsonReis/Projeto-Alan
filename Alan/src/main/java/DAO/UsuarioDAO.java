@@ -4,6 +4,7 @@ import classes.UsuarioListagem;
 import classes.entidades.Usuario;
 import conexao.ConexaoBanco;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,9 +12,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UsuarioDAO {
+    
+    public static void atualizarDataUltimoLogin(int usuarioId, long dataSecs) throws SQLException, ClassNotFoundException {
+        Connection conexao = ConexaoBanco.obterConexao();
+        
+        String sql = "UPDATE USUARIO SET dataUltimoLogin = ? WHERE codigoUsuario = ?";
+        
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            
+            stmt.setDate(1, new Date(dataSecs));
+            stmt.setInt(2, usuarioId);
+
+            stmt.execute();
+        }
+    }
+    
     public static void adicionar(Usuario usuario) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
-        //linguagem sql -> inserir no banco
+
         String sql = "INSERT INTO USUARIO  "
                 + "(CODIGOFILIAL, CODIGOPERFIL, NOME, LOGIN, SENHA, STATUS)"
                 + "VALUES(?,?,?,?,?,?)";
@@ -69,7 +85,7 @@ public class UsuarioDAO {
         Connection conexao = ConexaoBanco.obterConexao();
         
         String sql = "SELECT u.codigoUsuario, u.codigoFilial, u.codigoPerfil, u.nome, u.login, u.senha"
-                + ", u.status, p.nome as perfil"
+                + ", u.status, p.nome as perfil, u.dataUltimoLogin, u.saltHash"
                 + " FROM Usuario u INNER JOIN Perfil p ON u.codigoPerfil = p.codigoPerfil "
                 + "WHERE u.login = ? AND u.senha = ? AND u.status = true";
         
@@ -79,6 +95,7 @@ public class UsuarioDAO {
             stmt.setString(2, senha);
             ResultSet result = stmt.executeQuery();
             result.next();
+            
             int codUnitario = result.getInt("codigoUsuario");
             int codFilial = result.getInt("codigoFilial");
             int codPerfil = result.getInt("codigoPerfil");
@@ -87,8 +104,12 @@ public class UsuarioDAO {
             String senhaRes = result.getString("senha");
             String perfil = result.getString("perfil");
             boolean status = result.getBoolean("status");
+            Date dataUltimoLogin = result.getDate("dataUltimoLogin");
+            String saltHash = result.getString("saltHash");
             List<Integer> funcionalidades = consultarFuncionalidadesDoPerfil(result.getInt("codigoPerfil"));
-            usuario = new Usuario(nome, codUnitario, codFilial, codPerfil, loginRes, senhaRes, status, funcionalidades, perfil);
+            
+            usuario = new Usuario(nome, codUnitario, codFilial, codPerfil, loginRes, senhaRes, 
+                    status, funcionalidades, perfil, dataUltimoLogin, saltHash);
         }
         
         return usuario;
@@ -151,14 +172,15 @@ public class UsuarioDAO {
             stmt.setInt(1, id);
             ResultSet result = stmt.executeQuery();
             result.next();
-            int codUnitario = result.getInt("codigoUsuario");
+            int codUsuario = result.getInt("codigoUsuario");
             int codFilial = result.getInt("codigoFilial");
             int codPerfil = result.getInt("codigoPerfil");
             String nome = result.getString("nome");
             String loginRes = result.getString("login");
             String senhaRes = result.getString("senha");
             boolean status = result.getBoolean("status");
-            usuario = new Usuario(nome, codUnitario, codFilial, codPerfil, loginRes, senhaRes, status, null, "");
+            
+            usuario = new Usuario(nome, codUsuario, codFilial, codPerfil, loginRes, senhaRes, status, null, "", null, "");
         }
         
         return usuario;

@@ -57,7 +57,7 @@
             <script type="text/javascript" src="resources/js/jquery-2.2.3.min.js"><![CDATA[/*Teste*/]]></script>
             <script type="text/javascript" src="resources/js/bootstrap.min.js"><![CDATA[/*Teste*/]]></script>
             <script type="text/javascript" src="resources/js/jquery.dataTables.min.js"><![CDATA[/*Teste*/]]></script>
-            <script type="text/javascript" src="resources/js/buscaFiliais.js"><![CDATA[/*Teste*/]]></script>
+            <script type="text/javascript" src="resources/js/telas/buscaFiliais.js"><![CDATA[/*Teste*/]]></script>
         </body>
     </html>
 
