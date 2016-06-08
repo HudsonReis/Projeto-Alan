@@ -141,7 +141,7 @@ public class VendaDAO {
         return retorno;
     }
     
-    public static List<VendaListagem> listar(String dataInicial, String dataFinal, Usuario usuario) throws SQLException, ClassNotFoundException {
+    public static List<VendaListagem> listar(String dataInicial, String dataFinal, Usuario usuario, int codFilial) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
 
          String sql
@@ -163,7 +163,7 @@ public class VendaDAO {
                 + " WHERE v.DATAVENDA BETWEEN ? AND ? ";
 
 
-        if((usuario.getCodigoPerfil()!=1)&&(usuario.getCodigoPerfil()!=2)){
+        if(codFilial!=0){
             sql+= "and u.codigofilial = ?";
         }
 
@@ -173,8 +173,9 @@ public class VendaDAO {
        
         stmt.setString(1, dataInicial);
         stmt.setString(2, dataFinal);
-        if((usuario.getCodigoPerfil()!=1)&&(usuario.getCodigoPerfil()!=2)){
-            stmt.setInt(3, usuario.getCodigoFilial());
+        
+        if(codFilial!=0){
+            stmt.setInt(3, codFilial);
         }
         
         List<VendaListagem> retorno = new ArrayList<>();
@@ -201,7 +202,7 @@ public class VendaDAO {
         return retorno;
     }
     
-    public static List<VendaListagem> listar(String dataInicial, String dataFinal, int codProduto, Usuario usuario) throws SQLException, ClassNotFoundException {
+    public static List<VendaListagem> listar(String dataInicial, String dataFinal, int codProduto, Usuario usuario, int codFilial) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
 
         String sql
@@ -224,7 +225,7 @@ public class VendaDAO {
                 + " AND vi.CODIGOPRODUTO = ?";
 
 
-        if((usuario.getCodigoPerfil()!=1)&&(usuario.getCodigoPerfil()!=2)){
+        if(codFilial!=0){
             sql+= "and u.codigofilial = ?";
         }
 
@@ -236,8 +237,8 @@ public class VendaDAO {
         stmt.setString(1, dataInicial);
         stmt.setString(2, dataFinal);
         stmt.setInt(3, codProduto);
-        if((usuario.getCodigoPerfil()!=1)&&(usuario.getCodigoPerfil()!=2)){
-            stmt.setInt(4, usuario.getCodigoFilial());
+        if(codFilial!=0){
+            stmt.setInt(4, codFilial);
         }
         
         List<VendaListagem> retorno = new ArrayList<>();

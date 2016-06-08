@@ -1,6 +1,7 @@
 package DAO;
 
 import classes.entidades.Filial;
+import classes.entidades.Usuario;
 import conexao.ConexaoBanco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -135,16 +136,70 @@ public class FilialDAO {
         while (result.next()) {
             //pego o retorno do banco e atribuo à variaveis
             String resultCnpj = result.getString("cnpj");
-            
+
             int idBanco = result.getInt("codigofilial");
-            
-            if ((cnpj.equals(resultCnpj))&&(idTela!=idBanco)) {
+
+            if ((cnpj.equals(resultCnpj)) && (idTela != idBanco)) {
                 jaCadastrado = true;
             }
 
         }
 
         return jaCadastrado;
+    }
+
+    public static ArrayList<Filial> listarRelatorio(Usuario usuario) throws SQLException, ClassNotFoundException {
+
+        Connection conexao = ConexaoBanco.obterConexao();
+
+        String sql = "SELECT * FROM FILIAL";
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+
+        ResultSet result = stmt.executeQuery();
+        ArrayList<Filial> retorno = new ArrayList<>();
+
+        if ((usuario.getCodigoPerfil() == 1) || (usuario.getCodigoPerfil() == 2)) {
+            Filial todos = new Filial(0, "Todos", "Todos", "Todos", 0, "Todos", "Todos", "Todos", "Todos");
+            retorno.add(todos);
+            while (result.next()) {
+                int codigoFilial = result.getInt("codigofilial");
+                String nome = result.getString("nome");
+                String nomeFantasia = result.getString("fantasia");
+                String rua = result.getString("rua");
+                int num = result.getInt("numero");
+                String bairro = result.getString("bairro");
+                String estado = result.getString("estado");
+                String cidade = result.getString("cidade");
+                String cnpj = result.getString("cnpj");
+                //crio um objeto filial
+                Filial f = new Filial(codigoFilial, nome, nomeFantasia, rua, num, bairro, estado, cidade, cnpj);
+                //e adiciono no arraylist para retorno
+                retorno.add(f);
+            }
+        } else {
+
+            while (result.next()) {
+                if (result.getInt("codigofilial") == usuario.getCodigoFilial()) {
+                    int codigoFilial = result.getInt("codigofilial");
+                    String nome = result.getString("nome");
+                    String nomeFantasia = result.getString("fantasia");
+                    String rua = result.getString("rua");
+                    int num = result.getInt("numero");
+                    String bairro = result.getString("bairro");
+                    String estado = result.getString("estado");
+                    String cidade = result.getString("cidade");
+                    String cnpj = result.getString("cnpj");
+
+                    //crio um objeto filial
+                    Filial f = new Filial(codigoFilial, nome, nomeFantasia, rua, num, bairro, estado, cidade, cnpj);
+
+                    //e adiciono no arraylist para retorno
+                    retorno.add(f);
+                }
+            }
+        }
+
+        return retorno;
     }
 
 }

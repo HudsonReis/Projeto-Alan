@@ -49,9 +49,12 @@ public class RelatorioCompra extends BaseServlet {
         Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");
         List<CompraListagem> lista = new ArrayList<>();
         List<ProdutoListagem> produtos = new ArrayList<>();
+        ArrayList<Filial> filiais = new ArrayList<>();
+        
         try {
             lista = CompraDAO.listar(usuario);
             produtos = ProdutoDAO.listar();
+            filiais = FilialDAO.listarRelatorio(usuario);
         } catch (SQLException ex) {
             Logger.getLogger(RelatorioCompra.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
@@ -61,6 +64,7 @@ public class RelatorioCompra extends BaseServlet {
         }
 
         
+        request.setAttribute("filiais", filiais);
         request.setAttribute("Compras", lista);
         request.setAttribute("produtos", produtos);
 
@@ -81,22 +85,25 @@ public class RelatorioCompra extends BaseServlet {
         
         HttpSession session = request.getSession();
         Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");
+        ArrayList<Filial> filiais = new ArrayList<>();
         
         String dataInicial = request.getParameter("dataInicial");
         String dataFinal = request.getParameter("dataFinal");
         int codProduto = Integer.parseInt(request.getParameter("produtoId"));
+        int codFilial = Integer.parseInt(request.getParameter("filialId"));
         
         List<CompraListagem> lista = new ArrayList<>();
         List<ProdutoListagem> produtos = new ArrayList<>();
         
         try {
             if(codProduto==0){
-                lista = CompraDAO.listar(dataInicial, dataFinal, usuario);
+                lista = CompraDAO.listar(dataInicial, dataFinal, usuario, codFilial);
             }
             else{
-                lista = CompraDAO.listar(dataInicial, dataFinal, codProduto, usuario);
+                lista = CompraDAO.listar(dataInicial, dataFinal, codProduto, usuario, codFilial);
             }
             produtos = ProdutoDAO.listar();
+            filiais = FilialDAO.listarRelatorio(usuario);
         } catch (SQLException ex) {
             Logger.getLogger(RelatorioCompra.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
@@ -105,6 +112,7 @@ public class RelatorioCompra extends BaseServlet {
             System.out.println(ex.getMessage());
         }
         
+        request.setAttribute("filiais", filiais);
         request.setAttribute("Compras", lista);
         request.setAttribute("produtos", produtos);
 

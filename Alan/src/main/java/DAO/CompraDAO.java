@@ -147,7 +147,7 @@ public class CompraDAO {
         return retorno;
     }
 
-    public static List<CompraListagem> listar(String dataInicial, String dataFinal,Usuario usuario) throws SQLException, ClassNotFoundException {
+    public static List<CompraListagem> listar(String dataInicial, String dataFinal,Usuario usuario, int codFilial) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
 
         String sql=
@@ -169,7 +169,7 @@ public class CompraDAO {
                 + " and c.CODIGOFILIAL = u.CODIGOFILIAL"
                 + " WHERE c.DATACOMPRA BETWEEN ? AND ? ";
 
-         if((usuario.getCodigoPerfil()!=1)&&(usuario.getCodigoPerfil()!=2)){
+         if(codFilial!=0){
             sql+= " and u.codigofilial = ? ";
         }
 
@@ -178,8 +178,8 @@ public class CompraDAO {
         
         stmt.setString(1, dataInicial);
         stmt.setString(2, dataFinal);
-        if((usuario.getCodigoPerfil()!=1)&&(usuario.getCodigoPerfil()!=2)){
-            stmt.setInt(3, usuario.getCodigoFilial());
+        if(codFilial!=0){
+            stmt.setInt(3, codFilial);
         }
 
         List<CompraListagem> retorno = new ArrayList<>();
@@ -206,7 +206,7 @@ public class CompraDAO {
         return retorno;
     }
 
-    public static List<CompraListagem> listar(String dataInicial, String dataFinal, int codProduto,Usuario usuario) throws SQLException, ClassNotFoundException {
+    public static List<CompraListagem> listar(String dataInicial, String dataFinal, int codProduto,Usuario usuario, int codFilial) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
 
         String sql =
@@ -229,7 +229,7 @@ public class CompraDAO {
                 + " WHERE c.DATACOMPRA BETWEEN ? AND ? "
                 + " AND ci.CODIGOPRODUTO = ? ";
 
-        if((usuario.getCodigoPerfil()!=1)&&(usuario.getCodigoPerfil()!=2)){
+         if(codFilial!=0){
             sql+= " and u.codigofilial = ? ";
         }
         
@@ -238,8 +238,8 @@ public class CompraDAO {
         stmt.setString(1, dataInicial);
         stmt.setString(2, dataFinal);
         stmt.setInt(3, codProduto);
-        if((usuario.getCodigoPerfil()!=1)&&(usuario.getCodigoPerfil()!=2)){
-            stmt.setInt(4, usuario.getCodigoFilial());
+         if(codFilial!=0){
+            stmt.setInt(4, codFilial);
         }
 
         List<CompraListagem> retorno = new ArrayList<>();

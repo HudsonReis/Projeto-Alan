@@ -46,13 +46,15 @@ public class RelatorioVenda extends BaseServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");
-        
+        Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        ArrayList<Filial> filiais = new ArrayList<>();
+
         List<VendaListagem> lista = new ArrayList<>();
         List<ProdutoListagem> produtos = new ArrayList<>();
         try {
             lista = VendaDAO.listar(usuario);
             produtos = ProdutoDAO.listar();
+            filiais = FilialDAO.listarRelatorio(usuario);
         } catch (SQLException ex) {
             Logger.getLogger(RelatorioVenda.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
@@ -61,7 +63,7 @@ public class RelatorioVenda extends BaseServlet {
             System.out.println(ex.getMessage());
         }
 
-        
+        request.setAttribute("filiais", filiais);
         request.setAttribute("Vendas", lista);
         request.setAttribute("produtos", produtos);
 
@@ -79,35 +81,38 @@ public class RelatorioVenda extends BaseServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession();
-        Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");
-        
+        Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        ArrayList<Filial> filiais = new ArrayList<>();
+
         String dataInicial = request.getParameter("dataInicial");
         String dataFinal = request.getParameter("dataFinal");
         int codProduto = Integer.parseInt(request.getParameter("produtoId"));
-        
+        int codFilial = Integer.parseInt(request.getParameter("filialId"));
+
         List<VendaListagem> lista = new ArrayList<>();
         List<ProdutoListagem> produtos = new ArrayList<>();
-        
+
         try {
-            if(codProduto==0){
-                lista = VendaDAO.listar(dataInicial, dataFinal, usuario);
-            }
-            else{
-                lista = VendaDAO.listar(dataInicial, dataFinal, codProduto,usuario);
+            if (codProduto == 0) {
+                lista = VendaDAO.listar(dataInicial, dataFinal, usuario,codFilial);
+            } else {
+                lista = VendaDAO.listar(dataInicial, dataFinal, codProduto, usuario, codFilial);
             }
             produtos = ProdutoDAO.listar();
+            filiais = FilialDAO.listarRelatorio(usuario);
         } catch (SQLException ex) {
             Logger.getLogger(RelatorioVenda.class.getName()).log(Level.SEVERE, null, ex);
             String message = ex.getMessage();
             String message2 = ex.getMessage();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(RelatorioVenda.class.getName()).log(Level.SEVERE, null, ex);
-          String message = ex.getMessage();
-          String message2 = ex.getMessage();
+            String message = ex.getMessage();
+            String message2 = ex.getMessage();
         }
-        
+
+        request.setAttribute("filiais", filiais);
         request.setAttribute("Vendas", lista);
         request.setAttribute("produtos", produtos);
 
