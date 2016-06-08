@@ -95,12 +95,13 @@ public class CadastroFilial extends BaseServlet {
                     FilialDAO.alterar(filial);
                 } else {
                     FilialDAO.adicionar(filial);
-
                 }
-
+                
             }
-
+            
+            request.setAttribute("filial", filial);
             request.getSession().setAttribute("resposta", resposta);
+            
 
         } catch (SQLException | ClassNotFoundException ex) {
             logar(CadastroFilial.class.getName(), ex);
