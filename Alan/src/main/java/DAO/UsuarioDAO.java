@@ -36,11 +36,23 @@ public class UsuarioDAO {
 
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setInt(1, usuario.getCodigoFilial());
+            int idFilial  = usuario.getCodigoFilial();
+            
             stmt.setInt(2, usuario.getCodigoPerfil());
+            int idPerfil  = usuario.getCodigoPerfil();
+            
             stmt.setString(3, usuario.getNome());
+            String usuarioNome  = usuario.getNome();
+            
             stmt.setString(4, usuario.getLogin());
+            String usuarioLogin  = usuario.getLogin();
+            
             stmt.setString(5, String.copyValueOf(usuario.getHashSenha()));
+            String usuarioSenha  = String.copyValueOf(usuario.getHashSenha());
+            
             stmt.setBoolean(6, usuario.getStatus());
+            boolean Status  = usuario.getStatus();
+            
             stmt.execute();
         }
     }

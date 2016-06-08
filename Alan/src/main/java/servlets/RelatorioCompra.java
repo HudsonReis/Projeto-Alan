@@ -12,6 +12,7 @@ import classes.CompraListagem;
 import classes.ProdutoListagem;
 import classes.entidades.Filial;
 import classes.entidades.Produto;
+import classes.entidades.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -43,10 +45,12 @@ public class RelatorioCompra extends BaseServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        HttpSession session = request.getSession();
+        Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");
         List<CompraListagem> lista = new ArrayList<>();
         List<ProdutoListagem> produtos = new ArrayList<>();
         try {
-            lista = CompraDAO.listar();
+            lista = CompraDAO.listar(usuario);
             produtos = ProdutoDAO.listar();
         } catch (SQLException ex) {
             Logger.getLogger(RelatorioCompra.class.getName()).log(Level.SEVERE, null, ex);
@@ -75,7 +79,8 @@ public class RelatorioCompra extends BaseServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        
+        HttpSession session = request.getSession();
+        Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");
         
         String dataInicial = request.getParameter("dataInicial");
         String dataFinal = request.getParameter("dataFinal");
@@ -86,10 +91,10 @@ public class RelatorioCompra extends BaseServlet {
         
         try {
             if(codProduto==0){
-                lista = CompraDAO.listar(dataInicial, dataFinal);
+                lista = CompraDAO.listar(dataInicial, dataFinal, usuario);
             }
             else{
-                lista = CompraDAO.listar(dataInicial, dataFinal, codProduto);
+                lista = CompraDAO.listar(dataInicial, dataFinal, codProduto, usuario);
             }
             produtos = ProdutoDAO.listar();
         } catch (SQLException ex) {

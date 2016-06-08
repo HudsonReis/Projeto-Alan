@@ -8,6 +8,7 @@ package DAO;
 import classes.CompraListagem;
 import classes.entidades.Compra;
 import classes.entidades.Item;
+import classes.entidades.Usuario;
 import conexao.ConexaoBanco;
 import java.sql.Connection;
 import java.sql.Date;
@@ -90,7 +91,7 @@ public class CompraDAO {
         return idCompra;
     }
 
-    public static List<CompraListagem> listar() throws SQLException, ClassNotFoundException {
+    public static List<CompraListagem> listar(Usuario usuario) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
 
         String sql
@@ -109,11 +110,19 @@ public class CompraDAO {
                 + " inner join produto p on ci.CODIGOPRODUTO = P.CODIGOPRODUTO "
                 + " and c.CODIGOFILIAL = p.CODIGOFILIAL "
                 + " inner join usuario u on u.CODIGOUSUARIO = C.IDUSUARIO " 
-                + " and c.CODIGOFILIAL = u.CODIGOFILIAL";
+                + " and c.CODIGOFILIAL = u.CODIGOFILIAL ";
+        
+        if((usuario.getCodigoPerfil()!=1)&&(usuario.getCodigoPerfil()!=2)){
+            sql+= " where u.codigofilial = ? ";
+        }
 
 
         PreparedStatement stmt;
         stmt = conexao.prepareStatement(sql);
+       if((usuario.getCodigoPerfil()!=1)&&(usuario.getCodigoPerfil()!=2)){
+            stmt.setInt(1, usuario.getCodigoFilial());
+        }
+
         List<CompraListagem> retorno = new ArrayList<>();
         ResultSet result = stmt.executeQuery();
 
@@ -138,7 +147,7 @@ public class CompraDAO {
         return retorno;
     }
 
-    public static List<CompraListagem> listar(String dataInicial, String dataFinal) throws SQLException, ClassNotFoundException {
+    public static List<CompraListagem> listar(String dataInicial, String dataFinal,Usuario usuario) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
 
         String sql=
@@ -160,10 +169,18 @@ public class CompraDAO {
                 + " and c.CODIGOFILIAL = u.CODIGOFILIAL"
                 + " WHERE c.DATACOMPRA BETWEEN ? AND ? ";
 
+         if((usuario.getCodigoPerfil()!=1)&&(usuario.getCodigoPerfil()!=2)){
+            sql+= " and u.codigofilial = ? ";
+        }
+
         PreparedStatement stmt;
         stmt = conexao.prepareStatement(sql);
+        
         stmt.setString(1, dataInicial);
         stmt.setString(2, dataFinal);
+        if((usuario.getCodigoPerfil()!=1)&&(usuario.getCodigoPerfil()!=2)){
+            stmt.setInt(3, usuario.getCodigoFilial());
+        }
 
         List<CompraListagem> retorno = new ArrayList<>();
         ResultSet result = stmt.executeQuery();
@@ -189,7 +206,7 @@ public class CompraDAO {
         return retorno;
     }
 
-    public static List<CompraListagem> listar(String dataInicial, String dataFinal, int codProduto) throws SQLException, ClassNotFoundException {
+    public static List<CompraListagem> listar(String dataInicial, String dataFinal, int codProduto,Usuario usuario) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
 
         String sql =
@@ -210,13 +227,20 @@ public class CompraDAO {
                 + " inner join usuario u on u.CODIGOUSUARIO = C.IDUSUARIO " 
                 + " and c.CODIGOFILIAL = u.CODIGOFILIAL"
                 + " WHERE c.DATACOMPRA BETWEEN ? AND ? "
-                + " AND ci.CODIGOPRODUTO = ?";
+                + " AND ci.CODIGOPRODUTO = ? ";
 
+        if((usuario.getCodigoPerfil()!=1)&&(usuario.getCodigoPerfil()!=2)){
+            sql+= " and u.codigofilial = ? ";
+        }
+        
         PreparedStatement stmt;
         stmt = conexao.prepareStatement(sql);
         stmt.setString(1, dataInicial);
         stmt.setString(2, dataFinal);
         stmt.setInt(3, codProduto);
+        if((usuario.getCodigoPerfil()!=1)&&(usuario.getCodigoPerfil()!=2)){
+            stmt.setInt(4, usuario.getCodigoFilial());
+        }
 
         List<CompraListagem> retorno = new ArrayList<>();
         ResultSet result = stmt.executeQuery();

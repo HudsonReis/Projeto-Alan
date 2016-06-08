@@ -12,6 +12,7 @@ import classes.ProdutoListagem;
 import classes.VendaListagem;
 import classes.entidades.Filial;
 import classes.entidades.Produto;
+import classes.entidades.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -43,10 +45,13 @@ public class RelatorioVenda extends BaseServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        HttpSession session = request.getSession();
+        Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");
+        
         List<VendaListagem> lista = new ArrayList<>();
         List<ProdutoListagem> produtos = new ArrayList<>();
         try {
-            lista = VendaDAO.listar();
+            lista = VendaDAO.listar(usuario);
             produtos = ProdutoDAO.listar();
         } catch (SQLException ex) {
             Logger.getLogger(RelatorioVenda.class.getName()).log(Level.SEVERE, null, ex);
@@ -75,7 +80,8 @@ public class RelatorioVenda extends BaseServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        
+        HttpSession session = request.getSession();
+        Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");
         
         String dataInicial = request.getParameter("dataInicial");
         String dataFinal = request.getParameter("dataFinal");
@@ -86,18 +92,20 @@ public class RelatorioVenda extends BaseServlet {
         
         try {
             if(codProduto==0){
-                lista = VendaDAO.listar(dataInicial, dataFinal);
+                lista = VendaDAO.listar(dataInicial, dataFinal, usuario);
             }
             else{
-                lista = VendaDAO.listar(dataInicial, dataFinal, codProduto);
+                lista = VendaDAO.listar(dataInicial, dataFinal, codProduto,usuario);
             }
             produtos = ProdutoDAO.listar();
         } catch (SQLException ex) {
             Logger.getLogger(RelatorioVenda.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
+            String message = ex.getMessage();
+            String message2 = ex.getMessage();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(RelatorioVenda.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
+          String message = ex.getMessage();
+          String message2 = ex.getMessage();
         }
         
         request.setAttribute("Vendas", lista);
