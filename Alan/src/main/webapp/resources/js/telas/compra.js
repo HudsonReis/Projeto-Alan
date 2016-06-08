@@ -26,7 +26,9 @@ $(document).ready(function () {
         
         validarCampos(codigoFilial, "Informe uma Filial.", "codigoFilial");
         validarCampos(codigoProduto, "Informe o codigo do produto de maneira correta", "codigoProduto");
-        validarCampos(quantidade, "Informe a quantidade do produto de maneira correta", "Quantidade");
+        validarCampos(quantidade, "Informe a quantidade do produto de maneira correta", "Quantidade");        
+   
+        
    
         if (prosseguir) {
             

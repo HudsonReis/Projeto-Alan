@@ -80,7 +80,7 @@ function retornarDecimal (valor) {
 };
 
 function validarCampos (valor, mensagem, campo) {
-    if (valor == 0 || valor == null) {
+    if (valor <= 0 || valor == null) {
         toastr.warning(mensagem, "Alerta!");
         $("#" + campo).addClass("has-warning");
         prosseguir = false;

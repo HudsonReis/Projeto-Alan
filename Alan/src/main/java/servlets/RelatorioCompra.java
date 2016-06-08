@@ -24,6 +24,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import util.Formatacoes;
 
 /**
  *
@@ -55,10 +56,7 @@ public class RelatorioCompra extends BaseServlet {
             lista = CompraDAO.listar(usuario);
             produtos = ProdutoDAO.listar();
             filiais = FilialDAO.listarRelatorio(usuario);
-        } catch (SQLException ex) {
-            Logger.getLogger(RelatorioCompra.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(RelatorioCompra.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
         }
@@ -70,10 +68,11 @@ public class RelatorioCompra extends BaseServlet {
             quantidadeTotal+=cl.getQuantidade();
             valorTotal+=cl.getValor();
             
+            
         }
         
-        request.setAttribute("quantidadeTotal", quantidadeTotal);
-        request.setAttribute("valorTotal", valorTotal);
+        request.setAttribute("quantidadeTotal", Double.toString(quantidadeTotal));
+        request.setAttribute("valorTotal", Formatacoes.formatarMoeda(valorTotal));
         
         request.setAttribute("filiais", filiais);
         request.setAttribute("Compras", lista);

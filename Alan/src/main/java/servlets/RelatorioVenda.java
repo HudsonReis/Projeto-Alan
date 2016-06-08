@@ -25,6 +25,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import util.Formatacoes;
 
 /**
  *
@@ -56,10 +57,7 @@ public class RelatorioVenda extends BaseServlet {
             lista = VendaDAO.listar(usuario);
             produtos = ProdutoDAO.listar();
             filiais = FilialDAO.listarRelatorio(usuario);
-        } catch (SQLException ex) {
-            Logger.getLogger(RelatorioVenda.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(RelatorioVenda.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
         }
@@ -74,7 +72,7 @@ public class RelatorioVenda extends BaseServlet {
         }
 
         request.setAttribute("quantidadeTotal", quantidadeTotal);
-        request.setAttribute("valorTotal", valorTotal);
+        request.setAttribute("valorTotal", Formatacoes.formatarMoeda(valorTotal));
         request.setAttribute("filiais", filiais);
         request.setAttribute("Vendas", lista);
         request.setAttribute("produtos", produtos);
@@ -114,11 +112,7 @@ public class RelatorioVenda extends BaseServlet {
             }
             produtos = ProdutoDAO.listar();
             filiais = FilialDAO.listarRelatorio(usuario);
-        } catch (SQLException ex) {
-            Logger.getLogger(RelatorioVenda.class.getName()).log(Level.SEVERE, null, ex);
-            String message = ex.getMessage();
-            String message2 = ex.getMessage();
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(RelatorioVenda.class.getName()).log(Level.SEVERE, null, ex);
             String message = ex.getMessage();
             String message2 = ex.getMessage();

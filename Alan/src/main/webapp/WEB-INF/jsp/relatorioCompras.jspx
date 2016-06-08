@@ -48,62 +48,69 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="filialId">Filial</label>
-                                    <select class="form-control" id="filialId" name="filialId" required="required">
-                                        <c:forEach items="${filiais}" var="filial">
-                                            <option value="${filial.codigoFilial}">${filial.nomeFantasia}</option>
-                                        </c:forEach>
-                                    </select>
-                                    <input type="hidden" id="hiddenFilialId" value="${produto.codigoFilial}" />
-                                </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="filialId">Filial</label>
+                                <select class="form-control" id="filialId" name="filialId" required="required">
+                                    <c:forEach items="${filiais}" var="filial">
+                                        <option value="${filial.codigoFilial}">${filial.nomeFantasia}</option>
+                                    </c:forEach>
+                                </select>
+                                <input type="hidden" id="hiddenFilialId" value="${produto.codigoFilial}" />
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-success">Buscar</button>
-
-                        <table id="compras" class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Id Compra</th>
-                                    <th>Id Filial</th>
-                                    <th>Data Compra</th>
-                                    <th>Código Produto</th>
-                                    <th>Nome Produto</th>
-                                    <th>Id Usuario</th>
-                                    <th>Usuário</th>
-                                    <th>Quantidade</th>
-                                    <th>Valor Unitário</th>
-                                    <th>Valor</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach var="compra" items="${Compras}">
-                                    <tr>
-                                        <td class="id">${compra.idCompra}</td>
-                                        <td>${compra.idFilial}</td>
-                                        <td>${compra.dataCompra}</td>
-                                        <td>${compra.codigoProduto}</td>
-                                        <td>${compra.nomeProduto}</td>
-                                        <td>${compra.idUsuario}</td>
-                                        <td>${compra.nomeUsuario}</td>
-                                        <td>${compra.quantidade}</td>
-                                        <td>${compra.vrUnitario}</td>
-                                        <td>${compra.valor}</td>
-                                    </tr>           
-                                </c:forEach>
-                            </tbody>  
-                            <tfoot>
-                                <tr>
-                                    <td colspan="6"></td>
-                                    <td>Total Quantidade: </td>
-                                    <td>${quantidadeTotal}</td>
-                                     <td>Total valor:   </td>
-                                    <td>${valorTotal}</td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                        
-                    </div>
+                        <div class="col-md-2">
+                            <div class="form-group right">
+                                <label> &#xA0;</label>
+                                <button type="submit" class="btn btn-success form-control">Buscar</button>
+                            </div>                            
+                        </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">            
+                                <table id="compras" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Id Compra</th>
+                                            <th>Id Filial</th>
+                                            <th>Data Compra</th>
+                                            <th>Código Produto</th>
+                                            <th>Nome Produto</th>
+                                            <th>Id Usuario</th>
+                                            <th>Usuário</th>
+                                            <th>Quantidade</th>
+                                            <th>Valor Unitário</th>
+                                            <th>Valor</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="compra" items="${Compras}">
+                                            <tr>
+                                                <td class="id">${compra.idCompra}</td>
+                                                <td>${compra.idFilial}</td>
+                                                <td>${compra.dataCompra}</td>
+                                                <td>${compra.codigoProduto}</td>
+                                                <td>${compra.nomeProduto}</td>
+                                                <td>${compra.idUsuario}</td>
+                                                <td>${compra.nomeUsuario}</td>
+                                                <td>${compra.quantidade}</td>
+                                                <td>${compra.getValorUnitario()}</td>
+                                                <td>${compra.getValorStr()}</td>
+                                            </tr>           
+                                        </c:forEach>
+                                    </tbody>  
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="6"></td>
+                                            <td>Total Quantidade: </td>
+                                            <td>${quantidadeTotal}</td>
+                                             <td>Total valor:   </td>
+                                            <td>${valorTotal}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>                        
+                            </div>
+                        </div>
                 </form>
             </div>
             <script type="text/javascript" src="resources/js/jquery-2.2.3.min.js"><![CDATA[/*Teste*/]]></script>

@@ -5,6 +5,8 @@
  */
 package classes;
 
+import util.Formatacoes;
+
 
 /**
  *
@@ -77,5 +79,11 @@ public class CompraListagem {
         return idFilial;
     }
    
-
+    public String getValorUnitario() {
+        return Formatacoes.formatarMoeda(this.vrUnitario);
+    }
+    
+    public String getValorStr() {
+        return Formatacoes.formatarMoeda(this.valor);
+    }
 }

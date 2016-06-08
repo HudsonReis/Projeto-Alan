@@ -35,6 +35,7 @@ $(document).ready(function () {
     setarSelects(perfis, perfilId);
     setarSelects(filiais, filialId);
     
+    iniciarToastr();
     dispararResposta();
     $("#nome").focus();
 });
