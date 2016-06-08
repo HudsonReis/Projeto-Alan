@@ -26,6 +26,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import util.Resposta;
 
 /**
  *
@@ -47,20 +48,7 @@ public class CadastroCompra extends BaseServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        List<ProdutoListagem> produtos = new ArrayList<>();
-        List<Filial> filiais = new ArrayList<>();
-        
-        try {
-            produtos = ProdutoDAO.listar();
-            filiais = FilialDAO.listar();
-            
-        } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(CadastroCompra.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        request.setAttribute("Filiais", filiais);
-        request.setAttribute("Produtos", produtos);
-        
+        preencherInformacoes(request); 
         processRequest(request, response, "/WEB-INF/jsp/compra.jspx");
     }
 
@@ -76,25 +64,72 @@ public class CadastroCompra extends BaseServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        Resposta resposta = validar(request);
         HttpSession session = request.getSession();
         Usuario usuario = (Usuario)session.getAttribute("usuarioLogado");
         
-        int codigoFilial = Integer.parseInt(request.getParameter("filialId"));
-        int idUsuario = usuario.getCodigoUsuario();
-        double valorTotal = Double.parseDouble(request.getParameter("valorTotalItens"));
-        String json = request.getParameter("jsonItens");
+        if (resposta.getSucesso()){
+            
+            int codigoFilial = Integer.parseInt(request.getParameter("filialId"));
+            int idUsuario = usuario.getCodigoUsuario();
+            double valorTotal = Double.parseDouble(request.getParameter("valorTotalItens"));
+            String json = request.getParameter("jsonItens");
+
+            ArrayList<Item> itens = new Gson().fromJson(json, new TypeToken<List<Item>>(){}.getType());
+
+            Compra compra = new Compra(codigoFilial, idUsuario, valorTotal, itens);
+
+            try {
+                CompraDAO.adicionar(compra);
+
+            } catch (SQLException | ClassNotFoundException ex) {
+                Logger.getLogger(CadastroCompra.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            request.setAttribute("resposta", resposta);
+        }
         
-        ArrayList<Item> itens = new Gson().fromJson(json, new TypeToken<List<Item>>(){}.getType());
+        preencherInformacoes(request);
+        processRequest(request, response, "/WEB-INF/jsp/compra.jspx");
+    }
+    
+    public void preencherInformacoes(HttpServletRequest request) {
         
-        Compra compra = new Compra(codigoFilial, idUsuario, valorTotal, itens);
-  
+        List<ProdutoListagem> produtos = new ArrayList<>();
+        List<Filial> filiais = new ArrayList<>();
+        
         try {
-            CompraDAO.adicionar(compra);
+            produtos = ProdutoDAO.listar();
+            filiais = FilialDAO.listar();
+            
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(CadastroCompra.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        processRequest(request, response, "/WEB-INF/jsp/compra.jspx");
+        request.setAttribute("Filiais", filiais);
+        request.setAttribute("Produtos", produtos);
+    }
+    
+    public Resposta validar(HttpServletRequest request) {
+        Resposta resposta = new Resposta();
+        
+        String codigoFilialStr = request.getParameter("filialId");
+        String valorTotalStr = request.getParameter("valorTotalItens");
+        String json = request.getParameter("jsonItens");
+        
+        if(codigoFilialStr.equals("") || codigoFilialStr.equals("0")) {
+            resposta.setErro("É necessário informar uma filial.", "codigoFilial");
+        }
+        
+        if(valorTotalStr.equals("")) {
+            resposta.setErro("Ocorreram erros e valor Total não foi preenchido.", "valorTotalItens");
+        }
+        
+        if(json.equals("")) {
+            resposta.setErro("Ocorreram erros e a lista de Itens não foi preenchida.", "");
+        }
+        
+        return resposta;
     }
 
     /**

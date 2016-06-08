@@ -104,6 +104,9 @@
                             <button type="submit" class="btn btn-primary btn-success" id="btnSalvar">Salvar</button>
                         </form>                        
                     </div>
+                    <input type="hidden" id="mensagem" value="${resposta.mensagem}"/>
+                    <input type="hidden" id="sucesso" value="${resposta.sucesso}"/>
+                    <input type="hidden" id="campo" value="${resposta.campo}" />
                 </div>
                 <script type="text/javascript" src="resources/js/jquery-2.2.3.min.js"><![CDATA[/*Teste*/]]></script>
                 <script type="text/javascript" src="resources/js/bootstrap.min.js"><![CDATA[/*Teste*/]]></script>

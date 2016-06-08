@@ -2,6 +2,7 @@ var carrinhoVenda = [];
 
 $(document).ready(function () {
     iniciarToastr();
+    dispararResposta();
     
     $(document).on("click", "#btnSalvar", function () {
        var filialId = $("#codigoFilial").val();

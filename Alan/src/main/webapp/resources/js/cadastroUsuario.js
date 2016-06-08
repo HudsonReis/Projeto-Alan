@@ -38,16 +38,3 @@ $(document).ready(function () {
     dispararResposta();
     $("#nome").focus();
 });
-
-var dispararResposta = function () {
-    var sucesso = $("#sucesso").val();
-    var mensagem = $("#mensagem").val();
-    var campo = $("#campo").val();
-    
-    if (sucesso === "false") {
-        $("#" + campo).addClass("has-error");
-        toastr.error(mensagem, 'Erro!');
-    } else if (sucesso === "true") {
-        toastr.success(mensagem, 'Sucesso!');
-    }
-};
