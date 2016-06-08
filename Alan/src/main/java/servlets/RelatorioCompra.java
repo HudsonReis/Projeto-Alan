@@ -106,7 +106,7 @@ public class RelatorioCompra extends BaseServlet {
             filiais = FilialDAO.listarRelatorio(usuario);
         } catch (SQLException ex) {
             Logger.getLogger(RelatorioCompra.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
+                String message = ex.getMessage();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(RelatorioCompra.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());

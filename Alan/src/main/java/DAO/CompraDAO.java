@@ -25,6 +25,25 @@ import java.util.List;
  */
 public class CompraDAO {
 
+    //saida do sql padrão
+    private static String select
+            = " select "
+            + " ci.IDCOMPRA, "
+            + " c.DATACOMPRA, "
+            + " ci.CODIGOPRODUTO, "
+            + " p.NOME as NOME_PRODUTO, "
+            + " c.IDUSUARIO, "
+            + " u.NOME as NOME_USUARIO, "
+            + " ci.QUANTIDADE, "
+            + " ci.VALORUNITARIO, "
+            + " c.VALORTOTAL "
+            + " from compra_item ci "
+            + " inner join compra c on ci.IDCOMPRA = c.IDCOMPRA "
+            + " inner join produto p on ci.CODIGOPRODUTO = P.CODIGOPRODUTO "
+            + " and c.CODIGOFILIAL = p.CODIGOFILIAL "
+            + " inner join usuario u on u.CODIGOUSUARIO = C.IDUSUARIO "
+            + " and c.CODIGOFILIAL = u.CODIGOFILIAL";
+
     public static void adicionar(Compra compra) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
 
@@ -68,7 +87,7 @@ public class CompraDAO {
 
                 stmt.execute();
             }
-            
+
             ProdutoDAO.atualizarEstoque(item.getCodigoProduto(), item.getQuantidade(), true);
         }
     }
@@ -84,7 +103,7 @@ public class CompraDAO {
 
             ResultSet result = stmt.executeQuery();
             result.next();
-            
+
             idCompra = result.getInt("idCompra");
         }
 
@@ -93,158 +112,75 @@ public class CompraDAO {
 
     public static List<CompraListagem> listar(Usuario usuario) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
-
-        String sql
-                = " select "
-                + " ci.IDCOMPRA, "
-                + " c.DATACOMPRA, "
-                + " ci.CODIGOPRODUTO, "
-                + " p.NOME as NOME_PRODUTO, "
-                + " c.IDUSUARIO, "
-                + " u.NOME as NOME_USUARIO, "
-                + " ci.QUANTIDADE, "
-                + " ci.VALORUNITARIO, "
-                + " c.VALORTOTAL "
-                + " from compra_item ci "
-                + " inner join compra c on ci.IDCOMPRA = c.IDCOMPRA "
-                + " inner join produto p on ci.CODIGOPRODUTO = P.CODIGOPRODUTO "
-                + " and c.CODIGOFILIAL = p.CODIGOFILIAL "
-                + " inner join usuario u on u.CODIGOUSUARIO = C.IDUSUARIO " 
-                + " and c.CODIGOFILIAL = u.CODIGOFILIAL ";
-        
-        if((usuario.getCodigoPerfil()!=1)&&(usuario.getCodigoPerfil()!=2)){
-            sql+= " where u.codigofilial = ? ";
+        String sql = select;
+        if ((usuario.getCodigoPerfil() != 1) && (usuario.getCodigoPerfil() != 2)) {
+            sql += " where u.codigofilial = ? ";
         }
-
 
         PreparedStatement stmt;
         stmt = conexao.prepareStatement(sql);
-       if((usuario.getCodigoPerfil()!=1)&&(usuario.getCodigoPerfil()!=2)){
+        if ((usuario.getCodigoPerfil() != 1) && (usuario.getCodigoPerfil() != 2)) {
             stmt.setInt(1, usuario.getCodigoFilial());
         }
-
         List<CompraListagem> retorno = new ArrayList<>();
         ResultSet result = stmt.executeQuery();
+        retorno = percorreResult(result);
 
-        while (result.next()) {
-            int idCompra = result.getInt("IDCOMPRA");
-            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-            Date data = result.getDate("DATACOMPRA");
-            String dataCompra = format.format(data);
-            int codigoProduto = result.getInt("CODIGOPRODUTO");
-            String nomeProduto = result.getString("NOME_PRODUTO");
-            int idUsuario = result.getInt("IDUSUARIO");
-            String nomeUsuario = result.getString("NOME_USUARIO");
-            double quantidade = result.getDouble("QUANTIDADE");
-            double vrUnitario = result.getDouble("VALORUNITARIO");
-            double valor = result.getDouble("VALORTOTAL");
-
-            CompraListagem compra = new CompraListagem(idCompra, dataCompra, codigoProduto, nomeProduto,
-                    idUsuario, nomeUsuario, quantidade, vrUnitario, valor);
-            retorno.add(compra);
-
-        }
         return retorno;
     }
 
-    public static List<CompraListagem> listar(String dataInicial, String dataFinal,Usuario usuario, int codFilial) throws SQLException, ClassNotFoundException {
+    public static List<CompraListagem> listar(String dataInicial, String dataFinal, Usuario usuario, int codFilial) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
+        String sql = select;
+        sql += " WHERE c.DATACOMPRA BETWEEN ? AND ? ";
 
-        String sql=
-                  " select "
-                + " ci.IDCOMPRA, "
-                + " c.DATACOMPRA, "
-                + " ci.CODIGOPRODUTO, "
-                + " p.NOME as NOME_PRODUTO, "
-                + " c.IDUSUARIO, "
-                + " u.NOME as NOME_USUARIO, "
-                + " ci.QUANTIDADE, "
-                + " ci.VALORUNITARIO, "
-                + " c.VALORTOTAL "
-                + " from compra_item ci "
-                + " inner join compra c on ci.IDCOMPRA = c.IDCOMPRA "
-                + " inner join produto p on ci.CODIGOPRODUTO = P.CODIGOPRODUTO "
-                + " and c.CODIGOFILIAL = p.CODIGOFILIAL "
-                + " inner join usuario u on u.CODIGOUSUARIO = C.IDUSUARIO " 
-                + " and c.CODIGOFILIAL = u.CODIGOFILIAL"
-                + " WHERE c.DATACOMPRA BETWEEN ? AND ? ";
-
-         if(codFilial!=0){
-            sql+= " and u.codigofilial = ? ";
+        if (codFilial != 0) {
+            sql += " and u.codigofilial = ? ";
         }
 
         PreparedStatement stmt;
         stmt = conexao.prepareStatement(sql);
-        
+
         stmt.setString(1, dataInicial);
         stmt.setString(2, dataFinal);
-        if(codFilial!=0){
+        if (codFilial != 0) {
             stmt.setInt(3, codFilial);
         }
 
         List<CompraListagem> retorno = new ArrayList<>();
         ResultSet result = stmt.executeQuery();
-
-        while (result.next()) {
-            int idCompra = result.getInt("IDCOMPRA");
-            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-            Date data = result.getDate("DATACOMPRA");
-            String dataCompra = format.format(data);
-            int codigoProduto = result.getInt("CODIGOPRODUTO");
-            String nomeProduto = result.getString("NOME_PRODUTO");
-            int idUsuario = result.getInt("IDUSUARIO");
-            String nomeUsuario = result.getString("NOME_USUARIO");
-            double quantidade = result.getDouble("QUANTIDADE");
-            double vrUnitario = result.getDouble("VALORUNITARIO");
-            double valor = result.getDouble("VALORTOTAL");
-
-            CompraListagem compra = new CompraListagem(idCompra, dataCompra, codigoProduto, nomeProduto,
-                    idUsuario, nomeUsuario, quantidade, vrUnitario, valor);
-            retorno.add(compra);
-
-        }
+        retorno = percorreResult(result);
         return retorno;
     }
 
-    public static List<CompraListagem> listar(String dataInicial, String dataFinal, int codProduto,Usuario usuario, int codFilial) throws SQLException, ClassNotFoundException {
+    public static List<CompraListagem> listar(String dataInicial, String dataFinal, int codProduto, Usuario usuario, int codFilial) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
-
-        String sql =
-                  " select "
-                + " ci.IDCOMPRA, "
-                + " c.DATACOMPRA, "
-                + " ci.CODIGOPRODUTO, "
-                + " p.NOME as NOME_PRODUTO, "
-                + " c.IDUSUARIO, "
-                + " u.NOME as NOME_USUARIO, "
-                + " ci.QUANTIDADE, "
-                + " ci.VALORUNITARIO, "
-                + " c.VALORTOTAL "
-                + " from compra_item ci "
-                + " inner join compra c on ci.IDCOMPRA = c.IDCOMPRA "
-                + " inner join produto p on ci.CODIGOPRODUTO = P.CODIGOPRODUTO "
-                + " and c.CODIGOFILIAL = p.CODIGOFILIAL "
-                + " inner join usuario u on u.CODIGOUSUARIO = C.IDUSUARIO " 
-                + " and c.CODIGOFILIAL = u.CODIGOFILIAL"
-                + " WHERE c.DATACOMPRA BETWEEN ? AND ? "
+        String sql = select;
+        sql += " WHERE c.DATACOMPRA BETWEEN ? AND ? "
                 + " AND ci.CODIGOPRODUTO = ? ";
 
-         if(codFilial!=0){
-            sql+= " and u.codigofilial = ? ";
+        if (codFilial != 0) {
+            sql += " and u.codigofilial = ? ";
         }
-        
         PreparedStatement stmt;
         stmt = conexao.prepareStatement(sql);
         stmt.setString(1, dataInicial);
         stmt.setString(2, dataFinal);
         stmt.setInt(3, codProduto);
-         if(codFilial!=0){
+        if (codFilial != 0) {
             stmt.setInt(4, codFilial);
         }
 
         List<CompraListagem> retorno = new ArrayList<>();
         ResultSet result = stmt.executeQuery();
+        retorno = percorreResult(result);
 
+        sql = "";
+        return retorno;
+    }
+
+    public static List<CompraListagem> percorreResult(ResultSet result) throws SQLException, ClassNotFoundException {
+        List<CompraListagem> retorno = new ArrayList<>();
         while (result.next()) {
             int idCompra = result.getInt("IDCOMPRA");
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -261,8 +197,8 @@ public class CompraDAO {
             CompraListagem compra = new CompraListagem(idCompra, dataCompra, codigoProduto, nomeProduto,
                     idUsuario, nomeUsuario, quantidade, vrUnitario, valor);
             retorno.add(compra);
-
         }
         return retorno;
     }
+
 }
