@@ -48,17 +48,20 @@ $(document).ready(function () {
         var quantidade = $("#Quantidade").val();
         
         if(quantidade != 0 || quantidade != null) {
-            var valorProduto = $("#codigoProduto option:selected").data("valor");   
-            var valorTotal = quantidade * valorProduto;
+            var valorUnitario = retornarDecimal($("#valorUnitario").val());               
+            var valorTotal = valorUnitario * quantidade;            
             
             $("#valorTotal").val(formatarValor(valorTotal));
         }
     });
     
     $(document).on("change", "#codigoProduto", function () {
-        var valorProduto = $("#codigoProduto option:selected").data("valor");  
+        var valorProduto = parseFloat($("#codigoProduto option:selected").data("valor"));  
+        var percentualVenda = $("#codigoProduto option:selected").data("percentual"); 
         
-        $("#valorUnitario").val(formatarValor(valorProduto));
+        var valor = valorProduto + (valorProduto * percentualVenda);      
+        
+        $("#valorUnitario").val(formatarValor(valor));
         $("#Quantidade").focus();
     });
     

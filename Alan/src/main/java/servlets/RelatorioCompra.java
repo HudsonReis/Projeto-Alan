@@ -129,7 +129,6 @@ public class RelatorioCompra extends BaseServlet {
         for(CompraListagem cl : lista){
             quantidadeTotal+=cl.getQuantidade();
             valorTotal+=cl.getValor();
-            
         }
         
         request.setAttribute("quantidadeTotal", quantidadeTotal);
