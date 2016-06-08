@@ -36,7 +36,7 @@ public class Criptografia {
         return null;
     }
     
-    public static char[] gerarHashSenhaPBKDF2(String senha) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public static char[] gerarHashSenhaPBKDF2(String senha, String salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
         // PBKDF2 with SHA-1 as the hashing algorithm. Note that the NIST
         // specifically names SHA-1 as an acceptable hashing algorithm for PBKDF2
         String algorithm = "PBKDF2WithHmacSHA1";
@@ -48,10 +48,6 @@ public class Criptografia {
         // iOS 4.x reportedly uses 10,000:
         // http://blog.crackpassword.com/2010/09/smartphone-forensics-cracking-blackberry-backup-passwords/
         int iterations = 2000;
-
-        // SALT (EM SITUACOES REAIS, DEVEM SER DIFERENTES PARA CADA USUARIO)
-        // Normalmente, deve ser alguma informação que, após cadastrado, não pode mais ser alterado.
-        String salt = "ATACGHNAT";
 
         KeySpec spec = new PBEKeySpec(senha.toCharArray(), salt.getBytes(), iterations, derivedKeyLength);
         SecretKeyFactory f = SecretKeyFactory.getInstance(algorithm);

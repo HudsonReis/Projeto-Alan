@@ -17,8 +17,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import util.Criptografia;
 import java.util.Date;
+import util.Criptografia;
 
 
 @WebServlet(name = "LoginServlet", urlPatterns = {"/Login"})
@@ -44,6 +44,7 @@ public class LoginServlet extends BaseServlet {
 
       return;
     }
+    
     // Usar o request.getContextPath() para corrigir o caminho da URL.
     response.sendRedirect(request.getContextPath() + "/Home");
   }
@@ -61,7 +62,7 @@ public class LoginServlet extends BaseServlet {
           throws ServletException, IOException {
     String login = request.getParameter("login");
     String senha = request.getParameter("senha");
-
+    
     // Validar nome de usuário e senha.
     Usuario usuario = validar(login, senha);
     if (usuario != null) {
@@ -84,13 +85,13 @@ public class LoginServlet extends BaseServlet {
   // armazenados no banco de dados.
   private Usuario validar(String login, String senha) {
     try {
-        Usuario usuario = UsuarioDAO.consultar(login, String.copyValueOf(Criptografia.gerarHashSenhaPBKDF2(senha)));
+        Usuario usuario = UsuarioDAO.consultar(login);
         if (usuario != null && usuario.autenticar(login, senha)) {
             
             UsuarioDAO.atualizarDataUltimoLogin(usuario.getCodigoUsuario(), new Date().getTime());
             return usuario;
         }
-    } catch(SQLException | ClassNotFoundException | NoSuchAlgorithmException | InvalidKeySpecException ex) {
+    } catch(SQLException | ClassNotFoundException ex) {
         logar(LoginServlet.class.getName(), ex);
     }
     

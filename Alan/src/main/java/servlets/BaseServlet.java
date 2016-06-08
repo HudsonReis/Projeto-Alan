@@ -41,7 +41,8 @@ public class BaseServlet extends HttpServlet {
         request.setAttribute("funcionalidadeBuscaUsuarios", FuncionalidadesEnum.CadastroUsuarios.value);
         request.setAttribute("funcionalidadeCompras", FuncionalidadesEnum.RegistroMovimentacaoCompras.value);
         request.setAttribute("funcionalidadeVendas", FuncionalidadesEnum.RegistroMovimentacaoVendas.value);
-        request.setAttribute("funcionalidadeRelatorios", FuncionalidadesEnum.VisualizacaoRelatorios.value);
+        request.setAttribute("funcionalidadeRelatoriosCompras", FuncionalidadesEnum.VisualizacaoRelatoriosCompras.value);
+        request.setAttribute("funcionalidadeRelatoriosVendas", FuncionalidadesEnum.VisualizacaoRelatoriosVendas.value);
         
         try (PrintWriter out = response.getWriter()) {
             RequestDispatcher rd

@@ -73,14 +73,19 @@
                             </ul>
                         </li>
                     </c:if>
-                    <c:if test="${usuarioLogado.autorizado(funcionalidadeRelatorios)}">
+                    <c:if test="${usuarioLogado.autorizado(funcionalidadeRelatoriosCompras) ||
+                                  usuarioLogado.autorizado(funcionalidadeRelatoriosVendas)}">
                        <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Relatorios
                         <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="RelatorioVenda">Venda</a></li>
-                            <li><a href="RelatorioCompra">Compra</a></li>
+                            <c:if test="${usuarioLogado.autorizado(funcionalidadeRelatoriosCompras)}">
+                                <li><a href="RelatorioVenda">Venda</a></li>
+                            </c:if>
+                            <c:if test="${usuarioLogado.autorizado(funcionalidadeRelatoriosVendas)}">
+                                <li><a href="RelatorioCompra">Compra</a></li>
+                            </c:if>
                         </ul>
                         </li>
                     </c:if>  

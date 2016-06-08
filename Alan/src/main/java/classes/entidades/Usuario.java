@@ -36,17 +36,19 @@ public class Usuario {
         
     }
     
-    public Usuario(int codigoUsuario, String nome, int codigoFilial, int codigoPerfil, String login, String senha, boolean status) {
+    public Usuario(int codigoUsuario, String nome, int codigoFilial, int codigoPerfil, String login, 
+            String senha, boolean status, String saltHash) {
         this.codigoUsuario = codigoUsuario;
         this.nome = nome;
         this.codigoFilial = codigoFilial;
         this.codigoPerfil = codigoPerfil;
         this.login = login;
         this.status = status;
+        this.saltHash = saltHash; 
         
         try {
             if (senha != null) {
-                this.hashSenha = Criptografia.gerarHashSenhaPBKDF2(senha);
+                this.hashSenha = Criptografia.gerarHashSenhaPBKDF2(senha, this.saltHash);
             }
             
         } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
@@ -137,7 +139,7 @@ public class Usuario {
     public boolean autenticar(String login, String senha) {
         if (this.nome != null) {
             try {
-                return this.login.equals(login) && Arrays.equals(this.hashSenha, Criptografia.gerarHashSenhaPBKDF2(senha));
+                return this.login.equals(login) && Arrays.equals(this.hashSenha, Criptografia.gerarHashSenhaPBKDF2(senha, this.saltHash));
             } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
                 Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
             }

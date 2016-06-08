@@ -87,7 +87,7 @@ public class CadastroUsuario extends BaseServlet {
         String login = request.getParameter("Login");
         String senha = request.getParameter("Senha");
         
-        Usuario usuario = new Usuario(id, nome, codFilial, codPerfil, login, senha, status);
+        Usuario usuario = new Usuario(id, nome, codFilial, codPerfil, login, senha, status, nome + Math.random());
         
         try {
             resposta = validar(usuario);

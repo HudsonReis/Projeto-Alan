@@ -15,10 +15,11 @@ public enum FuncionalidadesEnum {
     CadastroUsuarios(3),
     RegistroMovimentacaoCompras(4),
     RegistroMovimentacaoVendas(5),
-    VisualizacaoRelatorios(6),
+    VisualizacaoRelatoriosCompras(6),
     BuscaUsuarios(7),
     BuscaProdutos(8),
-    BuscaFiliais(9);
+    BuscaFiliais(9),
+    VisualizacaoRelatoriosVendas(10);
     
     public int value;
     

@@ -31,27 +31,18 @@ public class UsuarioDAO {
         Connection conexao = ConexaoBanco.obterConexao();
 
         String sql = "INSERT INTO USUARIO  "
-                + "(CODIGOFILIAL, CODIGOPERFIL, NOME, LOGIN, SENHA, STATUS)"
-                + "VALUES(?,?,?,?,?,?)";
+                + "(CODIGOFILIAL, CODIGOPERFIL, NOME, LOGIN, SENHA, STATUS, SALTHASH)"
+                + "VALUES(?,?,?,?,?,?,?)";
 
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            
             stmt.setInt(1, usuario.getCodigoFilial());
-            int idFilial  = usuario.getCodigoFilial();
-            
             stmt.setInt(2, usuario.getCodigoPerfil());
-            int idPerfil  = usuario.getCodigoPerfil();
-            
             stmt.setString(3, usuario.getNome());
-            String usuarioNome  = usuario.getNome();
-            
             stmt.setString(4, usuario.getLogin());
-            String usuarioLogin  = usuario.getLogin();
-            
             stmt.setString(5, String.copyValueOf(usuario.getHashSenha()));
-            String usuarioSenha  = String.copyValueOf(usuario.getHashSenha());
-            
             stmt.setBoolean(6, usuario.getStatus());
-            boolean Status  = usuario.getStatus();
+            stmt.setString(7, usuario.getSaltHash());
             
             stmt.execute();
         }
@@ -93,18 +84,17 @@ public class UsuarioDAO {
         return contador > 0;
     }
     
-    public static Usuario consultar(String login, String senha) throws SQLException, ClassNotFoundException {
+    public static Usuario consultar(String login) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         
         String sql = "SELECT u.codigoUsuario, u.codigoFilial, u.codigoPerfil, u.nome, u.login, u.senha"
                 + ", u.status, p.nome as perfil, u.dataUltimoLogin, u.saltHash"
                 + " FROM Usuario u INNER JOIN Perfil p ON u.codigoPerfil = p.codigoPerfil "
-                + "WHERE u.login = ? AND u.senha = ? AND u.status = true";
+                + "WHERE u.login = ? AND u.status = true";
         
         Usuario usuario;
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, login);
-            stmt.setString(2, senha);
             ResultSet result = stmt.executeQuery();
             result.next();
             
