@@ -30,7 +30,7 @@ public class FilialDAO {
             stmt.execute();
         }
     }
-    
+
     public static void alterar(Filial filial) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         //linguagem sql -> inserir no banco
@@ -47,7 +47,7 @@ public class FilialDAO {
             stmt.setString(7, filial.getCidade());
             stmt.setString(8, filial.getCnpj());
             stmt.setInt(9, filial.getCodigoFilial());
-            
+
             stmt.execute();
         }
     }
@@ -73,24 +73,24 @@ public class FilialDAO {
             String estado = result.getString("estado");
             String cidade = result.getString("cidade");
             String cnpj = result.getString("cnpj");
-            
+
             //crio um objeto filial
-            Filial f = new Filial(codigoFilial,nome, nomeFantasia, rua, num, bairro, estado, cidade, cnpj);
-            
+            Filial f = new Filial(codigoFilial, nome, nomeFantasia, rua, num, bairro, estado, cidade, cnpj);
+
             //e adiciono no arraylist para retorno
             retorno.add(f);
-            
+
         }
 
         return retorno;
     }
-    
+
     public static Filial consultarPorId(int id) throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
-        
+
         String sql = "SELECT codigoFilial, nome, fantasia, rua, numero, bairro, estado, cidade, cnpj"
                 + " FROM FILIAL WHERE codigoFilial = ?";
-        
+
         Filial filial;
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setInt(1, id);
@@ -107,10 +107,10 @@ public class FilialDAO {
             String cnpj = result.getString("cnpj");
             filial = new Filial(codFilial, nome, fantasia, rua, numero, bairro, estado, cidade, cnpj);
         }
-        
+
         return filial;
     }
-    
+
     public static int maxId() throws SQLException, ClassNotFoundException {
         Connection conexao = ConexaoBanco.obterConexao();
         String sql = "SELECT MAX(CODIGOFILIAL)FROM FILIAL";
@@ -124,25 +124,24 @@ public class FilialDAO {
         }
         return prox;
     }
-    
-    public static boolean cnpjJaCadastrado(String cnpj) throws SQLException, ClassNotFoundException {
-        boolean jaCadastrado = false;
-        
-        Connection conexao = ConexaoBanco.obterConexao();
 
+    public static boolean cnpjJaCadastrado(String cnpj, int idTela) throws SQLException, ClassNotFoundException {
+        boolean jaCadastrado = false;
+        Connection conexao = ConexaoBanco.obterConexao();
         String sql = "SELECT * FROM FILIAL";
         PreparedStatement stmt = conexao.prepareStatement(sql);
-
         ResultSet result = stmt.executeQuery();
-        
 
         while (result.next()) {
             //pego o retorno do banco e atribuo à variaveis
             String resultCnpj = result.getString("cnpj");
-            if (cnpj.equals(resultCnpj)){
+            
+            int idBanco = result.getInt("codigofilial");
+            
+            if ((cnpj.equals(resultCnpj))&&(idTela!=idBanco)) {
                 jaCadastrado = true;
             }
-            
+
         }
 
         return jaCadastrado;

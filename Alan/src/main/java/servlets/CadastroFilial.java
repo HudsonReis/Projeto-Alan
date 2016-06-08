@@ -88,7 +88,7 @@ public class CadastroFilial extends BaseServlet {
         Filial filial = new Filial(id, nome, nomeFantasia, rua, num, bairro, estado, cidade, cnpj);
         try {
 
-            resposta = validar(filial);
+            resposta = validar(filial, id);
 
             if (resposta.getSucesso()) {
                 if (edicao) {
@@ -113,13 +113,13 @@ public class CadastroFilial extends BaseServlet {
         }
     }
 
-    public Resposta validar(Filial filial) throws SQLException, ClassNotFoundException {
+    public Resposta validar(Filial filial, int id) throws SQLException, ClassNotFoundException {
         Resposta resposta = new Resposta();
 
         if (!Funcoes.isCNPJ(filial.getCnpj())) {
             resposta.setErro("Este CNPJ é inválido.", "cnpj");
         }
-        if (FilialDAO.cnpjJaCadastrado(filial.getCnpj())) {
+        if (FilialDAO.cnpjJaCadastrado(filial.getCnpj(), id)) {
             resposta.setErro("Esse CNPJ já está cadastrado", "cnpj");
         }
 
