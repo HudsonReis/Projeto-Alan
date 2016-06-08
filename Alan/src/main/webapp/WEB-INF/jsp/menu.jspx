@@ -80,10 +80,10 @@
                         <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <c:if test="${usuarioLogado.autorizado(funcionalidadeRelatoriosCompras)}">
+                            <c:if test="${usuarioLogado.autorizado(funcionalidadeRelatoriosVendas)}">
                                 <li><a href="RelatorioVenda">Venda</a></li>
                             </c:if>
-                            <c:if test="${usuarioLogado.autorizado(funcionalidadeRelatoriosVendas)}">
+                            <c:if test="${usuarioLogado.autorizado(funcionalidadeRelatoriosCompras)}">
                                 <li><a href="RelatorioCompra">Compra</a></li>
                             </c:if>
                         </ul>

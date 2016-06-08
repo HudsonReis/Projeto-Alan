@@ -54,7 +54,7 @@ $(document).ready(function () {
     $(document).on("blur", "#Quantidade", function () {
         var quantidade = $("#Quantidade").val();
         
-        if(quantidade != 0 || quantidade != null) {
+        if(quantidade != 0 && quantidade != null && quantidade != "") {
             var valorProduto = $("#codigoProduto option:selected").data("valor");   
             var valorTotal = quantidade * valorProduto;
             

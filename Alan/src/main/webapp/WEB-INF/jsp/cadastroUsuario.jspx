@@ -110,7 +110,7 @@
             <script type="text/javascript" src="resources/js/jquery-2.2.3.min.js"><![CDATA[/*Teste*/]]></script>
             <script type="text/javascript" src="resources/js/bootstrap.min.js"><![CDATA[/*Teste*/]]></script>
             <script type="text/javascript" src="resources/js/toastr.min.js"><![CDATA[/*Teste*/]]></script>
-            <script type="text/javascript" src="resources/js/base.js"><![CDATA[/*Teste*/]]></script>
+            <script type="text/javascript" src="resources/js/telas/base.js"><![CDATA[/*Teste*/]]></script>
             <script type="text/javascript" src="resources/js/telas/cadastroUsuario.js"><![CDATA[/*Teste*/]]></script>
         </body>
     </html>
