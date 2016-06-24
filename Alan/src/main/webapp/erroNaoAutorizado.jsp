@@ -12,9 +12,9 @@
     <body>
         <div class="container">
             <div class="jumbotron">
-                <h1><i class="fa fa-ban red"></i> Sem permissão</h1>
-                <p class="lead">Você não tem permissão de acesso a essa página, entre em contato com o Administrador do Sistema. <em><span id="display-domain"></span></em>.</p>
-                <p><a onclick=javascript:checkSite(); class="btn btn-default btn-lg green">UI</a>
+                <h2><b><i class="fa fa-ban red"></i>Permissão negada</b></h2>
+                <p class="lead">Você não tem permissão de acesso à essa página, entre em contato com o Administrador do Sistema.<em><span id="display-domain"></span></em></p>
+                <p><a onclick=javascript:checkSite(); class="btn btn-default btn-lg green">Voltar</a>
                     <script type="text/javascript">
                         function checkSite() {
                             var currentSite = window.location.hostname;

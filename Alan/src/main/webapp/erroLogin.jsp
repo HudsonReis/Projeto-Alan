@@ -12,9 +12,9 @@
     <body>
         <div class="container">
             <div class="jumbotron">
-                <h1><i class="fa fa-ban red"></i> Erro interno</h1>
-                <p class="lead">Ocorreram erros ao processar solicitação, por favor entre em contato com o Administrador do Sistema. <em><span id="display-domain"></span></em>.</p>
-                <p><a onclick=javascript:checkSite(); class="btn btn-default btn-lg green">UI</a>
+                <h2><b><i class="fa fa-ban red"></i>Login ou senha inválidos</b></h2>
+                <p class="lead">O login ou senha informado(a) está incorreto(a)!<em><span id="display-domain"></span></em></p>
+                <p><a onclick=javascript:checkSite(); class="btn btn-default btn-lg green">Voltar</a>
                     <script type="text/javascript">
                         function checkSite() {
                             var currentSite = window.location.hostname;
